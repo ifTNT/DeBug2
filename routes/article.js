@@ -31,7 +31,7 @@ router.get('/:board_id', function(req, res, next) {
   ];
 
   res.send(JSON.stringify(rtVal));
-}
+});
 
 /* Get content of article */
 router.get('/:board_id/:article_id', function(req, res, next) {
