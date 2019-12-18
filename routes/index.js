@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/* GET first page. */
 router.get('/', function(req, res, next) {
   res.render('First_page');
 });
@@ -14,5 +14,10 @@ router.get('/signin', function(req, res, next) {
 /*GET Sign up page*/
 router.get('/signup', function(req, res, next) {
   res.render('Sign_up');
+});
+
+/*GET Home page*/
+router.get('/home', function(req, res, next) {
+  res.render('Home');
 });
 module.exports = router;
