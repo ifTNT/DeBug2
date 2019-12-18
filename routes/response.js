@@ -2,45 +2,47 @@ var express = require('express');
 var util = require('../common.js');
 var router = express.Router();
 
-/* Create a new user */
-router.post('/', function(req, res, next) {
+/* Create a new response */
+router.post('/:board_id/:article_id/', function(req, res, next) {
   var rtVal = {
     ok: true,
-    msg: "Develop only"
+    msg: `Develop only. New response under ${req.params.board_id}/${req.params.article_id}`
   }
   res.send(JSON.stringify(rtVal));
 });
 
-/* Get user info */
-router.get('/:id', function(req, res, next) {
-  var rtVal = {
-    ok: true,
-    user_id: req.params.id,
-    nick_name: "DEV",
-    join_time: 0,
-    last_active_time: 0,
-    personal_board_id: util.getPersonalBoardID(req.params.id),
-    subscribed: [
-      "board_id 1",
-      "board_id 2"
-    ]
-  }
+/* Get list of all response */
+router.get('/:board_id/:article_id/', function(req, res, next) {
+  var rtVal = [
+    {
+        response_id: 0,
+        time: 0,
+        content: "test1",
+        user_id: "user1"
+    },
+    {
+        response_id: 1,
+        time: 1,
+        content: "test2",
+        user_id: "user2"
+    }
+  ]
   res.send(JSON.stringify(rtVal));
 });
 
-/* Update userinfo */
-router.post('/:id', function(req, res, next){
+/* Update response */
+router.post('/:board_id/:article_id/:response_id', function(req, res, next){
   var rtVal = {
     ok: true,
-    msg:　`Develop only id=${req.params.id}`
+    msg:　`Develop only id=${req.params.board_id}/${req.params.article_id}/${req.params.response_id}`
   }
 });
 
-/* Delete a user */
-router.delete('/:id', function(req, res, next){
+/* Delete a response */
+router.delete('/:board_id/:article_id/:response_id', function(req, res, next){
   var rtVal = {
     ok: true,
-    msg:　`Develop only id=${req.params.id}`
+    msg:　`Develop only id=${req.params.board_id}/${req.params.article_id}/${req.params.response_id}`
   }
 });
 
