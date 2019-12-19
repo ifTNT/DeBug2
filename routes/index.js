@@ -7,7 +7,7 @@ router.get("/", function(req, res, next) {
 });
 
 router.get("/login_test", function(req, res, next) {
-  req.session.user_id = "text";
+  req.session.user_id = "ifTNT";
   req.session.authenticated = true;
   res.send(JSON.stringify({ ok: true}));
 });

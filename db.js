@@ -1,55 +1,59 @@
-const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database(file);
-db.getAsync = function (sql_str) {
-  return new Promise((resolve, reject) => {
-    db.get(sql_str, (err, data) => {
-      if (!err) {
-        resolve(data);
-      } else {
-        reject(err);
-      }
-    });
-  })
-}
-
-db.allAsync = function (sql_str) {
-  return new Promise((resolve, reject) => {
-    db.all(sql_str, (err, data) => {
-      if (!err) {
-        resolve(data);
-      } else {
-        reject(err);
-      }
-    });
-  })
-}
-
-db.runAsync = function (sql_str) {
-  return new Promise((resolve, reject) => {
-    db.run(sql_str, (err, data) => {
-      if (!err) {
-        resolve(data);
-      } else {
-        reject(err);
-      }
-    });
-  })
-}
-
 module.exports = class {
+  constructor() {
+    const file = "./database.db";
+
+    const sqlite3 = require("sqlite3").verbose();
+    this.db = new sqlite3.Database(file);
+    this.db.getAsync = function(sql_str) {
+      return new Promise((resolve, reject) => {
+        this.db.get(sql_str, (err, data) => {
+          if (!err) {
+            resolve(data);
+          } else {
+            reject(err);
+          }
+        });
+      });
+    };
+
+    this.db.allAsync = function(sql_str) {
+      return new Promise((resolve, reject) => {
+        this.db.all(sql_str, (err, data) => {
+          if (!err) {
+            resolve(data);
+          } else {
+            reject(err);
+          }
+        });
+      });
+    };
+
+    this.db.runAsync = function(sql_str) {
+      return new Promise((resolve, reject) => {
+        this.db.run(sql_str, (err, data) => {
+          if (!err) {
+            resolve(data);
+          } else {
+            reject(err);
+          }
+        });
+      });
+    };
+  }
   create_user(user_id, password, nickname, join_time) {
     return new Promise((resolve, reject) => {
-      var sql_signUp = "INSERT INTO ACCOUNT(user_id,password,nickname,join_time) VALUES (?,?,?S,?)";
-      db.run(sql_signUp, [user_id, password, nickname, join_time], (err) => {
+      var sql_signUp =
+        "INSERT INTO ACCOUNT(user_id,password,nickname,join_time) VALUES (?,?,?,?)";
+      this.db.run(sql_signUp, [user_id, password, nickname, join_time], err => {
         if (err) reject(err);
+        else resolve();
       });
-      resolve();
     });
   }
   get_userinfo(user_id) {
     return new Promise((resolve, reject) => {
       var aql_getUserinfo = `SELECT * FROM ACCOUNT WHERE user_id='${user_id}'`;
-      db.get(aql_getUserinfo, (err, data) => {
+      this.db.get(aql_getUserinfo, (err, data) => {
         if (err) reject(err);
         else resolve(data);
       });
@@ -68,7 +72,7 @@ module.exports = class {
         setInsert += `nickname='${nick_name}'`;
       }
       var sql03 = `update ACCOUNT set ${setInsert} WHERE user_id='${user_id}'`;
-      db.run(sql03, (err) => {
+      this.db.run(sql03, err => {
         if (err) reject(err);
         else resolve();
       });
@@ -76,8 +80,10 @@ module.exports = class {
   }
   update_last_active_time(user_id) {
     return new Promise((resolve, reject) => {
-      var sql_updateAcc = `update ACCOUNT set last_active_time=${parseInt(Date.now() / 1000)} WHERE user_id='${user_id}'`;
-      db.run(sql_updateAcc, (err) => {
+      var sql_updateAcc = `update ACCOUNT set last_active_time=${parseInt(
+        Date.now() / 1000
+      )} WHERE user_id='${user_id}'`;
+      this.db.run(sql_updateAcc, err => {
         if (err) return reject(err);
         else resolve();
       });
@@ -86,7 +92,7 @@ module.exports = class {
   delete_user(user_id) {
     return new Promise((resolve, reject) => {
       var sql_del = `DELETE FROM ACCOUNT WHERE user_id='${user_id}'`;
-      db.run(sql_del, function (err) {
+      this.db.run(sql_del, function(err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -99,42 +105,76 @@ module.exports = class {
 
   create_general_board(board_id, board_name, read_only, hashtag) {
     return new Promise((resolve, reject) => {
-      var sql_creategeneralBoard = "INSERT INTO GENERALBOARD(board_id,board_name,type,create_time,read_only,hashtag) VALUES (?,?,?,?,?,?)";
-      var sql_createBoard = "INSERT INTO BOARD(board_id,board_name,type,create_time,read_only) VALUES (?,?,0,?,?)";
+      var sql_creategeneralBoard =
+        "INSERT INTO GENERALBOARD(board_id,board_name,type,create_time,read_only,hashtag) VALUES (?,?,?,?,?,?)";
+      var sql_createBoard =
+        "INSERT INTO BOARD(board_id,board_name,type,create_time,read_only) VALUES (?,?,0,?,?)";
       var nowDate = parseInt(Date.now() / 1000);
-      db.run(sql_creategeneralBoard, [`'${board_id}'`, `'${board_name}'`, 0, `${nowDate}`, read_only, `'${hashtag}'`], function (err) {
-        if (err) return reject(err);
-        else
-          db.run(sql_createBoard, [`'${board_id}'`, `'${board_name}'`, 0, `${nowDate}`, read_only], function (err) {
-            if (err) return reject(err);
-            else resolve(data);
-          });
-      });
-
+      this.db.run(
+        sql_creategeneralBoard,
+        [
+          `'${board_id}'`,
+          `'${board_name}'`,
+          0,
+          `${nowDate}`,
+          read_only,
+          `'${hashtag}'`
+        ],
+        function(err) {
+          if (err) return reject(err);
+          else
+            this.db.run(
+              sql_createBoard,
+              [`'${board_id}'`, `'${board_name}'`, 0, `${nowDate}`, read_only],
+              function(err) {
+                if (err) return reject(err);
+                else resolve(data);
+              }
+            );
+        }
+      );
     });
   }
 
   create_personal_board(board_id, board_name, read_only, visible) {
     return new Promise((resolve, reject) => {
-      var sql_createPersonBoard = "INSERT INTO PERSONALBOARD(board_id,board_name,type,create_time,read_only,visiable) VALUES (?,?,?,?,?,?)";
-      var sql_createBoard = "INSERT INTO BOARD(board_id,board_name,type,create_time,read_only) VALUES (?,?,?,?,?)";
+      var sql_createPersonBoard =
+        "INSERT INTO PERSONALBOARD(board_id,board_name,type,create_time,read_only,visiable) VALUES (?,?,?,?,?,?)";
+      var sql_createBoard =
+        "INSERT INTO BOARD(board_id,board_name,type,create_time,read_only) VALUES (?,?,?,?,?)";
       var nowDate = parseInt(Date.now() / 1000);
-      db.run(sql_createPersonBoard, [`'${board_id}'`, `'${board_name}'`, 1, `${nowDate}`, read_only, visible], function (err) {
-        if (err) return reject(err);
-        else
-          db.run(sql_createBoard, [`'${board_id}'`, `'${board_name}'`, 1, `${nowDate}`, read_only], function (err) {
-            if (err) return reject(err);
-            else resolve();
-          });
-      });
+      this.db.run(
+        sql_createPersonBoard,
+        [
+          `'${board_id}'`,
+          `'${board_name}'`,
+          1,
+          `${nowDate}`,
+          read_only,
+          visible
+        ],
+        function(err) {
+          if (err) return reject(err);
+          else
+            this.db.run(
+              sql_createBoard,
+              [`'${board_id}'`, `'${board_name}'`, 1, `${nowDate}`, read_only],
+              function(err) {
+                if (err) return reject(err);
+                else resolve();
+              }
+            );
+        }
+      );
     });
   }
   // create_personal_board("234567", "test", 0, 0);
 
   get_board_list() {
     return new Promise((resolve, reject) => {
-      var sql_getBoardList = "SELECT board_id, board_name, read_only, online_user_cnt FROM GENERALBOARD WHERE type=0";
-      db.all(sql_getBoardList, (err, data) => {
+      var sql_getBoardList =
+        "SELECT board_id, board_name, read_only, online_user_cnt FROM GENERALBOARD WHERE type=0";
+      this.db.all(sql_getBoardList, (err, data) => {
         if (err) return reject(err);
         else resolve(data);
       });
@@ -144,12 +184,11 @@ module.exports = class {
   get_board(board_id) {
     return new Promise((resolve, reject) => {
       var sql_getBoard = `SELECT board_id, board_name, read_only, online_user_cnt FROM GENERALBOARD WHERE board_id='${board_id}'`;
-      db.get(sql_getBoard, (err, data) => {
+      this.db.get(sql_getBoard, (err, data) => {
         if (err) return reject(err);
         else resolve(data);
       });
     });
-
   }
   // get_board("NUKCSIE").then((data)=>{
   //   console.log(data);
@@ -158,7 +197,7 @@ module.exports = class {
   find_board(board_name) {
     return new Promise((resolve, reject) => {
       var sql_getBoard = `SELECT board_id, board_name, read_only, online_user_cnt FROM GENERALBOARD WHERE board_name='${board_name}'`;
-      db.get(sql_getBoard, (err, data) => {
+      this.db.get(sql_getBoard, (err, data) => {
         if (err) return reject(err);
         else resolve(data);
       });
@@ -178,28 +217,27 @@ module.exports = class {
         if (path != "") {
           path += ",";
         }
-        path += `read_only = ${read_only}`
+        path += `read_only = ${read_only}`;
       }
       var sql_updateAcc = `update BOARD set ${path} WHERE board_id='${board_id}'`;
-      var sql_updateAccPP = ""
+      var sql_updateAccPP = "";
       if (hashtag != null) {
         if (path != "") {
           path += ",";
         }
-        path += `hashtag = '${hashtag}'`
+        path += `hashtag = '${hashtag}'`;
         sql_updateAccPP = `update GENERALBOARD set ${path} WHERE board_id='${board_id}'`;
-      }
-      else {
+      } else {
         if (path != "") {
           path += ",";
         }
-        path += `visible = ${visible}`
+        path += `visible = ${visible}`;
         sql_updateAccPP = `update PERSONALBOARD set ${path} WHERE board_id='${board_id}'`;
       }
-      db.run(sql_updateAcc, function (err) {
+      this.db.run(sql_updateAcc, function(err) {
         if (err) return reject(err);
         else
-          db.run(sql_updateAccPP, function (err) {
+          this.db.run(sql_updateAccPP, function(err) {
             if (err) return reject(err);
             else resolve();
           });
@@ -212,17 +250,17 @@ module.exports = class {
     return new Promise((resolve, reject) => {
       var sql_getBoard = `SELECT type FROM BOARD WHERE board_id='${board_id}'`;
       var sql_del = "";
-      db.getAsync(sql_getBoard)
-        .then((data) => {
+      this.db.getAsync(sql_getBoard)
+        .then(data => {
           if (data.type == 0)
             sql_del = `DELETE FROM GENERALBOARD WHERE board_id='${board_id}'`;
           else
             sql_del = `DELETE FROM PERSONALBOARD WHERE board_id='${board_id}'`;
           var sql_delB = `DELETE FROM BOARD WHERE board_id='${board_id}'`;
-          db.runAsync(sql_delB)
+          this.db.runAsync(sql_delB);
         })
         .then(() => {
-          db.runAsync(sql_del)
+          this.db.runAsync(sql_del);
         })
         .then(resolve())
         .catch(reject(err));
@@ -233,53 +271,145 @@ module.exports = class {
   // |=============ARTICLE=============|
   // +---------------------------------+
 
-  create_picture_article(board_id, article_id, user_id, longitude, latitude, altitude, title, pic_url, alt_text) {
+  create_picture_article(
+    board_id,
+    article_id,
+    user_id,
+    longitude,
+    latitude,
+    altitude,
+    title,
+    pic_url,
+    alt_text
+  ) {
     return new Promise((resolve, reject) => {
-      var sql_addArticle = "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag, pic_url, alt_text,Plaintext_Flag,Flag_3D) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-      db.run(sql_addArticle, [board_id, article_id, user_id, 0, longitude, latitude, altitude, title, 1, pic_url, alt_text, 0, 0], function (err) {
-        if (err) return reject(err);
-        else resolve();
-      });
+      var sql_addArticle =
+        "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag, pic_url, alt_text,Plaintext_Flag,Flag_3D) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+      this.db.run(
+        sql_addArticle,
+        [
+          board_id,
+          article_id,
+          user_id,
+          0,
+          longitude,
+          latitude,
+          altitude,
+          title,
+          1,
+          pic_url,
+          alt_text,
+          0,
+          0
+        ],
+        function(err) {
+          if (err) return reject(err);
+          else resolve();
+        }
+      );
     });
   }
   // create_picture_article("NUKCSIE",56789,"mmmi",0,0,0,"test","dfghjkl","dfghjkko");
 
-  create_plaintext_article(board_id, article_id, user_id, longitude, latitude, altitude, title, markdown) {
+  create_plaintext_article(
+    board_id,
+    article_id,
+    user_id,
+    longitude,
+    latitude,
+    altitude,
+    title,
+    markdown
+  ) {
     return new Promise((resolve, reject) => {
-      var sql_addArticle = "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag,Plaintext_Flag, markdown, Flag_3D) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-      db.run(sql_addArticle, [board_id, article_id, user_id, 1, longitude, latitude, altitude, title, 0, 1, markdown, 0], function (err) {
-        if (err) return reject(err);
-        else resolve();
-      });
+      var sql_addArticle =
+        "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag,Plaintext_Flag, markdown, Flag_3D) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+      this.db.run(
+        sql_addArticle,
+        [
+          board_id,
+          article_id,
+          user_id,
+          1,
+          longitude,
+          latitude,
+          altitude,
+          title,
+          0,
+          1,
+          markdown,
+          0
+        ],
+        function(err) {
+          if (err) return reject(err);
+          else resolve();
+        }
+      );
     });
   }
   // create_picture_article("NUKCSIE",56789,"mmmi",0,0,0,"test","dfghjkl");
 
-  create_3D_article(board_id, article_id, user_id, longitude, latitude, altitude, title, model_url, alt_text) {
+  create_3D_article(
+    board_id,
+    article_id,
+    user_id,
+    longitude,
+    latitude,
+    altitude,
+    title,
+    model_url,
+    alt_text
+  ) {
     return new Promise((resolve, reject) => {
-      var sql_addArticle = "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag,Plaintext_Flag, Flag_3D, model_url, light_position, light_type, alt_text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-      db.run(sql_addArticle, [board_id, article_id, user_id, 2, longitude, latitude, altitude, title, 0, 0, 1, model_url, light_position, light_type, alt_text], function (err) {
-        if (err) return reject(err);
-        else resolve();
-      });
+      var sql_addArticle =
+        "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag,Plaintext_Flag, Flag_3D, model_url, light_position, light_type, alt_text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+      this.db.run(
+        sql_addArticle,
+        [
+          board_id,
+          article_id,
+          user_id,
+          2,
+          longitude,
+          latitude,
+          altitude,
+          title,
+          0,
+          0,
+          1,
+          model_url,
+          light_position,
+          light_type,
+          alt_text
+        ],
+        function(err) {
+          if (err) return reject(err);
+          else resolve();
+        }
+      );
     });
   }
 
   find_article_title(user_id, title, type, board_name, pageShow) {
     return new Promise((resolve, reject) => {
-      var condition = []
+      var condition = [];
       if (user_id != null) condition.push(`user_id = '${user_id}'`);
       if (title != null) condition.push(`title = '${title}'`);
       if (type != null) condition.push(`type = ${type}`);
-      db.getAsync(`SELECT board_id FROM BOARD WHERE board_name = '${board_name}'`)
-        .then((data) => {
+      this.db.getAsync(
+        `SELECT board_id FROM BOARD WHERE board_name = '${board_name}'`
+      )
+        .then(data => {
           condition.push(`board_id = '${data.board_id}'`);
         })
-        .catch(() => { })
+        .catch(() => {})
         .finally(() => {
-          searchQuery = condition.length == 0 ? "" : " WHERE " + condition.join(" AND ");
-          var aql_searchArticle = `SELECT article_id,title,user_id,board_id FROM ARTICLE ${searchQuery} order by article_id desc LIMIT ${(pageShow - 1) * 20},${20}`;
-          db.all(aql_searchArticle, (err, data) => {
+          searchQuery =
+            condition.length == 0 ? "" : " WHERE " + condition.join(" AND ");
+          var aql_searchArticle = `SELECT article_id,title,user_id,board_id FROM ARTICLE ${searchQuery} order by article_id desc LIMIT ${(pageShow -
+            1) *
+            20},${20}`;
+          this.db.all(aql_searchArticle, (err, data) => {
             if (err) return reject(err);
             else resolve(data);
           });
@@ -293,7 +423,7 @@ module.exports = class {
   get_article(board_id, article_id) {
     return new Promise((resolve, reject) => {
       var sql_getArtic = `SELECT * FROM ARTICLE WHERE article_id=${article_id} AND board_id='${board_id}'`;
-      db.get(sql_getArtic, (err, data) => {
+      this.db.get(sql_getArtic, (err, data) => {
         if (err) return reject(err);
         else resolve(data);
       });
@@ -318,7 +448,7 @@ module.exports = class {
         path += `alt_text='${alt_text}'`;
       }
       var sql_updatePA = `update ARTICLE set ${path} WHERE board_id='${board_id}' AND article_id =${article_id}`;
-      db.run(sql_updatePA, function (err) {
+      this.db.run(sql_updatePA, function(err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -341,8 +471,8 @@ module.exports = class {
         path += `markdown='${markdown}'`;
       }
       var sql_updatePtA = `update ARTICLE set ${path} WHERE board_id='${board_id}' AND article_id =${article_id}`;
-      db.run(sql_updatePtA, function (err) {
-        if (err) return reject(err)
+      this.db.run(sql_updatePtA, function(err) {
+        if (err) return reject(err);
         else resolve();
       });
     });
@@ -367,19 +497,18 @@ module.exports = class {
         path += `alt_text='${alt_text}'`;
       }
       var sql_update3DA = `update ARTICLE set ${path} WHERE board_id='${board_id}' AND article_id =${article_id}`;
-      db.run(sql_update3DA, function (err) {
-        if (err) return reject(err)
+      this.db.run(sql_update3DA, function(err) {
+        if (err) return reject(err);
         else resolve();
       });
-
     });
   }
 
   delete_article(board_id, article_id) {
     return new Promise((resolve, reject) => {
       var sql_delA = `DELETE FROM ARTICLE WHERE board_id='${board_id}' AND article_id = ${article_id}`;
-      db.run(sql_delA, function (err) {
-        if (err) return reject(err)
+      this.db.run(sql_delA, function(err) {
+        if (err) return reject(err);
         else resolve();
       });
     });
@@ -393,18 +522,29 @@ module.exports = class {
   create_response(board_id, article_id, response_id, user_id, content) {
     return new Promise((resolve, reject) => {
       var sql_res = `INSERT INTO RESPONSE(board_id, article_id, time, response_id, user_id, content) VALUES(?,?,?,?,?,?) `;
-      db.run(sql_res, [board_id, article_id, parseInt(Date.now() / 1000), response_id, user_id, content], function (err) {
-        if (err) return reject(err)
-        else resolve();
-      });
+      this.db.run(
+        sql_res,
+        [
+          board_id,
+          article_id,
+          parseInt(Date.now() / 1000),
+          response_id,
+          user_id,
+          content
+        ],
+        function(err) {
+          if (err) return reject(err);
+          else resolve();
+        }
+      );
     });
   }
 
   get_responses(board_id, article_id) {
     return new Promise((resolve, reject) => {
       var sql_getRes = `SELECT user_id,content FROM RESPONSE WHERE board_id='${board_id}' AND article_id=${article_id} order by time desc`;
-      db.all(sql_getRes, (err, data) => {
-        if (err) return reject(err)
+      this.db.all(sql_getRes, (err, data) => {
+        if (err) return reject(err);
         else resolve(data);
       });
     });
@@ -414,11 +554,10 @@ module.exports = class {
   update_response(board_id, article_id, response_id, content) {
     return new Promise((resolve, reject) => {
       var sql_updateRes = `update ARTICLE set content='${content}' WHERE board_id='${board_id}' AND article_id =${article_id} AND response_id = '${response_id}'`;
-      db.run(sql_updateRes, function (err) {
-        if (err) return reject(err)
+      this.db.run(sql_updateRes, function(err) {
+        if (err) return reject(err);
         else resolve();
       });
     });
-  };
-
-}
+  }
+};
