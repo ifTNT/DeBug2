@@ -16,13 +16,15 @@ header(style='height: 300px;width:60%;;margin-left: 20%;margin-right: 20%;')
 section.d-flex.flex-column(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;text-align: center;')
   .mb-3
     | Please input the old password: 
-    input#oldpassword(type='text' name='oldpassword' style='width: 200px;margin-right: 10px;')
+    input#oldpassword(type='password' name='oldpassword' style='width: 200px;margin-right: 10px;')
   .mb-3
     | Please input the new password: 
-    input#newpassword(type='text' name='newpassword' style='width: 200px;margin-right: 10px;')
+    input#newpassword(type='password' name='newpassword' style='width: 200px;margin-right: 10px;')
   .mb-3
     | Please input the new nickname: 
     input#newnickname(type='text' name='newnickname' style='width: 200px;margin-right: 10px;')
+  .mb-3
+    p#alert(style='display:none;color:red') 
   .mb-3
     button.btn.btn-primary.user_change.mb-2(type='button')  change 
 // Optional JavaScript
