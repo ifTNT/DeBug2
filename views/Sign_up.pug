@@ -17,17 +17,17 @@ section.pt-5(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;t
   form.pt-3(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%;')
     .form-group
       label(for='exampleInputEmail1') UserID
-      input#exampleInputuserid1.form-control(type='userid' aria-describedby='useridHelp' placeholder='Enter UserID')
+      input#userid.form-control(type='userid' aria-describedby='useridHelp' placeholder='Enter UserID')
     .form-group
       label(for='exampleInputPassword1') Password
-      input#exampleInputPassword1.form-control(type='password' placeholder='Password')
+      input#Password1.form-control(type='password' placeholder='Password')
     .form-group
       label(for='exampleInputPassword2') Check Password
-      input#exampleInputPassword2.form-control(type='passwordcheck' placeholder='PasswordCheck')
+      input#Password2.form-control(type='password' placeholder='PasswordCheck')
     .form-group
       label(for='exampleNickName1') Nickname
-      input#exampleInputNickName1.form-control(type='nickname' placeholder='Nickname')
-    p(style='display:none;color:red') This UserID has been used.
+      input#NickName.form-control(type='nickname' placeholder='Nickname')
+    p#alert(style='display:none;color:red') This UserID has been used.
     button.btn.btn-primary.submit(type='button') Submit
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
