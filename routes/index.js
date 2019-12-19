@@ -11,6 +11,14 @@ router.get('/signin', function(req, res, next) {
   res.render('Sign_in');
 });
 
+router.post('/signin_', function(req, res, next) {
+  if(req.body.user_id==='abc' && req.body.password==='123'){
+    res.send(JSON.stringify({ok:true}));
+  }else{
+    res.send(JSON.stringify({ok:false}))
+  }
+});
+
 /*GET Sign up page*/
 router.get('/signup', function(req, res, next) {
   res.render('Sign_up');

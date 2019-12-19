@@ -35,7 +35,7 @@ router.get('/', function(req, res, next){
 });
 
 /* Get board info */
-router.get('/:id', function(req, res, next) {
+router.get('/:name', function(req, res, next) {
   var rtVal = {
     board_id: "test1",
     board_name: "TEST1",
