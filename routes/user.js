@@ -1,6 +1,7 @@
 var express = require('express');
 var util = require('../common.js');
 var router = express.Router();
+var createError = require('http-errors');
 
 /* Create a new user */
 router.post('/', function(req, res, next) {
@@ -49,6 +50,10 @@ router.get('/:id', function(req, res, next) {
 
 /* Update userinfo */
 router.post('/:id', function(req, res, next){
+  //Fobrid invalid request
+  if(req.session.user_id!==req.params.id){
+    return next(createError(403))
+  }
   db.update_userinfo(user_id, password, nick_name)
   .then((data)=>{
     var rtVal = {
@@ -67,7 +72,11 @@ router.post('/:id', function(req, res, next){
 
 /* Delete a user */
 router.delete('/:id', function(req, res, next){
-  db.delete_user(user_id)
+  //Fobrid invalid request
+  if(req.session.user_id!==req.params.id){
+    return next(createError(403))
+  }
+  db.delete_user(req.body.user_id)
   .then((data)=>{
     var rtVal = {
       ok: true,
