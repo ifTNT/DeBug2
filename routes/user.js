@@ -25,8 +25,8 @@ router.post("/", function(req, res, next) {
     })
 
     //Setup management
-    .then(()=>{
-      return db.manage(uid, util.getPersonalBoardID(uid))
+    .then(() => {
+      return db.manage(uid, util.getPersonalBoardID(uid));
     })
     .then(() => {
       rtVal = {
@@ -75,17 +75,29 @@ router.get("/:id", function(req, res, next) {
 });
 
 /* Update userinfo */
-router.post("/:id", function(req, res, next) {
+router.post("/update", function(req, res, next) {
   //Fobrid invalid request
-  if (req.session.user_id !== req.params.id) {
-    return next(createError(403));
-  }
+  //if (req.session.user_id !== req.params.id) {
+  //  return next(createError(403));
+  //}
   var rtVal;
-  db.update_userinfo(req.params.id, req.body.password, req.body.nick_name)
+  db.get_userinfo(req.session.user_id)
+    .then(data => {
+      return new Promise((resolve, reject) => {
+        if (data.password === md5(req.body.old_password)) {
+          resolve();
+        } else {
+          reject("Password mismatch");
+        }
+      });
+    })
+    .then(
+      db.update_userinfo(req.session.user_id, req.body.password, req.body.nick_name)
+    )
     .then(() => {
       rtVal = {
         ok: true,
-        msg: `Update info success user_id=${req.params.id}`
+        msg: `Update info success user_id=${req.session.user_id}`
       };
     })
     .catch(err => {
