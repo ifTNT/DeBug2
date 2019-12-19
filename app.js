@@ -10,6 +10,7 @@ var usersRouter = require('./routes/user');
 var boardRouter = require('./routes/board');
 var articleRouter = require('./routes/article');
 var responseRouter = require('./routes/response');
+var session = require('express-session');
 
 var app = express();
 
@@ -21,10 +22,27 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret : 'secret',
+  resave : true,
+  saveUninitialized: false,
+    cookie : {
+    maxAge : 1000 * 60 * 3,
+  }
+}));
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+
+/* Middleware to check user login*/
+app.use(function(req,res,next){
+  if(req.session.authenticated === true){
+    return next()
+  }
+  return next(createError(403));
+});
+
 app.use('/api/v1/user', usersRouter);
 app.use('/api/v1/board', boardRouter);
 app.use('/api/v1/article', articleRouter);

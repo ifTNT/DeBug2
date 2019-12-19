@@ -4,11 +4,21 @@ var router = express.Router();
 
 /* Create a new user */
 router.post('/', function(req, res, next) {
-  var rtVal = {
-    ok: true,
-    msg: "Develop only"
-  }
-  res.send(JSON.stringify(rtVal));
+  db.create_user(req.body.user_id, req.body.password, req.body.nickname, req.body.join_time)
+  .then((data)=>{
+    var rtVal = {
+      ok: true,
+      msg: "User create successful"
+    }
+    res.send(JSON.stringify(rtVal));
+  })
+  .catch((err)=>{
+    var rtVal = {
+      ok: false,
+      msg: err.msg
+    }
+    res.send(JSON.stringify(rtVal));
+  });
 });
 
 /* Get user info */
