@@ -585,9 +585,9 @@ module.exports = class {
   subscribe(user_id, board_id) {
     return new Promise((resolve, reject) => {
       var sql_getListManage = "INSERT INTO SUBSCRIBE(user_id,board_id) VALUES (?,?)";
-      db.all(sql_getListManage, [user_id, board_id], (err, data) => {
+      db.run(sql_getListManage, [user_id, board_id], (err) => {
         if (err) return reject(err);
-        else resolve(data);
+        else resolve();
       });
     });
   }
