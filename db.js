@@ -420,5 +420,32 @@ module.exports = class {
       });
     });
   };
+  
+  // +----------------------------------+
+  // |==============MANAGE==============|
+  // +----------------------------------+
 
+  get_all_boardManager(baordId) {
+    return new Promise((resolve, reject) => {
+      var sql_getListManage = `SELECT user_id FROM MANAGE WHERE board_id='${baordId}'`;
+      db.all(sql_getListManage, (err, data) => {
+        if (err) return reject(err);
+        else resolve(data);
+      });
+    });
+  }
+
+  // +-----------------------------------+
+  // |=============SUBSCRIBE=============|
+  // +-----------------------------------+
+
+  subscribe(user_id, board_id) {
+    return new Promise((resolve, reject) => {
+      var sql_getListManage = "INSERT INTO SUBSCRIBE(user_id,board_id) VALUES (?,?)";
+      db.all(sql_getListManage, [user_id, board_id], (err, data) => {
+        if (err) return reject(err);
+        else resolve(data);
+      });
+    });
+  }
 }
