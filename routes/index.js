@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var md5 = require("md5");
+var createError = require('http-errors');
 
 /* GET first page. */
 router.get("/", function(req, res, next) {
@@ -24,7 +25,13 @@ router.get("/home", function(req, res, next) {
 
 /*GET User info page*/
 router.get("/user_info", function(req, res, next) {
-  res.render("User_info");
+  db.get_userinfo(req.session.user_id)
+  .then(data=>{
+    res.render("User_info",data);
+  })
+  .catch(()=>{
+    next(createError(403));
+  });
 });
 
 /*GET change page*/

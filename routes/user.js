@@ -112,17 +112,17 @@ router.post("/update", function(req, res, next) {
 });
 
 /* Delete a user */
-router.delete("/:id", function(req, res, next) {
+router.delete("/", function(req, res, next) {
   //Fobrid invalid request
-  if (req.session.user_id !== req.params.id) {
-    return next(createError(403));
-  }
+  //if (req.session.user_id !== req.params.id) {
+  //  return next(createError(403));
+  //}
   var rtVal;
-  db.delete_user(req.params.id)
+  db.delete_user(req.session.user_id)
     .then(() => {
       rtVal = {
         ok: true,
-        msg: `Deleted successful user_id=${req.params.id}`
+        msg: `Deleted successful user_id=${req.session.user_id}`
       };
     })
     .catch(err => {

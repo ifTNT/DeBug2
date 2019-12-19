@@ -16,7 +16,7 @@ header(style='height: 100px;width:60%;;margin-left: 20%;margin-right: 20%;')
 section.pt-5(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;text-align: center; ')
   p(style='color: gray;font-size:13px;')  LOGIN TO 
   p.p-1(style='font-size:30px;') DeBug2
-  form.pt-3(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%;')
+  form.pt-3(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%;' id="LoginForm")
     .UserID
       label(for='exampleInputEmail1') UserID
       input#userid.form-control(type='userid' aria-describedby='useridHelp' placeholder='Enter UserID')
@@ -30,7 +30,7 @@ section.pt-5(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;t
       <label class="form-check-label" for="exampleCheck1">Check me out</label>
       </div>
     p#alert(style='display:none;color:red') UserID or Password is error.
-    button#login.btn.btn-primary.login.mt-2(type='button') LOGIN
+    button#login.btn.btn-primary.login.mt-2(type='submit') LOGIN
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
 script(src='/JS/signin.js' defer='')
