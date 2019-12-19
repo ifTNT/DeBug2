@@ -11,13 +11,13 @@
     <title>DeBug2</title>
   </head>
   <body >
-    <header style="height: 300px;width:60%;;margin-left: 20%;margin-right: 20%;">
+    <header style="width:60%;;margin-left: 20%;margin-right: 20%;">
       <div class="fixed-top bg-dark" style="display:block;" >
          <nav class="d-flex justify-content-between  text-white " style="width:60%;height:100%;margin-left: 20%;margin-right: 20%;"> <!--pt-3 pl-5 pr-5 mb-2 -->
             <h1 >DeBug2</h1> 
             <div class="btn-group m-2">
-              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               {nickname} 
+              <button type="button" class="btn btn-danger dropdown-toggle user_id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                user_id
               </button>
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="User_info.html">Personal information</a>
@@ -27,11 +27,19 @@
             </div>          
           </nav>
       </div>
+      <figure class="figure " >
+        <img src="https://images.unsplash.com/photo-1518548235008-15c2e3a4fdd3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1056&q=80"
+         class="figure-img img-fluid rounded" style="-webkit-filter:brightness(.5);">
+      </figure>
     </header>
-     <section style="height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;">
-     
+    <section style="height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;">
+      Please input the board name : <input type="text" name="board_name" style="width: 200px;margin-right: 10px;">
+      <button type="button" class="btn btn-primary search_board mb-2" > search </button>
+      <div class="boards">
+       <!-- <button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">Block level button</button> -->
+      </div>
 
-     </section>
+    </section>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

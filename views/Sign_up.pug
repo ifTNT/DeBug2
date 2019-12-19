@@ -10,7 +10,7 @@ header(style='height: 100px;width:60%;;margin-left: 20%;margin-right: 20%;')
   .fixed-top.bg-dark(style='display:block;')
     nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
       // pt-3 pl-5 pr-5 mb-2
-      h1(onclick="javascript:location.href='First_page'") DeBug2
+      h1(onclick="javascript:location.href='/'") DeBug2
 section.pt-5(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;text-align: center; ')
   p(style='color: gray;font-size:13px;')  Please input some information to register 
   form.pt-3(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%;')
@@ -26,7 +26,8 @@ section.pt-5(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;t
     .form-group
       label(for='exampleNickName1') Nickname
       input#exampleInputNickName1.form-control(type='nickname' placeholder='Nickname')
-    button.btn.btn-primary(type='submit') Submit
+    p(style='display:none;color:red') This UserID has been used.
+    button.btn.btn-primary.submit(type='submit') Submit
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
 script(src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous')

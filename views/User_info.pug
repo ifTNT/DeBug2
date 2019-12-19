@@ -3,24 +3,30 @@ head
   // Required meta tags
   meta(charset='utf-8')
   meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
-  //Reset
-  link(rel='stylesheet' href='/stylesheets/reset.css')
   // Bootstrap CSS
   link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
-  title DeBug2
-header(style='height: 300px;width:60%;;margin-left: 20%;margin-right: 20%;')
+  title User_info
+header(style='height: 120px;width:60%;;margin-left: 20%;margin-right: 20%;')
   .fixed-top.bg-dark(style='display:block;')
     nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
       // pt-3 pl-5 pr-5 mb-2
-      h1 DeBug2
-      .m-2
-        a.btn.btn-danger.Sign_up.mr-1(href='signup' type='button') Sign up
-        a.btn.btn-primary.Sign_in(href='signin' type='button') Sign in
-section(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;text-align: center;')
-  h1 Welcome to Debug2
-  p Before you experience this , you must be logged in to use.
-  p Please click the button in the upper right corner
-  p If you have an account,click &quot;Sing in&quot;,otherwise click &quot;Sing up&quot;
+      h1(onclick="javascript:location.href='Home'") DeBug2
+section.pt-5(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%; ')
+  h3.mb-5(style='text-align: center;') Personal Information
+  .d-flex.align-items-stretch.mb-5.ml-5
+    .d-flex.flex-column.justify-content-center(style='width:50%')
+      p.font-weight-bold UserID
+      p.font-weight-bold Nickname
+      p.font-weight-bold Join Time
+      p.font-weight-bold Last active time
+    .d-flex.flex-column.justify-content-center(style='width:50% ')
+      p#user_id(style='display:none;')
+      p#password(style='display:none;')
+      p#join_time(style='display:none;')
+      p#last_active_time(style='display:none;')
+  .d-flex.justify-content-end
+    button.btn.btn-outline-primary.mr-3.change(type='button') Change password
+    button.btn.btn-outline-danger.delete(type='button') Delete account
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
 script(src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous')

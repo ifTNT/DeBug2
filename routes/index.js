@@ -20,4 +20,10 @@ router.get('/signup', function(req, res, next) {
 router.get('/home', function(req, res, next) {
   res.render('Home');
 });
+
+/*GET User info page*/
+router.get('/user_info', function(req, res, next) {
+  res.render('User_info');
+});
+
 module.exports = router;
