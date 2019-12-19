@@ -3,33 +3,30 @@ head
   // Required meta tags
   meta(charset='utf-8')
   meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  
   // Bootstrap CSS
   link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
-  title User_info
-header(style='height: 120px;width:60%;;margin-left: 20%;margin-right: 20%;')
+  title Article
+header(style='height: 300px;width:60%;;margin-left: 20%;margin-right: 20%;')
   .fixed-top.bg-dark(style='display:block;')
     nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
       // pt-3 pl-5 pr-5 mb-2
-      h1(onclick="javascript:location.href='Home'") DeBug2
-section.pt-5(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%; ')
-  h3.mb-5(style='text-align: center;') Personal Information
-  .d-flex.align-items-stretch.mb-5.ml-5
-    .d-flex.flex-column.justify-content-center(style='width:50%')
-      p.font-weight-bold UserID
-      p.font-weight-bold Nickname
-      p.font-weight-bold Join Time
-      p.font-weight-bold Last active time
-    .d-flex.flex-column.justify-content-center(style='width:50% ')
-      p#user_id(style='display:none;')
-      p#password(style='display:none;')
-      p#join_time(style='display:none;')
-      p#last_active_time(style='display:none;')
-  .d-flex.justify-content-end
-    a.btn.btn-outline-primary.mr-3(href='change' type='button') Change
-    button.btn.btn-outline-danger.delete_account(type='button') Delete account
+      h1 DeBug2
+section.d-flex.flex-column(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;text-align: center;')
+  .mb-3
+    | Please input the old password: 
+    input#oldpassword(type='text' name='oldpassword' style='width: 200px;margin-right: 10px;')
+  .mb-3
+    | Please input the new password: 
+    input#newpassword(type='text' name='newpassword' style='width: 200px;margin-right: 10px;')
+  .mb-3
+    | Please input the new nickname: 
+    input#newnickname(type='text' name='newnickname' style='width: 200px;margin-right: 10px;')
+  .mb-3
+    button.btn.btn-primary.user_change.mb-2(type='button')  change 
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
-script(src='/JS/userinfo.js' defer='')
+script(src='/JS/change.js' defer='')
 script(src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous')
 script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous')
 script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous')

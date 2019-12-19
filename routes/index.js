@@ -26,5 +26,9 @@ router.get('/user_info', function(req, res, next) {
   res.render('User_info');
 });
 
+/*GET change page*/
+router.get('/change', function(req, res, next) {
+  res.render('Change');
+});
 
 module.exports = router;
