@@ -19,7 +19,7 @@ router.get("/signup", function(req, res, next) {
 
 /*GET Home page*/
 router.get("/home", function(req, res, next) {
-  res.render("Home");
+  res.render("Home", {user_id: req.session.user_id});
 });
 
 /*GET User info page*/
@@ -30,11 +30,6 @@ router.get("/user_info", function(req, res, next) {
 /*GET change page*/
 router.get("/change", function(req, res, next) {
   res.render("Change");
-});
-
-/* GET home page. */
-router.get("/", function(req, res, next) {
-  res.render("index", { title: "Express" });
 });
 
 /* Backend of login*/
