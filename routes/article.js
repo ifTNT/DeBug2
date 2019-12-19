@@ -3,7 +3,33 @@ var util = require('../common.js');
 var router = express.Router();
 
 /* Create a new article */
-router.post('/', function(req, res, next) {
+router.post('/:board_id', function(req, res, next) {
+  /* [TODO] QQ */
+  /*var rtVal = {};
+  db.create_general_board(
+    req.body.board_id,
+    req.body.board_name,
+    req.body.read_only,
+    req.body.hashtag
+  )
+    .then(()=>{
+      return db.manage(req.session.user_id, req.body.board_id)
+    })
+    .then(() => {
+      rtVal = {
+        ok: true,
+        msg: `Create board successfully board_id=${req.body.board_id}`
+      };
+    })
+    .catch(err => {
+      rtVal = {
+        ok: false,
+        msg: err
+      };
+    })
+    .finally(() => {
+      res.send(JSON.stringify(rtVal));
+    });*/
   var rtVal = {
     ok: true,
     msg: "Develop only"

@@ -5,6 +5,7 @@
  */
 
 var app = require('../app');
+global.db = new (require('../db.js'));
 var debug = require('debug')('db2:server');
 var http = require('http');
 
