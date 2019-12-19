@@ -26,4 +26,5 @@ router.get('/user_info', function(req, res, next) {
   res.render('User_info');
 });
 
+
 module.exports = router;
