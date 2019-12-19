@@ -4,7 +4,7 @@ module.exports = class {
 
     const sqlite3 = require("sqlite3").verbose();
     this.db = new sqlite3.Database(file);
-    this.db.getAsync = function(sql_str) {
+    this.db.getAsync = (sql_str) => {
       return new Promise((resolve, reject) => {
         this.db.get(sql_str, (err, data) => {
           if (!err) {
@@ -16,7 +16,7 @@ module.exports = class {
       });
     };
 
-    this.db.allAsync = function(sql_str) {
+    this.db.allAsync = (sql_str) => {
       return new Promise((resolve, reject) => {
         this.db.all(sql_str, (err, data) => {
           if (!err) {
@@ -28,7 +28,7 @@ module.exports = class {
       });
     };
 
-    this.db.runAsync = function(sql_str) {
+    this.db.runAsync = (sql_str) => {
       return new Promise((resolve, reject) => {
         this.db.run(sql_str, (err, data) => {
           if (!err) {
@@ -108,7 +108,7 @@ module.exports = class {
       var sql_creategeneralBoard =
         "INSERT INTO GENERALBOARD(board_id,board_name,type,create_time,read_only,hashtag) VALUES (?,?,?,?,?,?)";
       var sql_createBoard =
-        "INSERT INTO BOARD(board_id,board_name,type,create_time,read_only) VALUES (?,?,0,?,?)";
+        "INSERT INTO BOARD(board_id,board_name,type,create_time,read_only) VALUES (?,?,?,?,?)";
       var nowDate = parseInt(Date.now() / 1000);
       this.db.run(
         sql_creategeneralBoard,
@@ -120,15 +120,15 @@ module.exports = class {
           read_only,
           `${hashtag}`
         ],
-        function(err) {
+        err => {
           if (err) return reject(err);
           else
             this.db.run(
               sql_createBoard,
               [`${board_id}`, `${board_name}`, 0, `${nowDate}`, read_only],
-              function(err) {
+              err => {
                 if (err) return reject(err);
-                else resolve(data);
+                else resolve();
               }
             );
         }
@@ -145,21 +145,14 @@ module.exports = class {
       var nowDate = parseInt(Date.now() / 1000);
       this.db.run(
         sql_createPersonBoard,
-        [
-          `${board_id}`,
-          `${board_name}`,
-          1,
-          `${nowDate}`,
-          read_only,
-          visible
-        ],
-        (err) => {
+        [`${board_id}`, `${board_name}`, 1, `${nowDate}`, read_only, visible],
+        err => {
           if (err) return reject(err);
           else
             this.db.run(
               sql_createBoard,
               [`${board_id}`, `${board_name}`, 1, `${nowDate}`, read_only],
-              (err) => {
+              err => {
                 if (err) return reject(err);
                 else resolve();
               }
@@ -198,8 +191,12 @@ module.exports = class {
     return new Promise((resolve, reject) => {
       var sql_getBoard = `SELECT board_id, board_name, read_only, online_user_cnt FROM GENERALBOARD WHERE board_name='${board_name}'`;
       this.db.get(sql_getBoard, (err, data) => {
-        if (err) return reject(err);
-        else resolve(data);
+        if (err) reject(err);
+        else if (data === undefined) {
+          reject("No data found.");
+        } else {
+          resolve(data);
+        }
       });
     });
   }
@@ -234,10 +231,10 @@ module.exports = class {
         path += `visible = ${visible}`;
         sql_updateAccPP = `update PERSONALBOARD set ${path} WHERE board_id='${board_id}'`;
       }
-      this.db.run(sql_updateAcc, function(err) {
+      this.db.run(sql_updateAcc, err => {
         if (err) return reject(err);
         else
-          this.db.run(sql_updateAccPP, function(err) {
+          this.db.run(sql_updateAccPP, err => {
             if (err) return reject(err);
             else resolve();
           });
@@ -250,20 +247,23 @@ module.exports = class {
     return new Promise((resolve, reject) => {
       var sql_getBoard = `SELECT type FROM BOARD WHERE board_id='${board_id}'`;
       var sql_del = "";
-      this.db.getAsync(sql_getBoard)
+      this.db
+        .getAsync(sql_getBoard)
         .then(data => {
           if (data.type == 0)
             sql_del = `DELETE FROM GENERALBOARD WHERE board_id='${board_id}'`;
           else
             sql_del = `DELETE FROM PERSONALBOARD WHERE board_id='${board_id}'`;
-          var sql_delB = `DELETE FROM BOARD WHERE board_id='${board_id}'`;
-          this.db.runAsync(sql_delB);
+          return this.db.runAsync(sql_del);
         })
         .then(() => {
-          this.db.runAsync(sql_del);
+          var sql_delB = `DELETE FROM BOARD WHERE board_id='${board_id}'`;
+          return this.db.runAsync(sql_delB);
         })
-        .then(resolve())
-        .catch(reject(err));
+        .then(resolve)
+        .catch(err => {
+          reject(err);
+        });
     });
   }
 
@@ -396,9 +396,10 @@ module.exports = class {
       if (user_id != null) condition.push(`user_id = '${user_id}'`);
       if (title != null) condition.push(`title = '${title}'`);
       if (type != null) condition.push(`type = ${type}`);
-      this.db.getAsync(
-        `SELECT board_id FROM BOARD WHERE board_name = '${board_name}'`
-      )
+      this.db
+        .getAsync(
+          `SELECT board_id FROM BOARD WHERE board_name = '${board_name}'`
+        )
         .then(data => {
           condition.push(`board_id = '${data.board_id}'`);
         })
@@ -559,8 +560,8 @@ module.exports = class {
         else resolve();
       });
     });
-  };
-  
+  }
+
   // +----------------------------------+
   // |==============MANAGE==============|
   // +----------------------------------+
@@ -568,20 +569,23 @@ module.exports = class {
   get_all_boardManager(baordId) {
     return new Promise((resolve, reject) => {
       var sql_getListManage = `SELECT user_id FROM MANAGE WHERE board_id='${baordId}'`;
-      db.all(sql_getListManage, (err, data) => {
+      this.db.all(sql_getListManage, (err, data) => {
         if (err) return reject(err);
         else {
-        data=data.map(d=>{return d['user_id']});
-        resolve(data);
-      }
+          data = data.map(d => {
+            return d["user_id"];
+          });
+          resolve(data);
+        }
       });
     });
   }
-  
+
   manage(user_id, board_id) {
     return new Promise((resolve, reject) => {
-      var sql_getListManage = "INSERT INTO MANAGE(user_id,board_id) VALUES (?,?)";
-      this.db.run(sql_getListManage, [user_id, board_id], (err) => {
+      var sql_getListManage =
+        "INSERT INTO MANAGE(user_id,board_id) VALUES (?,?)";
+      this.db.run(sql_getListManage, [user_id, board_id], err => {
         if (err) return reject(err);
         else resolve();
       });
@@ -594,24 +598,27 @@ module.exports = class {
 
   subscribe(user_id, board_id) {
     return new Promise((resolve, reject) => {
-      var sql_getListManage = "INSERT INTO SUBSCRIBE(user_id,board_id) VALUES (?,?)";
-      this.db.run(sql_getListManage, [user_id, board_id], (err) => {
+      var sql_getListManage =
+        "INSERT INTO SUBSCRIBE(user_id,board_id) VALUES (?,?)";
+      this.db.run(sql_getListManage, [user_id, board_id], err => {
         if (err) return reject(err);
         else resolve();
       });
     });
   }
-  
-  get_subscribe(user_id){
+
+  get_subscribe(user_id) {
     return new Promise((resolve, reject) => {
       var sql_getsubscribe = `SELECT board_id FROM SUBSCRIBE WHERE user_id = '${user_id}'`;
       this.db.all(sql_getsubscribe, (err, data) => {
         if (err) return reject(err);
-        else{
-          data=data.map(d=>{return d['board_id']});
-         resolve(data);
-       }
-     });
-   });
+        else {
+          data = data.map(d => {
+            return d["board_id"];
+          });
+          resolve(data);
+        }
+      });
+    });
   }
-}
+};
