@@ -113,19 +113,19 @@ module.exports = class {
       this.db.run(
         sql_creategeneralBoard,
         [
-          `'${board_id}'`,
-          `'${board_name}'`,
+          `${board_id}`,
+          `${board_name}`,
           0,
           `${nowDate}`,
           read_only,
-          `'${hashtag}'`
+          `${hashtag}`
         ],
         function(err) {
           if (err) return reject(err);
           else
             this.db.run(
               sql_createBoard,
-              [`'${board_id}'`, `'${board_name}'`, 0, `${nowDate}`, read_only],
+              [`${board_id}`, `${board_name}`, 0, `${nowDate}`, read_only],
               function(err) {
                 if (err) return reject(err);
                 else resolve(data);
@@ -146,20 +146,20 @@ module.exports = class {
       this.db.run(
         sql_createPersonBoard,
         [
-          `'${board_id}'`,
-          `'${board_name}'`,
+          `${board_id}`,
+          `${board_name}`,
           1,
           `${nowDate}`,
           read_only,
           visible
         ],
-        function(err) {
+        (err) => {
           if (err) return reject(err);
           else
             this.db.run(
               sql_createBoard,
-              [`'${board_id}'`, `'${board_name}'`, 1, `${nowDate}`, read_only],
-              function(err) {
+              [`${board_id}`, `${board_name}`, 1, `${nowDate}`, read_only],
+              (err) => {
                 if (err) return reject(err);
                 else resolve();
               }
@@ -574,6 +574,16 @@ module.exports = class {
         data=data.map(d=>{return d['user_id']});
         resolve(data);
       }
+      });
+    });
+  }
+  
+  manage(user_id, board_id) {
+    return new Promise((resolve, reject) => {
+      var sql_getListManage = "INSERT INTO MANAGE(user_id,board_id) VALUES (?,?)";
+      this.db.run(sql_getListManage, [user_id, board_id], (err) => {
+        if (err) return reject(err);
+        else resolve();
       });
     });
   }

@@ -34,6 +34,7 @@ app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/api/v1/user', usersRouter);
 
 /* Middleware to check user login*/
 app.use(function(req,res,next){
@@ -43,7 +44,6 @@ app.use(function(req,res,next){
   return next(createError(403));
 });
 
-app.use('/api/v1/user', usersRouter);
 app.use('/api/v1/board', boardRouter);
 app.use('/api/v1/article', articleRouter);
 app.use('/api/v1/response', responseRouter);

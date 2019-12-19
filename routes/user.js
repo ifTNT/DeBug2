@@ -7,13 +7,28 @@ var md5 = require("md5");
 /* Create a new user */
 router.post("/", function(req, res, next) {
   var rtVal = {};
+  var uid = req.body.user_id;
   db.create_user(
-    req.body.user_id,
+    uid,
     md5(req.body.password),
     req.body.nickname,
     parseInt(Date.now() / 1000) //Join time
   )
-    .then(data => {
+    //Create personal board
+    .then(() => {
+      return db.create_personal_board(
+        util.getPersonalBoardID(uid),
+        req.body.nickname,
+        1, //Read_only
+        0 //Visible
+      );
+    })
+
+    //Setup management
+    .then(()=>{
+      return db.manage(uid, util.getPersonalBoardID(uid))
+    })
+    .then(() => {
       rtVal = {
         ok: true,
         msg: "User create successful"
@@ -42,7 +57,6 @@ router.get("/:id", function(req, res, next) {
         join_time: data.join_time,
         last_active_time: data.last_active_time,
         personal_board_id: util.getPersonalBoardID(req.params.id)
-        //subscribed: ["board_id 1", "board_id 2"]
       };
       return db.get_subscribe(req.params.id);
     })
