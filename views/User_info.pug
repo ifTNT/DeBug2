@@ -15,11 +15,11 @@ header(style='height: 120px;width:60%;;margin-left: 20%;margin-right: 20%;')
 section.pt-5(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%; ')
   h3.mb-5(style='text-align: center;') Personal Information
   .d-flex.align-items-stretch.mb-5.ml-5
-    .d-flex.flex-column.justify-content-center(style='width:50%')
+    .d-flex.flex-column.justify-content-center
       p.font-weight-bold UserID: #{user_id}
       p.font-weight-bold Nickname: #{nickname}
-      p.font-weight-bold Join Time: #{new Date(join_time*1000).toLocaleDateString()}
-      p.font-weight-bold Last active time: #{new Date(last_active_time*1000).toLocaleDateString()}
+      p.font-weight-bold Join Time: #{new Date(join_time*1000)}
+      p.font-weight-bold Last active time: #{new Date(last_active_time*1000)}
   .d-flex.justify-content-end
     a.btn.btn-outline-primary.mr-3(href='change' type='button') Change
     a.btn.btn-outline-danger.delete_account Delete account
