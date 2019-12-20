@@ -5,14 +5,20 @@ var router = express.Router();
 /* Create a new board */
 router.post("/", function(req, res, next) {
   var rtVal = {};
+  console.log(
+    req.body.board_id,
+    req.body.board_name,
+    req.body.read_only,
+    req.body.hashtag
+  );
   db.create_general_board(
     req.body.board_id,
     req.body.board_name,
     req.body.read_only,
     req.body.hashtag
   )
-    .then(()=>{
-      return db.manage(req.session.user_id, req.body.board_id)
+    .then(() => {
+      return db.manage(req.session.user_id, req.body.board_id);
     })
     .then(() => {
       rtVal = {
@@ -63,15 +69,18 @@ router.get("/:name", function(req, res, next) {
 });
 
 /* Update board info */
-router.post("/:id", function(req, res, next) {
+router.post("/:name", function(req, res, next) {
   var rtVal = {};
-  db.update_board(
-    req.params.id,
-    req.body.board_name,
-    req.body.read_only,
-    req.body.hashtag,
-    req.body.visible
-  )
+  db.find_board(req.params.name)
+    .then(data => {
+      return db.update_board(
+        data.board_id,
+        req.body.board_name,
+        req.body.read_only,
+        req.body.hashtag,
+        req.body.visible
+      );
+    })
     .then(() => {
       rtVal = {
         ok: true,
@@ -90,13 +99,16 @@ router.post("/:id", function(req, res, next) {
 });
 
 /* Delete a board */
-router.delete("/:id", function(req, res, next) {
+router.delete("/:name", function(req, res, next) {
   var rtVal = {};
-  db.delete_board(req.params.id)
+  db.find_board(req.params.name)
+    .then(data => {
+      return db.delete_board(data.board_id);
+    })
     .then(() => {
       rtVal = {
         ok: true,
-        msg: `Successfully deleted board_id=${req.params.id}`
+        msg: `Successfully deleted board_name=${req.params.name}`
       };
     })
     .catch(err => {

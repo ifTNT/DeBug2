@@ -22,6 +22,28 @@ router.get("/signup", function(req, res, next) {
   res.render("Sign_up");
 });
 
+/*GET create board page*/
+router.get("/create_board", function(req, res, next) {
+  res.render("Edit_board", { create: true });
+});
+
+/*GET create board page*/
+router.get("/edit_board", function(req, res, next) {
+  console.log(req.query.board_name);
+  db.find_board(req.query.board_name)
+    .then(data => {
+      res.render("Edit_board", {
+        create: false,
+        board_id: data.board_id,
+        board_name: data.board_name,
+        hashtag: data.hashtag
+      });
+    })
+    .catch(() => {
+      next(createError(404));
+    });
+});
+
 /*GET Home page*/
 router.get("/home", function(req, res, next) {
   if (req.session.authenticated === true) {
@@ -50,6 +72,11 @@ router.get("/change", function(req, res, next) {
 /* Backend of login*/
 router.post("/signin_", function(req, res, next) {
   var rtVal = {};
+
+  //[TODO] remove while develop ended
+  req.body.user_id = "ifTNT";
+  req.body.password = "123";
+
   db.get_userinfo(req.body.user_id)
     .then(user => {
       return new Promise((resolve, reject) => {
