@@ -13,7 +13,7 @@ header(style='height: 300px;width:60%;;margin-left: 20%;margin-right: 20%;')
     nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
       // pt-3 pl-5 pr-5 mb-2
       h1 DeBug2
-section.d-flex.flex-column(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;text-align: center;')
+form.d-flex.flex-column(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;text-align: center;', id='changeForm')
   .mb-3
     | Please input the old password: 
     input#oldpassword(type='password' name='oldpassword' style='width: 200px;margin-right: 10px;')
@@ -26,7 +26,7 @@ section.d-flex.flex-column(style='height: 100%;width:60%;;margin-left: 20%;margi
   .mb-3
     p#alert(style='display:none;color:red') 
   .mb-3
-    button.btn.btn-primary.user_change.mb-2(type='button')  change 
+    button.btn.btn-primary.user_change.mb-2(type='submit')  change 
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
 //script(src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous')

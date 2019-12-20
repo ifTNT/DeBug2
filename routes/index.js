@@ -1,11 +1,15 @@
 var express = require("express");
 var router = express.Router();
 var md5 = require("md5");
-var createError = require('http-errors');
+var createError = require("http-errors");
 
 /* GET first page. */
 router.get("/", function(req, res, next) {
-  res.render("First_page");
+  if (req.session.authenticated === true) {
+    res.redirect("/home");
+  } else {
+    res.render("First_page");
+  }
 });
 
 /*GET Sign in page*/
@@ -20,18 +24,22 @@ router.get("/signup", function(req, res, next) {
 
 /*GET Home page*/
 router.get("/home", function(req, res, next) {
-  res.render("Home", {user_id: req.session.user_id});
+  if (req.session.authenticated === true) {
+    res.render("Home", { user_id: req.session.user_id });
+  } else {
+    res.redirect("/");
+  }
 });
 
 /*GET User info page*/
 router.get("/user_info", function(req, res, next) {
   db.get_userinfo(req.session.user_id)
-  .then(data=>{
-    res.render("User_info",data);
-  })
-  .catch(()=>{
-    next(createError(403));
-  });
+    .then(data => {
+      res.render("User_info", data);
+    })
+    .catch(() => {
+      next(createError(403));
+    });
 });
 
 /*GET change page*/
@@ -74,7 +82,8 @@ router.post("/signin_", function(req, res, next) {
 
 /* Backend of sign_out */
 router.get("/sign_out", function(req, res, next) {
-  req.session = undefined;
+  req.session.user_id = undefined;
+  req.session.authenticated = false;
   res.redirect("/");
 });
 

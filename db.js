@@ -1,10 +1,11 @@
+const util = require("./common.js");
 module.exports = class {
   constructor() {
     const file = "./database.db";
 
     const sqlite3 = require("sqlite3").verbose();
     this.db = new sqlite3.Database(file);
-    this.db.getAsync = (sql_str) => {
+    this.db.getAsync = sql_str => {
       return new Promise((resolve, reject) => {
         this.db.get(sql_str, (err, data) => {
           if (!err) {
@@ -16,7 +17,7 @@ module.exports = class {
       });
     };
 
-    this.db.allAsync = (sql_str) => {
+    this.db.allAsync = sql_str => {
       return new Promise((resolve, reject) => {
         this.db.all(sql_str, (err, data) => {
           if (!err) {
@@ -28,7 +29,7 @@ module.exports = class {
       });
     };
 
-    this.db.runAsync = (sql_str) => {
+    this.db.runAsync = sql_str => {
       return new Promise((resolve, reject) => {
         this.db.run(sql_str, (err, data) => {
           if (!err) {
@@ -91,11 +92,31 @@ module.exports = class {
   }
   delete_user(user_id) {
     return new Promise((resolve, reject) => {
-      var sql_del = `DELETE FROM ACCOUNT WHERE user_id='${user_id}'`;
-      this.db.run(sql_del, function(err) {
-        if (err) return reject(err);
-        else resolve();
-      });
+      var sql_del = `DELETE FROM MANAGE WHERE user_id='${user_id}'`;
+      this.db
+        .runAsync(sql_del)
+        .then(() => {
+          var sql_del = `DELETE FROM SUBSCRIBE WHERE user_id='${user_id}'`;
+          return this.db.runAsync(sql_del);
+        })
+        .then(() => {
+          var sql_del = `DELETE FROM PERSONALBOARD WHERE board_id='${util.getPersonalBoardID(
+            user_id
+          )}'`;
+          return this.db.runAsync(sql_del);
+        })
+        .then(() => {
+          var sql_del = `DELETE FROM BOARD WHERE board_id='${util.getPersonalBoardID(
+            user_id
+          )}'`;
+          return this.db.runAsync(sql_del);
+        })
+        .then(() => {
+          var sql_del = `DELETE FROM ACCOUNT WHERE user_id='${user_id}'`;
+          return this.db.runAsync(sql_del);
+        })
+        .then(resolve)
+        .catch(reject);
     });
   }
 

@@ -1,6 +1,7 @@
 //sign up page submit button
-function signup() {
-  console.log("signup");
+function signup(e) {
+  e.preventDefault();
+    console.log("signup");
   var token = $("input[name=csrfimiddlewaretoken").val();
   var userid = $("#userid").val();
   var password = $("#Password1").val();
@@ -50,4 +51,4 @@ function signup() {
       console.log(err);
     });
 }
-document.querySelector(".submit").addEventListener("click", signup);
+document.querySelector("#signupForm").addEventListener("submit", signup);

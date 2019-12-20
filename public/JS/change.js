@@ -1,6 +1,7 @@
 //Change page change button
-function change()
+function change(e)
 {
+    e.preventDefault();
     console.log("change");
     var token=$('input[name=csrfimiddlewaretoken').val();
     var oldpassword= $("#oldpassword").val();
@@ -45,4 +46,4 @@ function change()
            
     }).fail(function(err){console.log(err)})
 }
-document.querySelector('.user_change').addEventListener('click',change );
+document.querySelector('#changeForm').addEventListener('submit',change );

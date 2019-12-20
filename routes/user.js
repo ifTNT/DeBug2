@@ -94,7 +94,7 @@ router.post("/update", function(req, res, next) {
     .then(
       db.update_userinfo(
         req.session.user_id,
-        req.body.password,
+        md5(req.body.password),
         req.body.nick_name
       )
     )
