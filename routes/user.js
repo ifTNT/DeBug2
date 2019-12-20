@@ -92,7 +92,11 @@ router.post("/update", function(req, res, next) {
       });
     })
     .then(
-      db.update_userinfo(req.session.user_id, req.body.password, req.body.nick_name)
+      db.update_userinfo(
+        req.session.user_id,
+        req.body.password,
+        req.body.nick_name
+      )
     )
     .then(() => {
       rtVal = {
