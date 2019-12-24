@@ -19,13 +19,13 @@ header(style='width:60%;;margin-left: 20%;margin-right: 20%;')
           .dropdown-divider
           a.dropdown-item.sign_out(href='sign_out') Sign out
   figure.figure
-    img.figure-img.img-fluid.rounded(src='https://images.unsplash.com/photo-1518548235008-15c2e3a4fdd3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1056&q=80' style='-webkit-filter:brightness(.5);')
+    img.img-fluid.rounded(src='https://images.unsplash.com/photo-1518548235008-15c2e3a4fdd3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1056&q=80' style='-webkit-filter:brightness(.7);')
 section(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;')
   | Please input the board name : 
   input(type='text' name='board_name' id='boardname' style='width: 200px;margin-right: 10px;')
   button.btn.btn-dark.search_board(type='button')  search 
-  button.btn.btn-dark.insert_board(type='button')  insert
-  button.btn.btn-dark.delete_board(type='button')  delete
+  button.btn.btn-dark.insert_board.m-2(type='button')  insert
+  //button.btn.btn-dark.delete_board(type='button')  delete
   
   .boards
 

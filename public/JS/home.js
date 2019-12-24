@@ -10,7 +10,7 @@ function search_board()
 
     var obj = {
         csrfmiddlewaretoken: token,
-        Boards : Boards
+        board_name : Boards
     };
 
     var json = JSON.stringify(obj);
@@ -41,9 +41,10 @@ function search_board()
         newButton.classList.add("btn-block");
         newButton.classList.add("mt-3");
         //再加上自己的名字為ID
-        newButton.id="boardname";
+        newButton.id=boardname;
 
         document.querySelector('.boards').appendChild(newButton);
+    
         //console.log(Boards);
     }).fail(function(err){console.log(err)})
 
@@ -52,7 +53,7 @@ function search_board()
     //console.log(Boards.map(d=>{return d['board_name']}));
     
 }
-
+/*
 function insert_board()
 {
  
@@ -159,7 +160,7 @@ function delete_board()
     //console.log(Boards.map(d=>{return d['board_name']}));
     
 }
-
+*/
 document.querySelector('.search_board').addEventListener('click', search_board);
 document.querySelector('.insert_board').addEventListener('click',insert_board);
-document.querySelector('.delete_board').addEventListener('click', delete_board);
+//document.querySelector('.delete_board').addEventListener('click', delete_board);

@@ -33,44 +33,32 @@
     </nav>
   </header>
   <section style="width:60%;margin:80px 20% 0 20%">
-    <div class="articleWrap">
-       <div class="action" style="text-align: right;background-color:bisque;"><!--color for test-->
-        <button type="button" class="btn btn-outline-primary update_article mb-2 mr-2" > Update</button>
-        <button type="button" class="btn btn-outline-dark delete_article mb-2" > delete</button>
+      <div class=" Board_name p-2 d-flex justify-content-between" style=" background-color:gray"><!--color for test-->
+        <h2>Board_name</h2>
+        <div class="buttonsWrap">
+            <button type="button" class="btn btn-outline-primary new_article mb-2 mr-2" > New Article</button>
+            <button type="button" class="btn btn-outline-dark delete_board mb-2" > delete board </button>
+        </div>
       </div>
-      <div class="articleHeader d-flex align-items-start flex-column mb-3" style="background-color:aqua;"><!--color for test-->
-           <div class=" articleTitle p-2 " style=" background-color:gray"><!--color for test-->
-        <h3>標題:
-          <span>Test title</span>
-        </h3>
-      </div>
-      <div class="artitlePostedTime p-2" style="background-color:red"><!--color for test-->
-        <h2>發布時間:
-          <span>Test posted time</span>
-        </h2>
-      </div>
-      <div class="artitlePoster p-2" style="background-color:gray"><!--color for test-->
-        <h2>作者:
-          <span>Test writer</span>
-        </h2>
-      </div>
-     
+      <div class="search_article" style=" background-color:blue">
+        Please input the article name : <input type="text" id="boardname" name="board_name" style="width: 200px;margin-right: 10px;">
+        <button type="button" class="btn btn-dark search_board mb-2" > search </button>
+        </div>
+ 
+
+    <div class="articles" style="background-color: aqua;"><!--color for test-->
+        <!--button for test-->
+       <button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">Block level button</button>
+       <button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">Block level button</button>
+       <button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">Block level button</button>
+       <button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">Block level button</button>
+       <button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">Block level button</button>
+       <button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">Block level button</button>
+       <button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">Block level button</button>
+       <button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">Block level button</button>
+
     </div>
-    <div class="articleBody">
-      <div class="articleMain">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi quisquam pariatur necessitatibus accusamus
-          quam sunt a obcaecati dolorum. Neque quos officiis aspernatur illo corporis dolorem, quibusdam recusandae eius
-          fugiat quo provident officia reiciendis deserunt eos vitae unde architecto repudiandae, accusamus voluptatum?
-          Provident quia necessitatibus adipisci at non. Neque, illo iste!</p>
-      </div>
-      <div class="artitleMid p-2" style="background-color: #00b7ff;">
-        <h4>留言</h4>
-      </div>
-      <div class="articleResponse">
-        <p></p>
-      </div>
-    </div>
-    </div>
+
 
   </section>
   <!-- Optional JavaScript -->
