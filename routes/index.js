@@ -87,4 +87,26 @@ router.get("/sign_out", function(req, res, next) {
   res.redirect("/");
 });
 
+/*GET create board page*/
+router.get("/create_board", function(req, res, next) {
+  res.render("Edit_board", { create: true });
+});
+
+/*GET create board page*/
+router.get("/edit_board", function(req, res, next) {
+  console.log(req.query.board_name);
+  db.find_board(req.query.board_name)
+    .then(data => {
+      res.render("Edit_board", {
+        create: false,
+        board_id: data.board_id,
+        board_name: data.board_name,
+        hashtag: data.hashtag
+      });
+    })
+    .catch(() => {
+      next(createError(404));
+    });
+});
+
 module.exports = router;

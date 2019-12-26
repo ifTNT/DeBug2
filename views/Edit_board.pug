@@ -1,0 +1,39 @@
+doctype html
+head
+  // Required meta tags
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  script(src=' https://code.jquery.com/jquery-3.1.1.min.js')
+  // Bootstrap CSS
+  link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
+  title #{title}
+header(style='height: 100px;width:60%;;margin-left: 20%;margin-right: 20%;')
+  .fixed-top.bg-dark(style='display:block;')
+    nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
+      // pt-3 pl-5 pr-5 mb-2
+      h1(onclick="javascript:location.href='/'") DeBug2
+section.pt-5(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;text-align: center; ')
+  p(style='color: gray;font-size:13px;')  Please input some information of board 
+  form.pt-3(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%;', id='boardForm')
+    .form-group
+      label(for='exampleInputEmail1') Board ID
+      input#board_id.form-control(type='text' aria-describedby='useridHelp' value=board_id)
+    .form-group
+      label(for='exampleInputPassword1') Board Name
+      input#board_name.form-control(type='text' value=board_name)
+    .form-group
+      label(for='exampleInputPassword2') Hashtag
+      input#hash_tag.form-control(type='text' value=hashtag)
+    p#alert(style='display:none;color:red') This UserID has been used.
+    button.btn.btn-primary.submit(type='submit') Submit
+// Optional JavaScript
+// jQuery first, then Popper.js, then Bootstrap JS
+if create===true
+  script(src='/JS/create_board.js' defer='')
+else
+  input#originalBoardName(type="hidden", value=board_name)
+  script(src='/JS/edit_board.js' defer='')
+  
+//script(src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous')
+script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous')
+script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous')

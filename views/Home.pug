@@ -6,8 +6,10 @@ head
   script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
   // Bootstrap CSS
   link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
+  link(rel='stylesheet' href='/stylesheets/home_style.css')
   title DeBug2
-header(style='width:60%;;margin-left: 20%;margin-right: 20%;')
+//body(style='-webkit-scrollbar:display(none);')
+header(style='width:60%;margin-left: 20%;margin-right: 20%;')
   .fixed-top.bg-dark(style='display:block;')
     nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
       // pt-3 pl-5 pr-5 mb-2
@@ -23,8 +25,9 @@ header(style='width:60%;;margin-left: 20%;margin-right: 20%;')
 section(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;')
   | Please input the board name : 
   input(type='text' name='board_name' id='boardname' style='width: 200px;margin-right: 10px;')
-  button.btn.btn-dark.search_board(type='button')  search 
-  button.btn.btn-dark.insert_board.m-2(type='button')  insert
+  button.btn.btn-dark.search_board.mr-2(type='button')  search 
+  a.btn.btn-dark.mr-2(href="/create_board")  insert
+  button.btn.btn-dark.edit_board(type='button')  edit
   //button.btn.btn-dark.delete_board(type='button')  delete
   
   .boards
