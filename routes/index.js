@@ -109,4 +109,12 @@ router.get("/edit_board", function(req, res, next) {
     });
 });
 
+/*GET Article in a board page*/
+router.get("/Article_board", function(req, res, next) {
+  res.render("Article_board");
+});
+/*GET create Article page*/
+router.get("/Create_article", function(req, res, next) {
+  res.render("Create_article", { create: true });
+});
 module.exports = router;

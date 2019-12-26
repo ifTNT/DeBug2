@@ -27,7 +27,6 @@ function signup(e) {
     nickname: NickName
   };
 
-  var json = JSON.stringify(obj);
 
   $.ajax({
     type: "POST",

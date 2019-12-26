@@ -1,8 +1,8 @@
 //Home page search button
-function search_board()
+function search_article()
 {
  
-    console.log("search_board");
+    /*console.log("search_board");
     var token=$('input[name=csrfimiddlewaretoken').val();
     var Boards=document.querySelector('.boards').innerHTML;
     //console.log(Boards);
@@ -46,16 +46,13 @@ function search_board()
     
         //console.log(Boards);
     }).fail(function(err){console.log(err)})
-
-
-   // console.log(Boards);
-    //console.log(Boards.map(d=>{return d['board_name']}));
-    
+    */
 }
 /*edit and create */
-function edit_board(){
-    console.log("edit_board");
-    window.location.href = `/edit_board?board_name=${$("#boardname").val()}`
+function new_article(){
+    console.log("new_article");
+   // window.location.href = `/edit_board?board_name=${$("#boardname").val()}`
+   window.location.assign("/Create_article");
 }
 
 function list_board()
@@ -94,12 +91,7 @@ function list_board()
         console.log(err);
       });
 }
-function Go_article_board()
-{
-    var select=this.id;
-    console.log(select);
-    window.location.assign("/Article_board");
-}
-list_board();
-document.querySelector('.search_board').addEventListener('click', search_board);
-document.querySelector('.edit_board').addEventListener('click',edit_board);
+
+//list_board();
+document.querySelector('.new_article').addEventListener('click', new_article);
+document.querySelector('.search_article').addEventListener('click',search_article);

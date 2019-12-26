@@ -15,7 +15,6 @@ function signin(e) {
     password: password
   };
 
-  var json = JSON.stringify(obj);
 
   $.ajax({
     type: "POST",
@@ -27,6 +26,7 @@ function signin(e) {
       console.log(data);
       var stutas = data.ok;
       console.log(stutas);
+      //要不要顯示警告 如果錯了就要顯示
       if (stutas == false) {
         alert.style.display = "block";
       } else {

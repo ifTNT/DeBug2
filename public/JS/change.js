@@ -20,8 +20,6 @@ function change(e)
         nick_name:newNickName
     };
 
-    var json = JSON.stringify(obj);
-
 
    $.ajax({
         type:'POST',
