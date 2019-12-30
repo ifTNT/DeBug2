@@ -111,10 +111,17 @@ router.get("/edit_board", function(req, res, next) {
 
 /*GET Article in a board page*/
 router.get("/Article_board", function(req, res, next) {
-  res.render("Article_board");
+  if (req.session.authenticated === true) {
+    console.log(req.query.board_name);
+    console.log(req.session.user_id);
+    res.render("Article_board", { user_id: req.session.user_id,board_name:req.query.board_name});
+
+  } else {
+    res.redirect("/");
+  }
 });
 /*GET create Article page*/
 router.get("/Create_article", function(req, res, next) {
-  res.render("Create_article", { create: true });
+  res.render("Create_article");
 });
 module.exports = router;

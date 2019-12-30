@@ -1,3 +1,4 @@
+/*[TODO] */
 /*function create_board(e) {
     e.preventDefault();
     var board_name = $("#board_name").val();

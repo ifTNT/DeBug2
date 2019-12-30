@@ -1,19 +1,17 @@
-//Home page search button
 function search_article()
 {
  
-    /*console.log("search_board");
-    var token=$('input[name=csrfimiddlewaretoken').val();
-    var Boards=document.querySelector('.boards').innerHTML;
-    //console.log(Boards);
-    document.querySelector('.boards').innerHTML='';
+    console.log("search_article");
+    /*var token=$('input[name=csrfimiddlewaretoken').val();
+    var title=document.querySelector('.articles').innerHTML;
+    document.querySelector('.articles').innerHTML='';
 
     var obj = {
         csrfmiddlewaretoken: token,
-        board_name : Boards
+        title : title
     };
     
-    var name = $("#boardname").val();
+    var name = $("#articlename").val();
     console.log(name);
     $.ajax({
         type:'GET',
@@ -45,8 +43,8 @@ function search_article()
         document.querySelector('.boards').appendChild(newButton);
     
         //console.log(Boards);
-    }).fail(function(err){console.log(err)})
-    */
+    }).fail(function(err){console.log(err)})*/
+    
 }
 /*edit and create */
 function new_article(){
@@ -55,43 +53,46 @@ function new_article(){
    window.location.assign("/Create_article");
 }
 
-function list_board()
+function list_article_in_board()
 {
+    var which_boardname= document.querySelector('.which_boardname').innerHTML;//$(".which_boardname").innerHTML;
+    console.log(which_boardname);
+    var board_id="";
     $.ajax({
       type: "GET",
-      url: "/api/v1/board/",
+      url: "/api/v1/board/"+ which_boardname,
       dataType: "json"
     })
       .done(function(data) {
         console.log(data);
-        for(var obj in data)
-        {
-            console.log(data[obj].board_name); 
-            var name=data[obj].board_name;
-            //創建原本的樣式到指定位置
-           /*<button style="border:none;text-align: left;" type="button" 
-           class="btn btn-outline-dark btn-lg btn-block">Block level button</button>*/
-            const newButton=document.createElement('button');
-            newButton.textContent=name;
-            newButton.style.border="none";
-            newButton.style.textAlign="left";
-            newButton.type="Button";
-            newButton.classList.add("btn");
-            newButton.classList.add("btn-outline-dark");
-            newButton.classList.add("btn-lg");
-            newButton.classList.add("btn-block");
-            newButton.classList.add("mt-3");
-            //newButton.onclick="Go_article_board("+name+")";
-            //再加上自己的名字為ID
-            newButton.id=name;
-            document.querySelector('.boards').appendChild(newButton).addEventListener('click', Go_article_board);
-        }
+        board_id=data.board_id;
+        console.log(board_id);//確定ID正確性
     })
+    .fail(function(err) {
+      console.log(err);
+    }).then(function(){
+      console.log(board_id);//確定ID正確性
+      $.ajax({
+        type: "GET",
+        url: "/api/v1/article/"+ board_id,
+        dataType: "json"
+      })
+        .done(function(data) {
+          console.log(data);
+          
+       
+      })
       .fail(function(err) {
         console.log(err);
-      });
+      })
+    });
+    
 }
-
-//list_board();
+function subscribe()
+{
+  console.log("subscribe");
+}
+list_article_in_board();
 document.querySelector('.new_article').addEventListener('click', new_article);
-document.querySelector('.search_article').addEventListener('click',search_article);
+document.querySelector('.search_article_button').addEventListener('click',search_article);
+document.querySelector('.subscribe').addEventListener('click',subscribe);

@@ -96,9 +96,10 @@ function list_board()
 }
 function Go_article_board()
 {
-    var select=this.id;
-    console.log(select);
-    window.location.assign("/Article_board");
+    //find which board is clocked
+    var boardname_linkurl=this.id;
+    console.log( boardname_linkurl);
+    window.location.assign("/Article_board?board_name="+boardname_linkurl);
 }
 list_board();
 document.querySelector('.search_board').addEventListener('click', search_board);

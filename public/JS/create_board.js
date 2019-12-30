@@ -3,10 +3,12 @@ function create_board(e) {
     var board_name = $("#board_name").val();
     var board_id = $("#board_id").val();
     var hashtag = $("#hash_tag").val();
-  
+    var read_only=0;
+    
     var d = {
       board_id,
       board_name,
+      read_only,
       hashtag
     };
     console.log(d);
