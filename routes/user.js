@@ -5,7 +5,7 @@ var createError = require("http-errors");
 var md5 = require("md5");
 
 /* Create a new user */
-router.post("/", function(req, res, next) {
+router.post("/", function (req, res, next) {
   var rtVal = {};
   var uid = req.body.user_id;
   db.create_user(
@@ -46,7 +46,7 @@ router.post("/", function(req, res, next) {
 });
 
 /* Get user info */
-router.get("/:id", function(req, res, next) {
+router.get("/:id", function (req, res, next) {
   var rtVal = {};
   db.get_userinfo(req.params.id)
     .then(data => {
@@ -79,7 +79,7 @@ router.get("/:id", function(req, res, next) {
 });
 
 /* Update userinfo */
-router.post("/update", function(req, res, next) {
+router.post("/update", function (req, res, next) {
   //Fobrid invalid request
   //if (req.session.user_id !== req.params.id) {
   //  return next(createError(403));
@@ -101,7 +101,10 @@ router.post("/update", function(req, res, next) {
         md5(req.body.password),
         req.body.nick_name
       )
-    )
+    ).then(() => {
+      PerBoardID = util.getPersonalBoardID(req.session.user_id);
+      db.update_board(PerBoardID, req.body.nick_name, null, null, null,1);
+    })
     .then(() => {
       rtVal = {
         ok: true,
@@ -120,7 +123,7 @@ router.post("/update", function(req, res, next) {
 });
 
 /* Delete a user */
-router.delete("/", function(req, res, next) {
+router.delete("/", function (req, res, next) {
   //Fobrid invalid request
   //if (req.session.user_id !== req.params.id) {
   //  return next(createError(403));

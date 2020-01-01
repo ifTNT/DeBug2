@@ -231,7 +231,7 @@ module.exports = class {
   //   console.log(data);
   // });
 
-  update_board(board_id, board_name, read_only, hashtag, visible) {
+  update_board(board_id, board_name, read_only, hashtag, visible, flag) {
     return new Promise((resolve, reject) => {
       var path = "";
       if (board_name != null) {
@@ -250,14 +250,17 @@ module.exports = class {
           path += ",";
         }
         path += `hashtag = '${hashtag}'`;
-        sql_updateAccPP = `update GENERALBOARD set ${path} WHERE board_id='${board_id}'`;
-      } else {
+      }
+      if(visible!=null){
         if (path != "") {
           path += ",";
         }
         path += `visible = ${visible}`;
-        sql_updateAccPP = `update PERSONALBOARD set ${path} WHERE board_id='${board_id}'`;
       }
+      if (flag == 0)
+        sql_updateAccPP = `update GENERALBOARD set ${path} WHERE board_id='${board_id}'`;
+      else
+        sql_updateAccPP = `update PERSONALBOARD set ${path} WHERE board_id='${board_id}'`;
       this.db.run(sql_updateAcc, err => {
         if (err) return reject(err);
         else
@@ -329,7 +332,7 @@ module.exports = class {
           0,
           0
         ],
-        function(err) {
+        function (err) {
           if (err) return reject(err);
           else resolve();
         }
@@ -367,7 +370,7 @@ module.exports = class {
           markdown,
           0
         ],
-        function(err) {
+        function (err) {
           if (err) return reject(err);
           else resolve();
         }
@@ -409,7 +412,7 @@ module.exports = class {
           light_type,
           alt_text
         ],
-        function(err) {
+        function (err) {
           if (err) return reject(err);
           else resolve();
         }
@@ -430,7 +433,7 @@ module.exports = class {
         .then(data => {
           condition.push(`board_id = '${data.board_id}'`);
         })
-        .catch(() => {})
+        .catch(() => { })
         .finally(() => {
           searchQuery =
             condition.length == 0 ? "" : " WHERE " + condition.join(" AND ");
@@ -476,7 +479,7 @@ module.exports = class {
         path += `alt_text='${alt_text}'`;
       }
       var sql_updatePA = `update ARTICLE set ${path} WHERE board_id='${board_id}' AND article_id =${article_id}`;
-      this.db.run(sql_updatePA, function(err) {
+      this.db.run(sql_updatePA, function (err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -499,7 +502,7 @@ module.exports = class {
         path += `markdown='${markdown}'`;
       }
       var sql_updatePtA = `update ARTICLE set ${path} WHERE board_id='${board_id}' AND article_id =${article_id}`;
-      this.db.run(sql_updatePtA, function(err) {
+      this.db.run(sql_updatePtA, function (err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -525,7 +528,7 @@ module.exports = class {
         path += `alt_text='${alt_text}'`;
       }
       var sql_update3DA = `update ARTICLE set ${path} WHERE board_id='${board_id}' AND article_id =${article_id}`;
-      this.db.run(sql_update3DA, function(err) {
+      this.db.run(sql_update3DA, function (err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -535,7 +538,7 @@ module.exports = class {
   delete_article(board_id, article_id) {
     return new Promise((resolve, reject) => {
       var sql_delA = `DELETE FROM ARTICLE WHERE board_id='${board_id}' AND article_id = ${article_id}`;
-      this.db.run(sql_delA, function(err) {
+      this.db.run(sql_delA, function (err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -560,7 +563,7 @@ module.exports = class {
           user_id,
           content
         ],
-        function(err) {
+        function (err) {
           if (err) return reject(err);
           else resolve();
         }
@@ -582,7 +585,7 @@ module.exports = class {
   update_response(board_id, article_id, response_id, content) {
     return new Promise((resolve, reject) => {
       var sql_updateRes = `update ARTICLE set content='${content}' WHERE board_id='${board_id}' AND article_id =${article_id} AND response_id = '${response_id}'`;
-      this.db.run(sql_updateRes, function(err) {
+      this.db.run(sql_updateRes, function (err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -608,7 +611,7 @@ module.exports = class {
     });
   }
 
-  get_userManager(user_id){
+  get_userManager(user_id) {
     return new Promise((resolve, reject) => {
       var sql_getListManage = `SELECT BD.board_name FROM BOARD BD JOIN MANAGE MAN WHERE BD.board_id = MAN.board_id AND MAN.user_id ='${user_id}'`;
       this.db.all(sql_getListManage, (err, data) => {
@@ -650,10 +653,7 @@ module.exports = class {
       var sql_getsubscribe = `SELECT BD.board_name FROM BOARD BD JOIN SUBSCRIBE SUB WHERE BD.board_id = SUB.board_id AND SUB.user_id = '${user_id}'`;
       this.db.all(sql_getsubscribe, (err, data) => {
         if (err) return reject(err);
-        else 
-        {
-          console.log(data);
-          console.log(err);
+        else {
           resolve(data);
         }
       });
