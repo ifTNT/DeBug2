@@ -1,34 +1,39 @@
 /*[TODO] */
-/*function create_board(e) {
+function create_board(e) {
     e.preventDefault();
     var board_name = $("#board_name").val();
     var board_id = $("#board_id").val();
     var hashtag = $("#hash_tag").val();
-  
-    var d = {
-      board_id,
-      board_name,
-      hashtag
-    };
-    console.log(d);
-  
-    $.ajax({
-      type: "POST",
-      url: `/api/v1/board/`,
-      data: d,
-      dataType: "json"
-    })
-      .done(function(data) {
-        window.location.href = "/home";
+    var latitude, longitude;
+    navigator.geolocation.watchPosition((position) => {
+      console.log(position.coords);
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+      
+      var d = {
+        board_id,
+        board_name,
+        longitude,
+        latitude,
+        hashtag
+      };
+      console.log(d);
+      $.ajax({
+        type: "POST",
+        url: `/api/v1/board/`,
+        data: d,
+        dataType: "json"
       })
-      .fail(function(err) {
-        console.log(err);
-      });
-  
-    // console.log(Boards);
-    //console.log(Boards.map(d=>{return d['board_name']}));
+        .done(function(data) {
+          window.location.href = "/home";
+        })
+        .fail(function(err) {
+          console.log(err);
+        });
+        // console.log(Boards);
+        //console.log(Boards.map(d=>{return d['board_name']}));
+    });
   }
-  */
 
   function change_for_type_pic()
   {
