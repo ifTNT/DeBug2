@@ -42,7 +42,7 @@ function search_board()
         //再加上自己的名字為ID
         newButton.id=boardname;
 
-        document.querySelector('.boards').appendChild(newButton);
+        document.querySelector('.boards').appendChild(newButton).addEventListener('click', Go_article_board);
     
         //console.log(Boards);
     }).fail(function(err){console.log(err)})

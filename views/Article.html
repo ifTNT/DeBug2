@@ -34,40 +34,53 @@
   </header>
   <section style="width:60%;margin:80px 20% 0 20%">
     <div class="articleWrap">
-       <div class="action" style="text-align: right;background-color:bisque;"><!--color for test-->
+       <div class="action" style="text-align: right;">
         <button type="button" class="btn btn-outline-primary update_article mb-2 mr-2" > Update</button>
         <button type="button" class="btn btn-outline-dark delete_article mb-2" > delete</button>
       </div>
-      <div class="articleHeader d-flex align-items-start flex-column mb-3" style="background-color:aqua;"><!--color for test-->
-           <div class=" articleTitle p-2 " style=" background-color:gray"><!--color for test-->
-        <h3>標題:
-          <span>Test title</span>
-        </h3>
-      </div>
-      <div class="artitlePostedTime p-2" style="background-color:red"><!--color for test-->
-        <h2>發布時間:
-          <span>Test posted time</span>
-        </h2>
-      </div>
-      <div class="artitlePoster p-2" style="background-color:gray"><!--color for test-->
-        <h2>作者:
-          <span>Test writer</span>
-        </h2>
-      </div>
+      <div class="articleHeader d-flex align-items-start flex-column mb-3" style=" font-family:Microsoft JhengHei;">
+        <div class=" articleTitle p-2 " >
+          <h3>標題:
+            <span>#{title}</span>
+          </h3>
+        </div>
+        <div class="artitlePoster p-2">
+          <h6>作者:
+            <span>#{user_id}</span>
+          </h6>
+        </div>
      
     </div>
-    <div class="articleBody">
+    <div class="articleBody" style=" font-family:Microsoft JhengHei;">
       <div class="articleMain">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi quisquam pariatur necessitatibus accusamus
           quam sunt a obcaecati dolorum. Neque quos officiis aspernatur illo corporis dolorem, quibusdam recusandae eius
           fugiat quo provident officia reiciendis deserunt eos vitae unde architecto repudiandae, accusamus voluptatum?
           Provident quia necessitatibus adipisci at non. Neque, illo iste!</p>
       </div>
-      <div class="artitleMid p-2" style="background-color: #00b7ff;">
-        <h4>留言</h4>
+      <div class="artitleMid p-2 d-flex align-items-center" style="font-family:Microsoft JhengHei;">
+        <h4 class="mr-2">留言</h4>
+       <!-- <a href="/" class="badge badge-primary">new response</a>-->
       </div>
-      <div class="articleResponse">
-        <p></p>
+      <div class="articleResponse d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-center" id="someone_res">
+          <div >#{user_id} : #{content}</div>
+          <div >
+            <a href="/" class="badge badge-primary" style="">update</a>
+            <a href="/" class="badge badge-danger" style="" >delete</a>
+        </div>
+      </div>
+        <div class="d-flex justify-content-between align-items-center" id="someone_res">
+          <div >#{user_id} : #{content}</div>
+          <div >
+            <a href="/" class="badge badge-primary" style="">update</a>
+            <a href="/" class="badge badge-danger" style="" >delete</a>
+        </div>
+        </div>
+      </div>
+      <div class="create_response mt-4">
+        <input class="form-control" type="text" id="response_content"  placeholder="response…"  name="response_content" style="display:inline;width: 90%;margin-right: 10px;">
+        <button type="button" class="btn btn-dark search_board mb-2 btn-sm" >response </button>
       </div>
     </div>
     </div>

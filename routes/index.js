@@ -124,4 +124,13 @@ router.get("/Article_board", function(req, res, next) {
 router.get("/Create_article", function(req, res, next) {
   res.render("Create_article");
 });
+
+router.get("/Article", function(req, res, next) {
+  if (req.session.authenticated === true) {
+    res.render("Article", { user_id: req.session.user_id});
+
+  } else {
+    res.redirect("/");
+  }
+});
 module.exports = router;

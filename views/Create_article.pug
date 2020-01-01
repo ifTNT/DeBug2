@@ -13,19 +13,37 @@ header(style='height: 100px;width:60%;;margin-left: 20%;margin-right: 20%;')
     nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
       // pt-3 pl-5 pr-5 mb-2
       h1(onclick="javascript:location.href='/'") DeBug2
-section.pt-5(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;text-align: center; ')
-  p(style='color: gray;font-size:13px;')  Please input some information of board 
-  form.pt-3(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%;', id='boardForm')
+section.pt-5(style='height: 100%;width:60%;margin-left: 20%;margin-right: 20%;text-align: center; ')
+  p(style='color: gray;font-size:13px;')  Please input some information of article 
+  form.pt-3(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%;', id='ArticleForm')
     .form-group
-      label(for='exampleInputEmail1') Board Name
-      input#board_id.form-control(type='text' aria-describedby='useridHelp' value=board_id)
+      label(for='title') Title
+      input#title.form-control(type='text'  value=title)
     .form-group
-      label(for='exampleInputPassword1') Board Name
-      input#board_name.form-control(type='text' value=board_name)
-    .form-group
-      label(for='exampleInputPassword2') Hashtag
-      input#hash_tag.form-control(type='text' value=hashtag)
-    p#alert(style='display:none;color:red') This UserID has been used.
+      label(for='type') Which type 
+        .form-check.form-check-inline
+          input#picture.form-check-input(type='radio' name='Options'  value='option1' checked)
+          label.form-check-label(for='picture') Picture
+        .form-check.form-check-inline
+          input#plaintext.form-check-input(type='radio' name='Options' value='option2')
+          label.form-check-label(for='plaintext') Plaintext
+        .form-check.form-check-inline
+          input#three_dimensional.form-check-input(type='radio' name='Options' value='option3')
+          label.form-check-label(for='three_dimensional') 3D
+
+    .form-group#display_pic(style="")
+      label(for='pic_url') The url of Picture
+      input#pic_url.form-control(type='text'  value=pic_url)
+
+    .form-group#display_plaintext(style="display:none;")
+      label(for='markdown') Markdown
+      textarea#markdown.form-control(rows='5') 
+
+    .form-group#display_3D(style="display:none;")
+      label(for='model_url') The url of Model
+      input#model_url.form-control(type='text'  value=model_url)
+
+    //p#alert(style='display:none;color:red') This UserID has been used.
     button.btn.btn-primary.submit(type='submit') Submit
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
@@ -33,7 +51,7 @@ if create===true
   script(src='/JS/create_board.js' defer='')
 else
   input#originalBoardName(type="hidden", value=board_name)
-  script(src='/JS/edit_board.js' defer='')
+  script(src='/JS/create_article.js' defer='')
   
 //script(src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous')
 script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous')
