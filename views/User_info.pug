@@ -27,16 +27,33 @@ section.pt-5(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%; 
         .d-flex.flex-column.justify-content-center(style='width:100%')
           p.font-weight-bold UserID: #{user_id}
           p.font-weight-bold.find_user_id(style="display:none;") #{user_id}
+          p.font-weight-bold.find_user_nickname(style="display:none;") #{nickname}
           p.font-weight-bold Nickname: #{nickname}
           p.font-weight-bold Join Time: #{new Date(join_time*1000)}
           p.font-weight-bold Last active time: #{new Date(last_active_time*1000)}
       .d-flex.justify-content-end
         a.btn.btn-outline-primary.mr-3(href='change' type='button') Change password and nickname
-        a.btn.btn-outline-danger.delete_account Delete account
+        button.btn.btn-outline-danger.delete_account(type='button' data-toggle='modal' data-target='#exampleModal') Delete account
+    #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5#exampleModalLabel.modal-title Warning
+            button.close(type='button' data-dismiss='modal' aria-label='Close')
+              span(aria-hidden='true') &times;
+          .modal-body
+            | Are you sure you want to delete your account?
+          .modal-footer
+            button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+            button.btn.btn-danger.sure_delete_account(type='button') delete
     #subscribe.tab-pane.fade(role='tabpanel' aria-labelledby='subscribe-tab')
+      .subscribe_list
       // <p class="font-weight-bold">A</p>
     #manage.tab-pane.fade(role='tabpanel' aria-labelledby='manage-tab')
+      .manage_list
       // <p class="font-weight-bold">A</p>
+      .d-flex.justify-content-end
+        a.btn.btn-outline-primary.go_own_board_page Go own board page
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
 script(src='/JS/userinfo.js' defer='')

@@ -10,41 +10,8 @@ function deleteAccount()
         window.location.href = "/sign_out"
     });
 }
-function subscribe()
-{
-    $.ajax({
-      type: "GET",
-      url: "/api/v1/user/",
-      dataType: "json"
-    }).done(function(data){
-      console.log(data);
-      //const nameList = data.map(item => Object.values(item)[0]);
-      //取得data的name
-      var boardname=data.board_name;
-      console.log(boardname);
-      if(boardname==undefined)return;
-      //創建原本的樣式到指定位置
-      //<button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">text</button> 
-      const newButton=document.createElement('button');
-      newButton.textContent=boardname;
-      newButton.style.border="none";
-      newButton.style.textAlign="left";
-      newButton.type="Button";
-      newButton.classList.add("btn");
-      newButton.classList.add("btn-outline-dark");
-      newButton.classList.add("btn-lg");
-      newButton.classList.add("btn-block");
-      newButton.classList.add("mt-3");
-      //再加上自己的名字為ID
-      newButton.id=boardname;
 
-      document.querySelector('.boards').appendChild(newButton).addEventListener('click', Go_article_board);
-  
-      //console.log(Boards);
-  }).fail(function(err){console.log(err)})
-}
-
-function manage()
+function get_subscribe_manage()
 {
   var userid=document.querySelector('.find_user_id').innerHTML;
   console.log(userid);
@@ -54,24 +21,52 @@ function manage()
     dataType: "json"
   }).done(function(data){
     console.log(data);
-    var boardid=data.subscribe;
-    console.log(boardid);
-    for( i in boardid) {
-     
-    //創建原本的樣式到指定位置
-    //<p class="font-weight-bold">A</p>
-    const newp=document.createElement('p');
-    newp.textContent=boardid[i];
-    newp.classList.add("font-weight-bold");
-    //再加上boardid
-    newp.id=boardid[i];
-
-    document.querySelector('#subscribe').appendChild(newp);
+    var boardmanage=data.manage;
+    console.log(boardmanage);
+    for( i in boardmanage) {
+      //創建原本的樣式到指定位置
+      //<p class="font-weight-bold">A</p>
+      const newmanage=document.createElement('p');
+      newmanage.textContent=boardmanage[i].board_name;
+      newmanage.classList.add("font-weight-bold");
+      //再加上boardname
+      newmanage.id=boardmanage[i].board_name;
+      document.querySelector('.manage_list').appendChild(newmanage);
     }
-    //console.log(Boards);
+
+    var boardsubscribe=data.subscribe;
+    console.log(boardsubscribe);
+    for( i in boardsubscribe) {
+      //創建原本的樣式到指定位置
+      //<p class="font-weight-bold">A</p>
+      const newsubscribe=document.createElement('p');
+      newsubscribe.textContent=boardsubscribe[i].board_name;
+      newsubscribe.classList.add("font-weight-bold");
+      //再加上boardname
+      newsubscribe.id=boardsubscribe[i].board_name;
+      document.querySelector('.subscribe_list').appendChild(newsubscribe);
+    }
 }).fail(function(err){console.log(err)})
 }
 
-manage();
-document.querySelector('.delete_account').addEventListener('click', deleteAccount);
+function go_own_board_page()
+{
+  var userid=document.querySelector('.find_user_id').innerHTML;
+  var personal_board_id="";
+  $.ajax({
+    type: "GET",
+    url: "/api/v1/user/"+userid,
+    dataType: "json"
+  }).done(function(data){
+    console.log(data);
+    personal_board_id=data.personal_board_id;
+    console.log(personal_board_id);
+}).then(function(){
+  window.location.assign("/Article_board?&board_id="+personal_board_id);
+}) 
+}
+
+get_subscribe_manage();
+document.querySelector('.sure_delete_account').addEventListener('click', deleteAccount);
+document.querySelector('.go_own_board_page').addEventListener('click', go_own_board_page);
 
