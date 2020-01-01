@@ -19,25 +19,52 @@
       
     </header>
     <section class="pt-5" style="height: 100%;width:40%;;margin-left: 30%;margin-right: 30%; ">
-    <h3 style="text-align: center;" class="mb-5">Personal Information</h3>
-    <div class="d-flex align-items-stretch mb-5 ml-5" >
-        <div class="d-flex  flex-column justify-content-center" style="width:50%">
-            <p class="font-weight-bold">UserID</p>
-            <p class="font-weight-bold">Nickname</p>
-            <p class="font-weight-bold">Join Time</p>
-            <p class="font-weight-bold">Last active time</p>
+      <h3 style="text-align: center;" class="mb-5">Personal Information</h3>
+
+      <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" 
+          href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="subscribe-tab" data-toggle="tab" 
+          href="#subscribe" role="tab" aria-controls="subscribe" aria-selected="false">Subscribe</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="manage-tab" data-toggle="tab" 
+          href="#manage" role="tab" aria-controls="manage" aria-selected="false">Manage</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <div class="d-flex align-items-stretch mb-5 " >
+            <div class="d-flex  flex-column justify-content-center" style="width:100%">
+                <p class="font-weight-bold">UserID: #{user_id}</p>
+                <p class="font-weight-bold">Nickname: #{nickname}</p>
+                <p class="font-weight-bold">Join Time: #{new Date(join_time*1000)}</p>
+                <p class="font-weight-bold">Last active time: #{new Date(last_active_time*1000)}</p>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <a href="Change.html" type="button" class="btn btn-outline-primary mr-3">Change password</a>
+            <button type="button" class="btn btn-outline-danger">Delete account</button>
+          </div>
         </div>
-        <div class="d-flex  flex-column justify-content-center" style="width:50% ">
-            <p style="display:none;" id="user_id"></p>
-            <p style="display:none;" id="password"></p>
-            <p style="display:none;" id="join_time"></p>
-            <p style="display:none;" id="last_active_time"></p>
+
+        <div class="tab-pane fade" id="subscribe" role="tabpanel" aria-labelledby="subscribe-tab">
+         <!-- <p class="font-weight-bold">A</p>-->
+          
         </div>
-    </div>
-    <div class="d-flex justify-content-end">
-        <a href="Change.html" type="button" class="btn btn-outline-primary mr-3">Change password</a>
-        <button type="button" class="btn btn-outline-danger">Delete account</button>
-    </div>
+
+        <div class="tab-pane fade" id="manage" role="tabpanel" aria-labelledby="manage-tab">
+          <!-- <p class="font-weight-bold">A</p>-->
+        </div>
+
+      </div>
+
+
+    
+      
     </section>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

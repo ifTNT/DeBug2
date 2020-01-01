@@ -8,7 +8,7 @@ head
   link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
   link(rel='stylesheet' href='/stylesheets/home_style.css')
   title DeBug2
-//body(style='-webkit-scrollbar:display(none);')
+// body(style='-webkit-scrollbar:display(none);')
 header(style='width:60%;margin-left: 20%;margin-right: 20%;')
   .fixed-top.bg-dark(style='display:block;')
     nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
@@ -23,19 +23,24 @@ header(style='width:60%;margin-left: 20%;margin-right: 20%;')
   figure.figure
     img.img-fluid.rounded(src='https://images.unsplash.com/photo-1518548235008-15c2e3a4fdd3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1056&q=80' style='-webkit-filter:brightness(.7);')
 section(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;')
-  | Please input the board name : 
-  input(type='text' name='board_name' id='boardname' style='width: 200px;margin-right: 10px;')
-  button.btn.btn-dark.search_board.mr-2(type='button')  search 
-  button.btn.btn-dark.edit_board.mr-2(type='button')  edit
-  a.btn.btn-dark.mr-2(href="/create_board")  create
-  //button.btn.btn-dark.delete_board(type='button')  delete
-  
+  | Please input the board name and choose
+  .input-group.mb-3(style='width: 100%;')
+    .input-group-prepend
+      button.btn.btn-dark.dropdown-toggle.search_choose(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') Public board
+      .dropdown-menu
+        button.dropdown-item.search_choose_public Public board
+        button.dropdown-item.search_choose_personal Someone's board
+    input#boardname.form-control(type='text' aria-label='Text input with dropdown button')
+    button.btn.btn-dark.search_board.ml-2.mr-2(type='button')  search 
+    button.btn.btn-dark.edit_board.mr-2(type='button')  edit
+    a.btn.btn-dark.mr-2(href='/create_board')  create
+  // <input type="text" name="board_name" id="boardname" style="width: 200px;margin-right: 10px;">
+  // button.btn.btn-dark.delete_board(type='button')  delete
   .boards
-
-footer.mt-5 
+footer.mt-5  
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
 script(src='/JS/home.js' defer='')
-//script(src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous')
+// script(src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous')
 script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous')
 script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous')

@@ -1,7 +1,8 @@
 //Home page search button
 function search_board()
 {
- 
+    var which_type_board_name=document.querySelector('.search_choose').innerHTML
+    console.log(which_type_board_name);
     console.log("search_board");
     var token=$('input[name=csrfimiddlewaretoken').val();
     var Boards=document.querySelector('.boards').innerHTML;
@@ -15,6 +16,8 @@ function search_board()
     
     var name = $("#boardname").val();
     console.log(name);
+//Public board
+//Someone's board
     $.ajax({
         type:'GET',
         url:"/api/v1/board/"+ name ,
@@ -48,9 +51,6 @@ function search_board()
     }).fail(function(err){console.log(err)})
 
 
-   // console.log(Boards);
-    //console.log(Boards.map(d=>{return d['board_name']}));
-    
 }
 /*edit and create */
 function edit_board(){
@@ -101,6 +101,25 @@ function Go_article_board()
     console.log( boardname_linkurl);
     window.location.assign("/Article_board?board_name="+boardname_linkurl);
 }
+
+function search_choose_public()
+{
+    console.log("search_choose_public" );
+    document.querySelector('.search_choose').innerHTML="Public board";
+
+
+}
+function search_choose_personal()
+{
+    console.log("search_choose_personal" );
+    document.querySelector('.search_choose').innerHTML="Someone's board";
+
+}
+
 list_board();
 document.querySelector('.search_board').addEventListener('click', search_board);
 document.querySelector('.edit_board').addEventListener('click',edit_board);
+
+document.querySelector('.search_choose_public').addEventListener('click',search_choose_public);
+document.querySelector('.search_choose_personal').addEventListener('click',search_choose_personal);
+

@@ -14,15 +14,29 @@ header(style='height: 120px;width:60%;;margin-left: 20%;margin-right: 20%;')
       h1(onclick="javascript:location.href='Home'") DeBug2
 section.pt-5(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%; ')
   h3.mb-5(style='text-align: center;') Personal Information
-  .d-flex.align-items-stretch.mb-5.ml-5
-    .d-flex.flex-column.justify-content-center
-      p.font-weight-bold UserID: #{user_id}
-      p.font-weight-bold Nickname: #{nickname}
-      p.font-weight-bold Join Time: #{new Date(join_time*1000)}
-      p.font-weight-bold Last active time: #{new Date(last_active_time*1000)}
-  .d-flex.justify-content-end
-    a.btn.btn-outline-primary.mr-3(href='change' type='button') Change
-    a.btn.btn-outline-danger.delete_account Delete account
+  ul#myTab.nav.nav-tabs.mb-3(role='tablist')
+    li.nav-item
+      a#home-tab.nav-link.active(data-toggle='tab' href='#home' role='tab' aria-controls='home' aria-selected='true') Home
+    li.nav-item
+      a#subscribe-tab.nav-link(data-toggle='tab' href='#subscribe' role='tab' aria-controls='subscribe' aria-selected='false') Subscribe
+    li.nav-item
+      a#manage-tab.nav-link(data-toggle='tab' href='#manage' role='tab' aria-controls='manage' aria-selected='false') Manage
+  #myTabContent.tab-content
+    #home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='home-tab')
+      .d-flex.align-items-stretch.mb-5
+        .d-flex.flex-column.justify-content-center(style='width:100%')
+          p.font-weight-bold UserID: #{user_id}
+          p.font-weight-bold.find_user_id(style="display:none;") #{user_id}
+          p.font-weight-bold Nickname: #{nickname}
+          p.font-weight-bold Join Time: #{new Date(join_time*1000)}
+          p.font-weight-bold Last active time: #{new Date(last_active_time*1000)}
+      .d-flex.justify-content-end
+        a.btn.btn-outline-primary.mr-3(href='change' type='button') Change password and nickname
+        a.btn.btn-outline-danger.delete_account Delete account
+    #subscribe.tab-pane.fade(role='tabpanel' aria-labelledby='subscribe-tab')
+      // <p class="font-weight-bold">A</p>
+    #manage.tab-pane.fade(role='tabpanel' aria-labelledby='manage-tab')
+      // <p class="font-weight-bold">A</p>
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
 script(src='/JS/userinfo.js' defer='')

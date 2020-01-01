@@ -1,47 +1,55 @@
 <!DOCTYPE html>
 
 <head>
-    <!-- Required meta tags-->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="/stylesheets/home_style.css">
-    <title>DeBug2</title>
+  <!-- Required meta tags-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="/stylesheets/home_style.css">
+  <title>DeBug2</title>
 </head>
 <!--body(style='-webkit-scrollbar:display(none);')-->
 <header style="width:60%;margin-left: 20%;margin-right: 20%;">
-    <div class="fixed-top bg-dark" style="display:block;">
-        <nav class="d-flex justify-content-between text-white" style="width:60%;height:100%;margin-left: 20%;margin-right: 20%;">
-            <!-- pt-3 pl-5 pr-5 mb-2-->
-            <h1>DeBug2</h1>
-            <div class="btn-group m-2"><button class="btn btn-danger dropdown-toggle user_id" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                <div class="dropdown-menu"><a class="dropdown-item person_info" href="user_info">Personal information</a>
-                    <div class="dropdown-divider"></div><a class="dropdown-item sign_out" href="sign_out">Sign out</a></div>
-            </div>
-        </nav>
-    </div>
-    <figure class="figure"><img class="img-fluid rounded" src="https://images.unsplash.com/photo-1518548235008-15c2e3a4fdd3?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1056&amp;q=80" style="-webkit-filter:brightness(.7);"></figure>
+  <div class="fixed-top bg-dark" style="display:block;">
+    <nav class="d-flex justify-content-between text-white"
+      style="width:60%;height:100%;margin-left: 20%;margin-right: 20%;">
+      <!-- pt-3 pl-5 pr-5 mb-2-->
+      <h1>DeBug2</h1>
+      <div class="btn-group m-2"><button class="btn btn-danger dropdown-toggle user_id" type="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="dropdown-menu"><a class="dropdown-item person_info" href="user_info">Personal information</a>
+          <div class="dropdown-divider"></div><a class="dropdown-item sign_out" href="sign_out">Sign out</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <figure class="figure"><img class="img-fluid rounded"
+      src="https://images.unsplash.com/photo-1518548235008-15c2e3a4fdd3?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1056&amp;q=80"
+      style="-webkit-filter:brightness(.7);"></figure>
 </header>
 <section style="height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;">
   Please input the board name and choose
-  <div class="input-group mb-3 " style="width: 80%;">
+  <div class="input-group mb-3 " style="width: 100%;">
     <div class="input-group-prepend">
-      <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Board Type</button>
-      <div class="dropdown-menu" style="display: inline-block;">
+      <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">Board Type</button>
+      <div class="dropdown-menu">
         <button class="dropdown-item">Public board</button>
         <button class="dropdown-item">Someone's board</button>
       </div>
     </div>
     <input type="text" class="form-control" aria-label="Text input with dropdown button">
+    <button class="btn btn-dark search_board ml-2 mr-2" type="button"> search </button>
+    <button class="btn btn-dark edit_board mr-2" type="button"> edit</button>
+    <a class="btn btn-dark mr-2" href="/create_board"> create</a>
   </div>
 
   <!--<input type="text" name="board_name" id="boardname" style="width: 200px;margin-right: 10px;">-->
-  <button class="btn btn-dark search_board mr-2" type="button"> search 
-  </button><button class="btn btn-dark edit_board mr-2" type="button"> edit</button>
-    <a class="btn btn-dark mr-2" href="/create_board"> create</a>
-        <!--button.btn.btn-dark.delete_board(type='button')  delete-->
+
+  <!--button.btn.btn-dark.delete_board(type='button')  delete-->
   <div class="boards"></div>
 </section>
 <footer class="mt-5"> </footer>
@@ -49,5 +57,7 @@
 <!-- jQuery first, then Popper.js, then Bootstrap JS-->
 <script src="/JS/home.js" defer=""></script>
 <!--script(src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous')-->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+  integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
