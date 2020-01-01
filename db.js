@@ -197,7 +197,13 @@ module.exports = class {
 
   get_board(board_id) {
     return new Promise((resolve, reject) => {
-      var sql_getBoard = `SELECT board_id, board_name, read_only, online_user_cnt FROM GENERALBOARD WHERE board_id='${board_id}'`;
+      var sql_getBoard = `SELECT B.board_id, B.board_name, B.read_only, B.online_user_cnt, PB.visiable, GB.hashtag
+      FROM BOARD B
+      LEFT JOIN GENERALBOARD GB
+      ON B.board_id = GB.board_id
+      LEFT JOIN PERSONALBOARD PB
+      ON B.board_id = PB.board_id
+      WHERE B.board_id ='${board_id}'`;
       this.db.get(sql_getBoard, (err, data) => {
         if (err) return reject(err);
         else resolve(data);
