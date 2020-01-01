@@ -610,15 +610,11 @@ module.exports = class {
 
   get_userManager(user_id){
     return new Promise((resolve, reject) => {
-      var sql_getListManage = `SELECT BD.board_name FROM BOARD BD JOIN MANAGE MAN WHERE BD.board_id = MAN.board_id AND MAN.user_id ='${baordId}'`;
+      var sql_getListManage = `SELECT BD.board_name FROM BOARD BD JOIN MANAGE MAN WHERE BD.board_id = MAN.board_id AND MAN.user_id ='${user_id}'`;
       this.db.all(sql_getListManage, (err, data) => {
         if (err) return reject(err);
-        else {
-          data = data.map(d => {
-            return d["user_id"];
-          });
+        else
           resolve(data);
-        }
       });
     });
   }
@@ -654,10 +650,10 @@ module.exports = class {
       var sql_getsubscribe = `SELECT BD.board_name FROM BOARD BD JOIN SUBSCRIBE SUB WHERE BD.board_id = SUB.board_id AND SUB.user_id = '${user_id}'`;
       this.db.all(sql_getsubscribe, (err, data) => {
         if (err) return reject(err);
-        else {
-          data = data.map(d => {
-            return d["board_id"];
-          });
+        else 
+        {
+          console.log(data);
+          console.log(err);
           resolve(data);
         }
       });

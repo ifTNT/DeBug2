@@ -62,7 +62,7 @@ router.get("/:id", function(req, res, next) {
     })
     .then(data => {
       rtVal["subscribe"] = data;
-      return db.get_userManager(req.params.id)
+      return db.get_userManager(req.params.id);
     })
     .then(data => {
       rtVal["manage"] = data;
