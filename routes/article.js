@@ -39,7 +39,7 @@ router.post("/:board_id", function(req, res, next) {
 
 /* Get list of all article */
 router.get("/:board_id", function(req, res, next) {
-  /*
+  
   var rtVal = [];
   db.get_all_article(req.params.board_id)
     .then(data => {
@@ -54,7 +54,7 @@ router.get("/:board_id", function(req, res, next) {
     .finally(() => {
       res.send(JSON.stringify(rtVal));
     });
-  */
+  /*
   let rtVal = [
     {
       article_id: 1,
@@ -80,6 +80,15 @@ router.get("/:board_id", function(req, res, next) {
         "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf"
     },
     {
+      article_id: 3,
+      latitude: 23.01090,
+      longitude: 120.66600,
+      altitude: 1,
+      title: `只是隻鴨子`,
+      model_url:
+        "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf"
+    },
+    {
       article_id: 4,
       latitude: 22.7311333,
       longitude: 120.2774256,
@@ -98,6 +107,7 @@ router.get("/:board_id", function(req, res, next) {
   ];
 
   res.send(JSON.stringify(rtVal));
+  */
 });
 
 /* Get content of article */
