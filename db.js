@@ -632,6 +632,16 @@ module.exports = class {
     });
   }
 
+  get_userBoardId(user_id) {
+    return new Promise((resolve, reject) => {
+      var sql_getuserBoardId = `SELECT board_id FROM MANAGE WHERE user_id ='${user_id}'`;
+      this.db.all(sql_getuserBoardId, (err, data) => {
+        if (err) return reject(err);
+        else resolve(data);
+      });
+    });
+  }
+
   manage(user_id, board_id) {
     return new Promise((resolve, reject) => {
       var sql_getListManage =
