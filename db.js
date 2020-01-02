@@ -187,7 +187,7 @@ module.exports = class {
   get_board_list() {
     return new Promise((resolve, reject) => {
       var sql_getBoardList =
-        "SELECT board_id, board_name, read_only, online_user_cnt FROM GENERALBOARD WHERE type=0";
+        "SELECT board_id, board_name, read_only FROM GENERALBOARD WHERE type=0";
       this.db.all(sql_getBoardList, (err, data) => {
         if (err) return reject(err);
         else resolve(data);
@@ -197,7 +197,7 @@ module.exports = class {
 
   get_board(board_id) {
     return new Promise((resolve, reject) => {
-      var sql_getBoard = `SELECT B.board_id, B.board_name, B.read_only, B.online_user_cnt, PB.visiable, GB.hashtag
+      var sql_getBoard = `SELECT B.board_id, B.board_name, B.read_only, PB.visiable, GB.hashtag
       FROM BOARD B
       LEFT JOIN GENERALBOARD GB
       ON B.board_id = GB.board_id
@@ -216,7 +216,7 @@ module.exports = class {
 
   find_board(board_name) {
     return new Promise((resolve, reject) => {
-      var sql_getBoard = `SELECT board_id, board_name, read_only, online_user_cnt FROM GENERALBOARD WHERE board_name='${board_name}'`;
+      var sql_getBoard = `SELECT board_id, board_name, read_only FROM GENERALBOARD WHERE board_name='${board_name}'`;
       this.db.get(sql_getBoard, (err, data) => {
         if (err) reject(err);
         else if (data === undefined) {
@@ -393,7 +393,7 @@ module.exports = class {
   ) {
     return new Promise((resolve, reject) => {
       var sql_addArticle =
-        "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag,Plaintext_Flag, Flag_3D, model_url, light_position, light_type, alt_text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag,Plaintext_Flag, Flag_3D, model_url, alt_text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
       this.db.run(
         sql_addArticle,
         [
@@ -409,8 +409,6 @@ module.exports = class {
           0,
           1,
           model_url,
-          light_position,
-          light_type,
           alt_text
         ],
         function(err) {

@@ -113,16 +113,16 @@ function create_personal_board(board_id, board_name, read_only, visible) {
 // create_personal_board("234567", "test", 0, 0);
 
 async function get_board_list() {
-  var sql_getBoardList = "SELECT board_id, board_name, read_only, online_user_cnt FROM GENERALBOARD WHERE type=0";
+  var sql_getBoardList = "SELECT board_id, board_name, read_only FROM GENERALBOARD WHERE type=0";
   let data = db.allAsync(sql_getBoardList);
   return data;
-}//return [{board_id, board_name, read_only, online_user_cnt} for gernalboard] type == 0
+}//return [{board_id, board_name, read_only} for gernalboard] type == 0
 // get_board_list().then((data)=>{
 //   console.log(data);
 // });
 
 async function get_board(board_id) {
-  var sql_getBoard = `SELECT board_id, board_name, read_only, online_user_cnt FROM GENERALBOARD WHERE board_id='${board_id}'`;
+  var sql_getBoard = `SELECT board_id, board_name, read_only FROM GENERALBOARD WHERE board_id='${board_id}'`;
   let data = db.getAsync(sql_getBoard);
   return data;
 }
@@ -131,7 +131,7 @@ async function get_board(board_id) {
 // });
 
 async function find_board(board_name) {
-  var sql_getBoard = `SELECT board_id, board_name, read_only, online_user_cnt FROM GENERALBOARD WHERE board_name='${board_name}'`;
+  var sql_getBoard = `SELECT board_id, board_name, read_only FROM GENERALBOARD WHERE board_name='${board_name}'`;
   let data = db.getAsync(sql_getBoard);
   return data;
 }
@@ -211,8 +211,8 @@ function create_plaintext_article(board_id, article_id, user_id, longitude, lati
 // create_picture_article("NUKCSIE",56789,"mmmi",0,0,0,"test","dfghjkl");
 
 function create_3D_article(board_id, article_id, user_id, longitude, latitude, altitude, title, model_url, alt_text) {
-  var sql_addArticle = "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag,Plaintext_Flag, Flag_3D, model_url, light_position, light_type, alt_text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-  db.run(sql_addArticle, [board_id, article_id, user_id, 2, longitude, latitude, altitude, title, 0, 0, 1, model_url, light_position, light_type, alt_text], function (err) { if (err) throw err; })
+  var sql_addArticle = "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag,Plaintext_Flag, Flag_3D, model_url, alt_text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  db.run(sql_addArticle, [board_id, article_id, user_id, 2, longitude, latitude, altitude, title, 0, 0, 1, model_url, alt_text], function (err) { if (err) throw err; })
 }
 
 async function find_article_title(user_id, title, type, board_name, pageShow) {
