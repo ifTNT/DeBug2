@@ -6,6 +6,7 @@ head
   script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
   // Bootstrap CSS
   link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
+  link(rel='stylesheet' href='stylesheets/article_board.css')
   title Article_board
 header.fixed-top.bg-dark(style='display:block;')
   nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
@@ -18,23 +19,32 @@ header.fixed-top.bg-dark(style='display:block;')
         a.dropdown-item(href='user_info') Personal information
         .dropdown-divider
         a.dropdown-item(href='sign_out') Sign out
-section(style='width:60%;margin:80px 20% 0 20%')
-  .Board_name.p-2.d-flex.justify-content-between
-    h2.which_boardname(style='font-family:Microsoft JhengHei;') #{board_name}
+section.navigator
+  .wrap
+    h2.boardname(style='font-family:Microsoft JhengHei;') #{board_name}
     .buttonsWrap
-      button.btn.btn-outline-primary.new_article.mb-2.mr-2(type='button')  New Article
-      button.btn.btn-outline-primary.subscribe.mb-2.mr-2(type='button')  Subscribe
-  .search_article.mt-2
-    | Please input the article name : 
-    input#boardname(type='text' name='article_name' style='width: 200px;margin-right: 10px;')
-    button.btn.btn-outline-dark.search_article_button.mb-2(type='button')  search 
-  .articles
-    // button for test
-    // <button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">Block level button</button>
+      button.btn.btn-outline-primary.new_article(type='button')  New Article
+      button.btn.btn-outline-primary.subscribe(type='button')  Subscribe
+    .search_article
+      | Please input the article name : 
+      input#boardname(type='text' name='article_name' style='width: 200px;margin-right: 10px;')
+      button.btn.btn-outline-dark.search_article_button(type='button')  search 
+
+.articles
+#tooltip
+#board_id #{board_id}
+
+// button for test
+// <button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">Block level button</button>
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
   
+
+script(src='https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js')
+script(src='https://threejs.org/examples/js/controls/OrbitControls.js' defer='')
+script(src='https://threejs.org/examples/js/loaders/GLTFLoader.js' defer='')
 script(src='/JS/Article_board.js' defer='')
+script(src='/JS/Article_board_3d.js' defer='')
 //script(src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous')
 script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous')
 script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous')
