@@ -29,6 +29,7 @@ section(style='width:60%;margin:80px 20% 0 20%')
     .articleHeader.d-flex.align-items-start.flex-column.mb-3
       .articleTitle.p-2
         h3 #{data.title}
+      input#edit_title.form-control(style="display:none;" type='text'  value="title")
       .artitlePoster.p-2
         h4 #{data.user_id}
     .articleBody
@@ -37,7 +38,12 @@ section(style='width:60%;margin:80px 20% 0 20%')
           p.markdown #{data.markdown}
         if(data.pic_url!==null)
           image(src=data.pic_url)
-        
+
+        .form-group#edit_main(style="display:none;")
+          textarea#markdown.form-control(rows='5')
+
+        button#edit_button.btn.btn-outline-primary.mb-2.mr-2(style="display:none;" type='button') 確認送出
+
       #map(style="height:200px;width:100%;margin-bottom:15px;")
       .artitleMid.p-2.d-flex.align-items-center
         h4.mr-2 回覆
