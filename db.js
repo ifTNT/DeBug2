@@ -251,7 +251,7 @@ module.exports = class {
         }
         path += `hashtag = '${hashtag}'`;
       }
-      if (visible != null) {
+      if (visiable != null) {
         if (path != "") {
           path += ",";
         }

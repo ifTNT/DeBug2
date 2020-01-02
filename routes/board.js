@@ -100,7 +100,7 @@ router.post("/:id", function(req, res, next) {
     .catch(err => {
       rtVal = {
         ok: false,
-        msg: err
+        msg: err.stack
       };
     })
     .finally(() => {
