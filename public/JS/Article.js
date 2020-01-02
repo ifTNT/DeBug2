@@ -168,13 +168,13 @@ function delete_res(e) {
 }
 
 document
+  .querySelector(".create_response")
+  .addEventListener("submit", post_response);
+document
   .querySelector(".update_article")
   .addEventListener("click", update_article);
 document
   .querySelector(".delete_article")
   .addEventListener("click", delete_article);
-document
-  .querySelector(".create_response")
-  .addEventListener("submit", post_response);
 
 //是否顯示留言更新刪除  前端去找userid 右上角那個innerHTML抓 後端不做
