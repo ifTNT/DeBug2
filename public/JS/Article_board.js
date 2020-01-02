@@ -12,7 +12,7 @@ function new_article(){
 
 function list_article_in_board()
 {
-    var which_boardname= document.querySelector('.which_boardname').innerHTML;//$(".which_boardname").innerHTML;
+    var which_boardname= document.querySelector('.boardname').innerHTML;//$(".which_boardname").innerHTML;
     console.log(which_boardname);
     var board_id="";
     $.ajax({
@@ -49,7 +49,7 @@ function subscribe()
 {
   console.log("subscribe");
 }
-list_article_in_board();
+//list_article_in_board();
 document.querySelector('.new_article').addEventListener('click', new_article);
 document.querySelector('.search_article_button').addEventListener('click',search_article);
 document.querySelector('.subscribe').addEventListener('click',subscribe);

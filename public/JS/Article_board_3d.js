@@ -4,7 +4,10 @@ function getRandom(min, max) {
 
 function fromLongLatToXZ(longitude, latitude) {
   let r = 6371000; //Radius of earth (m);
-  let scaleFactor = 100;
+  let scaleFactor = 1;
+
+  longitude = longitude * Math.PI / 180;
+  latitude = latitude * Math.PI / 180;
 
   //For small area, euqalrectangular projection is fine.
   let x = (r * longitude * Math.cos(latitude)) / scaleFactor;
@@ -24,6 +27,7 @@ function initScene() {
   window.scene;
   window.renderer;
   window.camera;
+  window.controls;
 
   scene = new THREE.Scene();
 
@@ -33,20 +37,20 @@ function initScene() {
 
   cubeTextureLoader.load(
     [
+      /*
       "paper_texture.jpg",
       "paper_texture.jpg",
       "paper_texture.jpg",
       "paper_texture.jpg",
       "paper_texture.jpg",
       "paper_texture.jpg"
-      /*
+      */
       "minecraft_1.png",
       "minecraft_no_sun.png",
       "minecraft_sky.png",
       "minecraft_ground.png",
       "minecraft_no_sun.png",
       "minecraft_no_sun.png"
-      */
     ],
     function(texture) {
       scene.background = texture;
@@ -75,7 +79,7 @@ function initScene() {
   //Clock for update control
   var clock = new THREE.Clock();
   //Control
-  let controls = new THREE.FirstPersonControls(camera, renderer.domElement);
+  controls = new THREE.FirstPersonControls(camera, renderer.domElement);
   controls.movementSpeed = 10;
   controls.lookSpeed = 0.1;
   controls.update(clock.getDelta());
@@ -101,35 +105,60 @@ function initScene() {
   }).done(function(data) {
     console.log(data);
     for (let i of data) {
-      const geometry = new THREE.BoxGeometry(0.1, 2, 2); // Article cube
-      const material = new THREE.MeshPhongMaterial({
-        color: getRandom(0, 0xfaffff)
-      });
-      let cube = new THREE.Mesh(geometry, material);
-
       let { x, z } = fromLongLatToXZ(i.longitude, i.latitude);
       let y = i.altitude;
-
       console.log(x, y, z);
 
-      cube.position.set(x, y, z);
-      cube.id = i.article_id;
-      cube.title = i.title;
-      scene.add(cube);
+      if (i.model_url && i.model_url !== null) {
+        let loader = new THREE.GLTFLoader();
+        loader.load(
+          i.model_url,
+          function(gltf) {
+            gltf.scene.position.set(x, y, z);
+            console.log(gltf.scene);
+            scene.add(gltf.scene);
+          },
+          undefined,
+          function(error) {
+            console.error(error);
+            //Handle fallback
+            var texture = new THREE.TextureLoader().load("images/fallback.png");
+            let material = new THREE.MeshBasicMaterial({ map: texture });
+            const geometry = new THREE.BoxGeometry(1, 1, 1); // Fallback cube
+            let cube = new THREE.Mesh(geometry, material);
 
-      let faceOnCamera = function() {
-        cube.rotation.y = Math.atan2(
-          cube.position.z - camera.position.z,
-          camera.position.x - cube.position.x
+            cube.position.set(x, y, z);
+            cube.id = i.article_id;
+            cube.title = "Object doesn't exist";
+            scene.add(cube);
+          }
         );
-        /*cube.rotation.z = Math.atan2(
-        (camera.position.y - cube.position.y),
-        (camera.position.x - cube.position.x )
-        );*/
+      } else {
+        const geometry = new THREE.BoxGeometry(0.1, 2, 2); // Article cube
+        const material = new THREE.MeshPhongMaterial({
+          color: getRandom(0, 0xfaffff)
+        });
+        let cube = new THREE.Mesh(geometry, material);
 
-        requestAnimationFrame(faceOnCamera);
-      };
-      faceOnCamera();
+        cube.position.set(x, y, z);
+        cube.id = i.article_id;
+        cube.title = i.title;
+        scene.add(cube);
+
+        let faceOnCamera = function() {
+          cube.rotation.y = Math.atan2(
+            cube.position.z - camera.position.z,
+            camera.position.x - cube.position.x
+          );
+          /*cube.rotation.z = Math.atan2(
+            (camera.position.y - cube.position.y),
+            (camera.position.x - cube.position.x )
+           );*/
+
+          requestAnimationFrame(faceOnCamera);
+        };
+        faceOnCamera();
+      }
     }
   });
 
@@ -152,6 +181,7 @@ function initScene() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    controls.handleResize();
     //let article_style = document.querySelector("#article").style;
     //article_style.width = `${window.innerWidth / 2}px`;
     //article_style.height = `${window.innerHeight}px`;

@@ -39,14 +39,23 @@ router.post("/:board_id", function(req, res, next) {
 
 /* Get list of all article */
 router.get("/:board_id", function(req, res, next) {
-  var rtVal = [
-    {
-      article_id: 0,
-      latitude: 22.7311233, //In radian
-      longitude: 120.2774246, //In radian
-      altitude: 0, //In meters
-      title: `article1 in ${req.params.board_id}`
-    },
+  /*
+  var rtVal = [];
+  db.get_all_article(req.params.board_id)
+    .then(data => {
+      rtVal = data;
+    })
+    .catch(err => {
+      rtVal = {
+        ok: false,
+        msg: err
+      };
+    })
+    .finally(() => {
+      res.send(JSON.stringify(rtVal));
+    });
+  */
+  let rtVal = [
     {
       article_id: 1,
       latitude: 22.7311333,
@@ -60,6 +69,31 @@ router.get("/:board_id", function(req, res, next) {
       longitude: 0.001 / 3600,
       altitude: 0,
       title: `article3 in ${req.params.board_id}`
+    },
+    {
+      article_id: 3,
+      latitude: 22.7311633,
+      longitude: 120.2775256,
+      altitude: 1,
+      title: `只是隻鴨子`,
+      model_url:
+        "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf"
+    },
+    {
+      article_id: 4,
+      latitude: 22.7311333,
+      longitude: 120.2774256,
+      altitude: 5,
+      title: `芭樂`,
+      model_url: "/glTF_models/Avocado/Avocado.gltf"
+    },
+    {
+      article_id: 4,
+      latitude: 22.7311333,
+      longitude: 120.2774256,
+      altitude: 10,
+      title: `芭樂`,
+      model_url: "/glTF_models/"
     }
   ];
 

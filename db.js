@@ -251,7 +251,7 @@ module.exports = class {
         }
         path += `hashtag = '${hashtag}'`;
       }
-      if(visible!=null){
+      if (visible != null) {
         if (path != "") {
           path += ",";
         }
@@ -332,7 +332,7 @@ module.exports = class {
           0,
           0
         ],
-        function (err) {
+        function(err) {
           if (err) return reject(err);
           else resolve();
         }
@@ -370,7 +370,7 @@ module.exports = class {
           markdown,
           0
         ],
-        function (err) {
+        function(err) {
           if (err) return reject(err);
           else resolve();
         }
@@ -412,7 +412,7 @@ module.exports = class {
           light_type,
           alt_text
         ],
-        function (err) {
+        function(err) {
           if (err) return reject(err);
           else resolve();
         }
@@ -433,7 +433,7 @@ module.exports = class {
         .then(data => {
           condition.push(`board_id = '${data.board_id}'`);
         })
-        .catch(() => { })
+        .catch(() => {})
         .finally(() => {
           searchQuery =
             condition.length == 0 ? "" : " WHERE " + condition.join(" AND ");
@@ -450,6 +450,16 @@ module.exports = class {
   // find_article_title(null, null, null, "高雄大學", 1).then((data)=>{
   //   console.log(data);
   // })
+
+  get_all_article(board_id) {
+    return new Promise((resolve, reject) => {
+      var sql_getArtic = `SELECT * FROM ARTICLE WHERE board_id='${board_id}'`;
+      this.db.all(sql_getArtic, (err, data) => {
+        if (err) return reject(err);
+        else resolve(data);
+      });
+    });
+  }
 
   get_article(board_id, article_id) {
     return new Promise((resolve, reject) => {
@@ -479,7 +489,7 @@ module.exports = class {
         path += `alt_text='${alt_text}'`;
       }
       var sql_updatePA = `update ARTICLE set ${path} WHERE board_id='${board_id}' AND article_id =${article_id}`;
-      this.db.run(sql_updatePA, function (err) {
+      this.db.run(sql_updatePA, function(err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -502,7 +512,7 @@ module.exports = class {
         path += `markdown='${markdown}'`;
       }
       var sql_updatePtA = `update ARTICLE set ${path} WHERE board_id='${board_id}' AND article_id =${article_id}`;
-      this.db.run(sql_updatePtA, function (err) {
+      this.db.run(sql_updatePtA, function(err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -528,7 +538,7 @@ module.exports = class {
         path += `alt_text='${alt_text}'`;
       }
       var sql_update3DA = `update ARTICLE set ${path} WHERE board_id='${board_id}' AND article_id =${article_id}`;
-      this.db.run(sql_update3DA, function (err) {
+      this.db.run(sql_update3DA, function(err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -538,7 +548,7 @@ module.exports = class {
   delete_article(board_id, article_id) {
     return new Promise((resolve, reject) => {
       var sql_delA = `DELETE FROM ARTICLE WHERE board_id='${board_id}' AND article_id = ${article_id}`;
-      this.db.run(sql_delA, function (err) {
+      this.db.run(sql_delA, function(err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -563,7 +573,7 @@ module.exports = class {
           user_id,
           content
         ],
-        function (err) {
+        function(err) {
           if (err) return reject(err);
           else resolve();
         }
@@ -585,7 +595,7 @@ module.exports = class {
   update_response(board_id, article_id, response_id, content) {
     return new Promise((resolve, reject) => {
       var sql_updateRes = `update ARTICLE set content='${content}' WHERE board_id='${board_id}' AND article_id =${article_id} AND response_id = '${response_id}'`;
-      this.db.run(sql_updateRes, function (err) {
+      this.db.run(sql_updateRes, function(err) {
         if (err) return reject(err);
         else resolve();
       });
@@ -616,8 +626,7 @@ module.exports = class {
       var sql_getListManage = `SELECT BD.board_name FROM BOARD BD JOIN MANAGE MAN WHERE BD.board_id = MAN.board_id AND MAN.user_id ='${user_id}'`;
       this.db.all(sql_getListManage, (err, data) => {
         if (err) return reject(err);
-        else
-          resolve(data);
+        else resolve(data);
       });
     });
   }

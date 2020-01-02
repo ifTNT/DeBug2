@@ -7,6 +7,9 @@
   box-shadow: -5px 0px 10px darkgray;
   box-sizing: border-box;
 }*/
+body {
+  overflow: hidden;
+}
 #tooltip {
   position: fixed;
   left: 0;
