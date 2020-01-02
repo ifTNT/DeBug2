@@ -5,6 +5,19 @@ var router = express.Router();
 /* Create a new article */
 router.post("/:board_id", function(req, res, next) {
   /* [TODO] QQ */
+  var rtVal = {};
+  switch(req.body.type){
+    case 0:
+      
+    break;
+    case 1:
+
+    break;
+    case 2:
+
+    break;
+
+  }
   /*var rtVal = {};
   db.create_general_board(
     req.body.board_id,

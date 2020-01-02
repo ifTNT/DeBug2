@@ -259,7 +259,7 @@ function onSceneMouseClick(e) {
   let intersects = ray.intersectObjects(scene.children);
   if (intersects.length > 0 && intersects[0].object === selectedCube) {
     document.querySelector("#tooltip").style.opacity = "0";
-    alert(intersects[0].object.name);
+    openArticle(intersects[0].object.name);
     //document.querySelector("#article").style.display = "block";
     //document.querySelector("#article").innerHTML = intersects[0].object.id;
   } else {
@@ -276,3 +276,8 @@ function onSceneMouseEnter(e) {
 }
 
 initScene();
+
+function openArticle(article_id){
+  let board_id = document.querySelector("#board_id");
+  alert("還沒做啦幹", article_id);
+}
