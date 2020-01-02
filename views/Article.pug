@@ -6,12 +6,13 @@ head
   script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
   // Bootstrap CSS
   link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
+  link(rel='stylesheet' href='/stylesheets/article.css')
   script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtSDjMSesCZFoJNZ06PknkmdHtvV4YrS4&callback=initMap")
   title Article
 header.fixed-top.bg-dark(style='display:block;')
   nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
     // pt-3 pl-5 pr-5 mb-2
-    h1 DeBug2
+    h1(onclick="javascript:location.href='/'") DeBug2
     .btn-group.m-2
       button.btn.btn-danger.dropdown-toggle.user_id(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
         | #{user_id}
@@ -26,20 +27,16 @@ section(style='width:60%;margin:80px 20% 0 20%')
       button.btn.btn-outline-dark.delete_article.mb-2(type='button')  delete
     .articleHeader.d-flex.align-items-start.flex-column.mb-3
       .articleTitle.p-2
-        h3
-          | Title:
-          span #{title}
+        h3 #{data.title}
       .artitlePoster.p-2
-        h4
-          | Writer:
-          span user_id
+        h4 #{data.user_id}
     .articleBody
       .articleMain
-        p
-          | Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi quisquam pariatur necessitatibus accusamus
-          | quam sunt a obcaecati dolorum. Neque quos officiis aspernatur illo corporis dolorem, quibusdam recusandae eius
-          | fugiat quo provident officia reiciendis deserunt eos vitae unde architecto repudiandae, accusamus voluptatum?
-          | Provident quia necessitatibus adipisci at non. Neque, illo iste!
+        if(data.markdown!==null)
+          p.markdown #{data.markdown}
+        if(data.pic_url!==null)
+          image(src=data.pic_url)
+        
       #map(style="height:200px;width:100%;margin-bottom:15px;")
       .artitleMid.p-2.d-flex.align-items-center
         h4.mr-2 Response
@@ -58,8 +55,14 @@ section(style='width:60%;margin:80px 20% 0 20%')
       .create_response.mt-4
         input#response_content.form-control(type='text' placeholder='response…' name='response_content' style='display:inline;width: 80%;margin-right: 10px;')
         button.btn.btn-dark.post_response.mb-2.btn-sm(type='button') response 
+#longitude(style='display:none;') #{data.longitude}
+#latitude(style='display:none;') #{data.latitude}
+#altitude(style='display:none;') #{data.altitude}
+#board_id(style='display:none;') #{board_id}
+#article_id(style='display:none;') #{data.article_id}
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
+script(src='https://cdn.jsdelivr.net/npm/marked/marked.min.js')
 script(src='/JS/Article.js')
 script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous')
 script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous')
