@@ -43,24 +43,62 @@ function init() {
 }
 init();
 
+function updateART(){
+  var titleT = $("#edit_title").val();
+  var markdownT = $("#markdown").val();
+  let board_id = $("#board_id").text(); // 回傳 board_id
+  let article_id = $("#article_id").text(); //回傳 article_id
+  console.log(titleT+" "+ markdownT)
+  var d = {
+    titleT,
+    markdownT
+  };
+  $.ajax({
+    type: "POST",
+    url: "/api/v1/article/" + board_id + "/" + article_id,
+    data: d,
+    dataType: "json"
+  }).done(data => {
+    if(data.ok=true){
+      alert(data.msg.toString());
+      $("#edit_title").hide();
+      $("#edit_main").hide();
+      $("#edit_button").hide();
+      location.reload();
+    }else{
+      alert(data.msg.toString());
+      $("#edit_title").hide();
+      $("#edit_main").hide();
+      $("#edit_button").hide();
+    }
+  });
+}
+
 function update_article() {
   console.log("update_article");
-  // var title=document.querySelector('.articles').innerHTML;
-  //document.querySelector('.articles').innerHTML='';
+  $("#edit_title").show();
+  $("#edit_main").show();
+  $("#edit_button").show();
+  document.querySelector("#edit_button").addEventListener("click", updateART);
 }
 
 function delete_article() {
   var getUrlString = location.href;
   var url = new URL(getUrlString);
-  board_id = url.searchParams.get("board_id"); // 回傳 board_id
-  article_id = url.searchParams.get("article_id"); //回傳 article_id
+  let board_id = $("#board_id").text(); // 回傳 board_id
+  let article_id = $("#article_id").text(); //回傳 article_id
+  console.log(board_id+" "+article_id)
   console.log("delete_article");
   $.ajax({
     type: "DELETE",
     url: "/api/v1/article/" + board_id + "/" + article_id,
     dataType: "json"
   }).done(data => {
-    console.log(data);
+    if(data.ok==true){
+      window.history.back();
+    }else{
+      console.log(data.msg)
+    }
     // window.location.href = "/Article_board?board_id="+board_id;
   });
 }

@@ -504,10 +504,6 @@ module.exports = class {
       if (title != null) {
         path = `title='${title}'`;
       }
-      if (pic_url != null) {
-        if (path != "") path += ",";
-        path += `pic_url='${pic_url}'`;
-      }
       if (markdown != null) {
         if (path != "") path += ",";
         path += `markdown='${markdown}'`;
