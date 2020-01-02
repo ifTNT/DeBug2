@@ -22,13 +22,13 @@ section.pt-5(style='height: 100%;width:60%;margin-left: 20%;margin-right: 20%;te
     .form-group
       label(for='type') Which type 
         .form-check.form-check-inline
-          input#picture.form-check-input(type='radio' name='Options'  value='option1' checked)
+          input#picture.form-check-input(type='radio' name='type'  value='0' checked)
           label.form-check-label(for='picture') Picture
         .form-check.form-check-inline
-          input#plaintext.form-check-input(type='radio' name='Options' value='option2')
+          input#plaintext.form-check-input(type='radio' name='type' value='1')
           label.form-check-label(for='plaintext') Plaintext
         .form-check.form-check-inline
-          input#three_dimensional.form-check-input(type='radio' name='Options' value='option3')
+          input#three_dimensional.form-check-input(type='radio' name='type' value='2')
           label.form-check-label(for='three_dimensional') 3D
 
     .form-group#display_pic(style="")
