@@ -393,7 +393,7 @@ module.exports = class {
   ) {
     return new Promise((resolve, reject) => {
       var sql_addArticle =
-        "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag,Plaintext_Flag, Flag_3D, model_url, alt_text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        "INSERT INTO ARTICLE(board_id, article_id, user_id, type, longitude, latitude, altitude, title, Picture_Flag,Plaintext_Flag, Flag_3D, model_url, alt_text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
       this.db.run(
         sql_addArticle,
         [

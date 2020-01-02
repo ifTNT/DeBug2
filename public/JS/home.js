@@ -3,7 +3,6 @@ function search_board() {
   // var which_type_board_name=document.querySelector('.search_choose').innerHTML;
   var which_type_board_name = document.querySelector(".search_choose")
     .textContent;
-  console.log(which_type_board_name == "Public board");
   var token = $("input[name=csrfimiddlewaretoken").val();
   var Boards = document.querySelector(".boards").innerHTML;
   document.querySelector(".boards").innerHTML = "";
@@ -17,7 +16,7 @@ function search_board() {
   console.log(name);
 
   var urlForAjax = "/api/v1/board/";
-  if (which_type_board_name == "Public board") {
+  if (which_type_board_name == "公版") {
     //public board
     urlForAjax += name;
     findBoard(urlForAjax, obj);

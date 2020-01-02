@@ -1,8 +1,9 @@
-navigator.geolocation.watchPosition((position) => {
+navigator.geolocation.watchPosition(position => {
   console.log(position.coords);
   window.latitude = position.coords.latitude;
   window.longitude = position.coords.longitude;
-  window.altitude = position.coords.altitude === null ? 0 : position.coords.altitude;
+  window.altitude =
+    position.coords.altitude === null ? 0 : position.coords.altitude;
 });
 function create_article(e) {
   e.preventDefault();
@@ -15,9 +16,9 @@ function create_article(e) {
   //抓board_id
   var getUrlString = location.href;
   var url = new URL(getUrlString);
-  var board_id = url.searchParams.get('board_id'); // 回傳board_id
+  var board_id = url.searchParams.get("board_id"); // 回傳board_id
 
-  var alt_text = "rrrrrrrrrrrrrrrrrrrrr"
+  var alt_text = "rrrrrrrrrrrrrrrrrrrrr";
 
   var d = {
     type,
@@ -36,11 +37,17 @@ function create_article(e) {
     data: d,
     dataType: "json"
   })
-    .done(function (data) {
+    .done(function(data) {
       console.log(data);
+      if(data.ok===true){
+        window.history.back();
+      }else{
+        alert(data.msg);
+      }
     })
-    .fail(function (err) {
+    .fail(function(err) {
       console.log(err);
+      alert(JSON.stringify(err));
     });
 }
 
@@ -49,25 +56,29 @@ function change_for_type_pic() {
   $("#display_pic").show();
   $("#display_plaintext").hide();
   $("#display_3D").hide();
-
-
 }
 function change_for_type_plaintext() {
   console.log("plaintext");
   $("#display_pic").hide();
   $("#display_plaintext").show();
   $("#display_3D").hide();
-
 }
 function change_for_type_3D() {
   console.log("3D");
   $("#display_pic").hide();
   $("#display_plaintext").hide();
   $("#display_3D").show();
-
 }
 
-document.querySelector("#ArticleForm").addEventListener("submit", create_article);
-document.querySelector("#picture").addEventListener('click', change_for_type_pic);
-document.querySelector("#plaintext").addEventListener('click', change_for_type_plaintext);
-document.querySelector("#three_dimensional").addEventListener('click', change_for_type_3D);
+document
+  .querySelector("#ArticleForm")
+  .addEventListener("submit", create_article);
+document
+  .querySelector("#picture")
+  .addEventListener("click", change_for_type_pic);
+document
+  .querySelector("#plaintext")
+  .addEventListener("click", change_for_type_plaintext);
+document
+  .querySelector("#three_dimensional")
+  .addEventListener("click", change_for_type_3D);

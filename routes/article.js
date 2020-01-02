@@ -70,7 +70,7 @@ router.post("/:board_id", function(req, res, next) {
       .catch(err => {
         rtVal = {
           ok: false,
-          msg: err
+          msg: err.stack
         };
       }).finally(()=>{
         res.send(JSON.stringify(rtVal));
