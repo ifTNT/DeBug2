@@ -420,6 +420,7 @@ module.exports = class {
   }
 
   find_article_title(user_id, title, type, board_name, pageShow) {
+    const rowPerPage = 200;
     return new Promise((resolve, reject) => {
       var condition = [];
       if (user_id != null) condition.push(`user_id = '${user_id}'`);
@@ -436,9 +437,9 @@ module.exports = class {
         .finally(() => {
           searchQuery =
             condition.length == 0 ? "" : " WHERE " + condition.join(" AND ");
-          var aql_searchArticle = `SELECT article_id,title,user_id,board_id FROM ARTICLE ${searchQuery} order by article_id desc LIMIT ${(pageShow -
-            1) *
-            20},${20}`;
+          var aql_searchArticle =
+            `SELECT article_id,title,user_id,board_id FROM ARTICLE ${searchQuery} order by article_id desc` +
+            `LIMIT ${(pageShow - 1) * rowPerPage},${rowPerPage}`;
           this.db.all(aql_searchArticle, (err, data) => {
             if (err) return reject(err);
             else resolve(data);
@@ -451,8 +452,9 @@ module.exports = class {
   // })
 
   get_all_article(board_id) {
+    const LIMIT = 1000;
     return new Promise((resolve, reject) => {
-      var sql_getArtic = `SELECT * FROM ARTICLE WHERE board_id='${board_id}'`;
+      var sql_getArtic = `SELECT * FROM ARTICLE WHERE board_id='${board_id}' LIMIT 0,${LIMIT}`;
       this.db.all(sql_getArtic, (err, data) => {
         if (err) return reject(err);
         else resolve(data);

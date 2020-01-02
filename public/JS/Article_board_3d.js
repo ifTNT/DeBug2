@@ -2,18 +2,20 @@ function getRandom(min, max) {
   return Math.random() * Math.abs(max - min) + min;
 }
 
-function fromLongLatToXZ(longitude, latitude) {
+function convertCoordinates(longitude, latitude, altitude) {
   let r = 6371000; //Radius of earth (m);
-  let scaleFactor = 1;
+  let scaleFactor = 200;
+  let scaleAltitude = 3;
 
-  longitude = longitude * Math.PI / 180;
-  latitude = latitude * Math.PI / 180;
+  longitude = (longitude * Math.PI) / 180;
+  latitude = (latitude * Math.PI) / 180;
 
   //For small area, euqalrectangular projection is fine.
   let x = (r * longitude * Math.cos(latitude)) / scaleFactor;
   let z = (r * latitude) / scaleFactor;
+  let y = altitude * scaleAltitude;
 
-  return { x, z };
+  return { x, y, z };
 }
 
 function initScene() {
@@ -105,9 +107,8 @@ function initScene() {
   }).done(function(data) {
     console.log(data);
     for (let i of data) {
-      let { x, z } = fromLongLatToXZ(i.longitude, i.latitude);
-      let y = i.altitude;
-      console.log(x, y, z);
+      let { x, y, z } = convertCoordinates(i.longitude, i.latitude, i.altitude);
+      //console.log(x, y, z);
 
       if (i.model_url && i.model_url !== null) {
         let loader = new THREE.GLTFLoader();
@@ -141,7 +142,7 @@ function initScene() {
         let cube = new THREE.Mesh(geometry, material);
 
         cube.position.set(x, y, z);
-        cube.id = i.article_id;
+        cube.name = i.article_id;
         cube.title = i.title;
         scene.add(cube);
 
@@ -175,6 +176,8 @@ function initScene() {
   //document.querySelector("#article").style.height = `${window.innerHeight}px`;
   renderer.domElement.addEventListener("mousedown", onSceneMouseDown);
   renderer.domElement.addEventListener("mouseup", onSceneMouseClick);
+  renderer.domElement.addEventListener("mouseout", onSceneMouseOut);
+  renderer.domElement.addEventListener("mouseenter", onSceneMouseEnter);
 
   //RWD
   window.addEventListener("resize", function() {
@@ -190,8 +193,8 @@ function initScene() {
   //Update camera location from geolocation
   navigator.geolocation.watchPosition(function(p) {
     let { longitude, latitude, altitude } = p.coords;
-    let { x, z } = fromLongLatToXZ(longitude, latitude);
-    let y = altitude == null ? 0 : altitude;
+    altitude = altitude == null ? 0 : altitude;
+    let { x, y, z } = convertCoordinates(longitude, latitude, altitude);
     camera.position.set(x, y, z);
     console.log("camera:", x, y, z);
     console.log(p.coords);
@@ -256,12 +259,20 @@ function onSceneMouseClick(e) {
   let intersects = ray.intersectObjects(scene.children);
   if (intersects.length > 0 && intersects[0].object === selectedCube) {
     document.querySelector("#tooltip").style.opacity = "0";
-    alert(intersects[0].object.id);
+    alert(intersects[0].object.name);
     //document.querySelector("#article").style.display = "block";
     //document.querySelector("#article").innerHTML = intersects[0].object.id;
   } else {
     //document.querySelector("#article").style.display = "none";
   }
+}
+
+function onSceneMouseOut(e) {
+  document.querySelector("#tooltip").style.display = "none";
+}
+
+function onSceneMouseEnter(e) {
+  document.querySelector("#tooltip").style.display = "block";
 }
 
 initScene();
