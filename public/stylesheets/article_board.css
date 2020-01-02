@@ -30,7 +30,7 @@ section.navigator {
   position: fixed;
   top: 4rem;
   width: 100%;
-  z-index: 9999;
+  z-index: 9990;
   display: flex;
   justify-content: center;
 }
@@ -55,4 +55,7 @@ section.navigator .boardname {
 }
 #board_id {
   display: none;
+}
+header.fixed-top {
+  z-index: 9999;
 }
