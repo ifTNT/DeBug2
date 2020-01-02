@@ -1,96 +1,135 @@
+//TODO
 function search_article()
 {
- 
+  //抓board_id
+    var getUrlString = location.href;
+    var url = new URL(getUrlString);
+    var board_id=url.searchParams.get('board_id'); // 回傳 board_id
+
     console.log("search_article");
-    /*var token=$('input[name=csrfimiddlewaretoken').val();
     var title=document.querySelector('.articles').innerHTML;
     document.querySelector('.articles').innerHTML='';
 
-    var obj = {
-        csrfmiddlewaretoken: token,
-        title : title
-    };
-    
-    var name = $("#articlename").val();
-    console.log(name);
+    var article_name = $("#articlename").val();
+    console.log(article_name);
+    if(article_name==="")return;
     $.ajax({
         type:'GET',
-        url:"/api/v1/board/"+ name ,
-        data: obj ,
+        url:"/api/v1/article/"+ board_id+"/search?article_name="+article_name ,
         dataType: 'json'
     }).done(function(data){
         console.log(data);
-        //const nameList = data.map(item => Object.values(item)[0]);
-        //取得data的name
-        var boardname=data.board_name;
-        console.log(boardname);
-        if(boardname==undefined)return;
-        //創建原本的樣式到指定位置
-        //<button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">text</button> 
-        const newButton=document.createElement('button');
-        newButton.textContent=boardname;
-        newButton.style.border="none";
-        newButton.style.textAlign="left";
-        newButton.type="Button";
-        newButton.classList.add("btn");
-        newButton.classList.add("btn-outline-dark");
-        newButton.classList.add("btn-lg");
-        newButton.classList.add("btn-block");
-        newButton.classList.add("mt-3");
-        //再加上自己的名字為ID
-        newButton.id=boardname;
+        //取得data的title
+        for(i in data){
+          var title=data[i].title;
+          console.log(title);
+          //if(boardname==undefined)return;
 
-        document.querySelector('.boards').appendChild(newButton);
-    
+          //創建原本的樣式到指定位置
+          //<button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">text</button> 
+          const newButton=document.createElement('button');
+          newButton.textContent=boardname;
+          newButton.style.border="none";
+          newButton.style.textAlign="left";
+          newButton.type="Button";
+          newButton.classList.add("btn");
+          newButton.classList.add("btn-outline-dark");
+          newButton.classList.add("btn-lg");
+          newButton.classList.add("btn-block");
+          newButton.classList.add("mt-3");
+          //再加上自己的article_id為ID HTML
+          var article_id=data[i].article_id;
+          newButton.id=article_id;
+
+          document.querySelector('.articles').appendChild(newButton).addEventListener('click', Go_article);
+     }
         //console.log(Boards);
-    }).fail(function(err){console.log(err)})*/
+    }).fail(function(err){console.log(err)})
     
+}
+function Go_article()
+{
+  var getUrlString = location.href;
+  var url = new URL(getUrlString);
+  var board_id=url.searchParams.get('board_id'); // 回傳 board_id  
+  console.log("Go_article");
 }
 /*edit and create */
 function new_article(){
     console.log("new_article");
-   // window.location.href = `/edit_board?board_name=${$("#boardname").val()}`
-   window.location.assign("/Create_article");
+    var getUrlString = location.href;
+    var url = new URL(getUrlString);
+    var board_id=url.searchParams.get('board_id'); // 回傳 board_id
+    window.location.href = "/Create_article?board_id="+board_id;
+   //window.location.assign("/Create_article");
 }
+
 
 function list_article_in_board()
 {
-    var which_boardname= document.querySelector('.which_boardname').innerHTML;//$(".which_boardname").innerHTML;
-    console.log(which_boardname);
-    var board_id="";
-    $.ajax({
-      type: "GET",
-      url: "/api/v1/board/"+ which_boardname,
-      dataType: "json"
-    })
-      .done(function(data) {
-        console.log(data);
-        board_id=data.board_id;
-        console.log(board_id);//確定ID正確性
-    })
-    .fail(function(err) {
-      console.log(err);
-    }).then(function(){
-      console.log(board_id);//確定ID正確性
-      $.ajax({
-        type: "GET",
-        url: "/api/v1/article/"+ board_id,
-        dataType: "json"
-      })
-        .done(function(data) {
-          console.log(data);
-          
-       
-      })
-      .fail(function(err) {
-        console.log(err);
-      })
-    });
+   //抓board_id
+   var getUrlString = location.href;
+   var url = new URL(getUrlString);
+   var board_id=url.searchParams.get('board_id'); // 回傳 board_id
+
+   console.log("list_article_in_board");
+   var title=document.querySelector('.articles').innerHTML;
+   document.querySelector('.articles').innerHTML='';
+
+   $.ajax({
+       type:'GET',
+       url:"/api/v1/article/"+ board_id ,
+       dataType: 'json'
+   }).done(function(data){
+       console.log(data);
+       //取得data的title
+       for(i in data){
+         var title=data[i].title;
+         console.log(title);
+         //if(boardname==undefined)return;
+
+         //創建原本的樣式到指定位置
+         //<button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">text</button> 
+         const newButton=document.createElement('button');
+         newButton.textContent=title;
+         newButton.style.border="none";
+         newButton.style.textAlign="left";
+         newButton.type="Button";
+         newButton.classList.add("btn");
+         newButton.classList.add("btn-outline-dark");
+         newButton.classList.add("btn-lg");
+         newButton.classList.add("btn-block");
+         newButton.classList.add("mt-3");
+         //再加上自己的article_id為ID HTML
+         var article_id=data[i].article_id;
+         newButton.id=article_id;
+         document.querySelector('.articles').appendChild(newButton).addEventListener('click', Go_article);
+    }
+       //console.log(Boards);
+   }).fail(function(err){console.log(err)})
+   
     
 }
 function subscribe()
 {
   console.log("subscribe");
+  //catch board_id
+  var getUrlString = location.href;
+  var url = new URL(getUrlString);
+  var board_id=url.searchParams.get('board_id'); // 回傳 21
+
+  $.ajax({
+    type: "POST",
+    url: "/api/v1/board/"+board_id+"/subscribe",
+    dataType: "json"
+  })
+    .done(function(data) {
+      console.log(data);
+    })
+    .fail(function(err) {
+      console.log(err);
+    });
+
 }
 list_article_in_board();
 document.querySelector('.new_article').addEventListener('click', new_article);

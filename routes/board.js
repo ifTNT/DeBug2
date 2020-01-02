@@ -70,8 +70,8 @@ router.post("/:id", function(req, res, next) {
     req.body.board_name,
     req.body.read_only,
     req.body.hashtag,
-    req.body.visible,
-    0
+    req.body.visiable,
+    req.body.flag
   )
     .then(() => {
       rtVal = {

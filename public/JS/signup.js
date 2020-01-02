@@ -14,7 +14,7 @@ function signup(e) {
   console.log(check_password);
   console.log(NickName);
   //先確認密碼
-  if (password != check_password) {
+  if (password !== check_password) {
     alert.style.display = "block";
     alert.textContent = "This Password is not the same.";
     return;

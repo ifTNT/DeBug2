@@ -71,6 +71,7 @@ function list_board()
         {
             console.log(data[obj].board_name); 
             var name=data[obj].board_name;
+            console.log(data[obj].board_id);
             //創建原本的樣式到指定位置
            /*<button style="border:none;text-align: left;" type="button" 
            class="btn btn-outline-dark btn-lg btn-block">Block level button</button>*/
@@ -85,8 +86,8 @@ function list_board()
             newButton.classList.add("btn-block");
             newButton.classList.add("mt-3");
             //newButton.onclick="Go_article_board("+name+")";
-            //再加上自己的名字為ID
-            newButton.id=name;
+            //再加上自己的ID為HTML ID
+            newButton.id=data[obj].board_id;
             document.querySelector('.boards').appendChild(newButton).addEventListener('click', Go_article_board);
         }
     })
@@ -97,16 +98,18 @@ function list_board()
 function Go_article_board()
 {
     //find which board is clocked
-    var boardname_linkurl=this.id;
-    console.log( boardname_linkurl);
-    window.location.assign("/Article_board?board_name="+boardname_linkurl);
+    var boardid_linkurl=this.id;
+    console.log( boardid_linkurl);
+
+    window.location.assign("/Article_board?board_id="+boardid_linkurl);
 }
 
 function search_choose_public()
 {
     console.log("search_choose_public" );
     document.querySelector('.search_choose').innerHTML="Public board";
-
+    document.querySelector('.boards').innerHTML='';
+    list_board();
 
 }
 function search_choose_personal()

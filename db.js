@@ -231,7 +231,7 @@ module.exports = class {
   //   console.log(data);
   // });
 
-  update_board(board_id, board_name, read_only, hashtag, visible, flag) {
+  update_board(board_id, board_name, read_only, hashtag, visiable, flag) {
     return new Promise((resolve, reject) => {
       var path = "";
       if (board_name != null) {
@@ -251,12 +251,13 @@ module.exports = class {
         }
         path += `hashtag = '${hashtag}'`;
       }
-      if(visible!=null){
+      if(visiable!=null){
         if (path != "") {
           path += ",";
         }
-        path += `visible = ${visible}`;
+        path += `visiable = ${visiable}`;
       }
+      console.log(path);
       if (flag == 0)
         sql_updateAccPP = `update GENERALBOARD set ${path} WHERE board_id='${board_id}'`;
       else

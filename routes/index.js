@@ -114,7 +114,7 @@ router.get("/Article_board", function(req, res, next) {
   if (req.session.authenticated === true) {
     console.log(req.query.board_name);
     console.log(req.session.user_id);
-    res.render("Article_board", { user_id: req.session.user_id,board_name:req.query.board_name});
+    res.render("Article_board", { user_id: req.session.user_id,board_id:req.query.board_id});
 
   } else {
     res.redirect("/");
@@ -132,5 +132,9 @@ router.get("/Article", function(req, res, next) {
   } else {
     res.redirect("/");
   }
+});
+
+router.get("/Edit_person_board", function(req, res, next) {
+  res.render("Edit_person_board", { create: true });
 });
 module.exports = router;

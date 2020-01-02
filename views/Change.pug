@@ -8,12 +8,16 @@ head
   // Bootstrap CSS
   link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
   title Article
-header(style='height: 300px;width:60%;;margin-left: 20%;margin-right: 20%;')
+header(style='height: 200px;width:60%;;margin-left: 20%;margin-right: 20%;')
   .fixed-top.bg-dark(style='display:block;')
     nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
       // pt-3 pl-5 pr-5 mb-2
       h1(onclick="javascript:location.href='/user_info'") DeBug2
+  p.
 form.d-flex.flex-column(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;text-align: center;', id='changeForm')
+  p(style='color: gray;font-size:13px;')  If you want to change password,please input old password and new password 
+  p(style='color: gray;font-size:13px;')   change nickname, please input nickname and old password
+
   .mb-3
     | Please input the old password: 
     input#oldpassword(type='password' name='oldpassword' style='width: 200px;margin-right: 10px;')

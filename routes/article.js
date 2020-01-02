@@ -45,14 +45,14 @@ router.get('/:board_id', function(req, res, next) {
         longitude: 0,
         latitude: 0,
         altitude: 0,
-        title: `article1 in ${board_id}`
+        title: `article1 in ${req.params.board_id}`
     },
     {
         article_id: 1,
         longitude: 0,
         latitude: 0,
         altitude: 0,
-        title: `article2 in ${board_id}`
+        title: `article2 in ${req.params.board_id}`
     }
   ];
 

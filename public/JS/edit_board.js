@@ -4,11 +4,13 @@ function edit_board(e) {
     var original_board_name = $("#originalBoardName").val();
     var board_id = $("#board_id").val();
     var hashtag = $("#hash_tag").val();
+    var flag=0;
   
     var d = {
       board_id,
       board_name,
-      hashtag
+      hashtag,
+      flag
     };
     console.log(d);
   

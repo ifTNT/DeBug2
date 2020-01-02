@@ -13,6 +13,10 @@ function change(e)
     console.log(newpassword);
     console.log(newNickName);
 
+    if(newpassword=="")
+        newpassword=oldpassword;
+
+
     var obj = {
         csrfmiddlewaretoken: token,
         old_password:oldpassword,
@@ -20,6 +24,15 @@ function change(e)
         nick_name:newNickName
     };
 
+    if(newNickName=="")
+    {
+        obj = {
+        csrfmiddlewaretoken: token,
+        old_password:oldpassword,
+        password:newpassword,
+        };
+    }
+        
 
    $.ajax({
         type:'POST',

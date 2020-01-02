@@ -52,8 +52,15 @@ section.pt-5(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%; 
     #manage.tab-pane.fade(role='tabpanel' aria-labelledby='manage-tab')
       .manage_list
       // <p class="font-weight-bold">A</p>
-      .d-flex.justify-content-end
-        a.btn.btn-outline-primary.go_own_board_page Go own board page
+      .d-flex.justify-content-end.mt-3
+        button.btn.btn-outline-dark.go_own_board_page.mr-3 Go own board page
+        .dropdown.show
+          a#dropdownMenuLink.btn.btn-outline-primary.dropdown-toggle( role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+            | Own page Visiable
+          .dropdown-menu(aria-labelledby='dropdownMenuLink')
+            a.dropdown-item.type_true Yes
+            a.dropdown-item.type_false No
+
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
 script(src='/JS/userinfo.js' defer='')
