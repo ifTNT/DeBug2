@@ -2,6 +2,17 @@ function getRandom(min, max) {
   return Math.random() * Math.abs(max - min) + min;
 }
 
+function fromLongLatToXZ(longitude, latitude) {
+  let r = 6371000; //Radius of earth (m);
+  let scaleFactor = 100;
+
+  //For small area, euqalrectangular projection is fine.
+  let x = (r * longitude * Math.cos(latitude)) / scaleFactor;
+  let z = (r * latitude) / scaleFactor;
+
+  return { x, z };
+}
+
 function initScene() {
   //Initial global varible
   //For hover judging
@@ -15,6 +26,32 @@ function initScene() {
   window.camera;
 
   scene = new THREE.Scene();
+
+  //Load texture for scene
+  var cubeTextureLoader = new THREE.CubeTextureLoader();
+  cubeTextureLoader.setPath("/images/");
+
+  cubeTextureLoader.load(
+    [
+      "paper_texture.jpg",
+      "paper_texture.jpg",
+      "paper_texture.jpg",
+      "paper_texture.jpg",
+      "paper_texture.jpg",
+      "paper_texture.jpg"
+      /*
+      "minecraft_1.png",
+      "minecraft_no_sun.png",
+      "minecraft_sky.png",
+      "minecraft_ground.png",
+      "minecraft_no_sun.png",
+      "minecraft_no_sun.png"
+      */
+    ],
+    function(texture) {
+      scene.background = texture;
+    }
+  );
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight); // 場景大小
@@ -34,55 +71,70 @@ function initScene() {
   scene.add(camera);
   camera.lookAt(scene.position);
   camera.position.set(10, 10, 10);
-  let controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.update();
 
-  //Create light
+  //Clock for update control
+  var clock = new THREE.Clock();
+  //Control
+  let controls = new THREE.FirstPersonControls(camera, renderer.domElement);
+  controls.movementSpeed = 10;
+  controls.lookSpeed = 0.1;
+  controls.update(clock.getDelta());
+  //let controls = new THREE.OrbitControls(camera, renderer.domElement);
+  //controls.update();
+
+  //Point light that stick to camera
   var pointLight = new THREE.PointLight(0xffffff, 1, 50);
   scene.add(pointLight);
+  //Ambient light
   var light = new THREE.AmbientLight(0xaaaaaa);
   scene.add(light);
 
-  //[TODO] Fetch article list and add block
-  //Create object
+  //Axes helper
+  var axesHelper = new THREE.AxesHelper(5);
+  scene.add(axesHelper);
+
+  //Create article cubes
   $.ajax({
     type: "GET",
     url: `/api/v1/article/${$("#board_id").text()}`,
     dataType: "json"
-  }).done(data=>{
-      console.log(data);
-  })
-  for (var i = 0; i < 100; i++) {
-    const geometry = new THREE.BoxGeometry(0.1, 2, 2); // Article cube
-    const material = new THREE.MeshPhongMaterial({
-      color: getRandom(0, 0xffffff)
-    });
-    let cube = new THREE.Mesh(geometry, material);
-    cube.position.set(
-      getRandom(-20, 20),
-      getRandom(-20, 20),
-      getRandom(-20, 20)
-    );
-    cube.id = i;
-    scene.add(cube);
+  }).done(function(data) {
+    console.log(data);
+    for (let i of data) {
+      const geometry = new THREE.BoxGeometry(0.1, 2, 2); // Article cube
+      const material = new THREE.MeshPhongMaterial({
+        color: getRandom(0, 0xfaffff)
+      });
+      let cube = new THREE.Mesh(geometry, material);
 
-    let faceOnCamera = function() {
-      cube.rotation.y = Math.atan2(
-        cube.position.z - camera.position.z,
-        camera.position.x - cube.position.x
-      );
-      /*cube.rotation.z = Math.atan2(
+      let { x, z } = fromLongLatToXZ(i.longitude, i.latitude);
+      let y = i.altitude;
+
+      console.log(x, y, z);
+
+      cube.position.set(x, y, z);
+      cube.id = i.article_id;
+      cube.title = i.title;
+      scene.add(cube);
+
+      let faceOnCamera = function() {
+        cube.rotation.y = Math.atan2(
+          cube.position.z - camera.position.z,
+          camera.position.x - cube.position.x
+        );
+        /*cube.rotation.z = Math.atan2(
         (camera.position.y - cube.position.y),
         (camera.position.x - cube.position.x )
         );*/
 
-      requestAnimationFrame(faceOnCamera);
-    };
-    faceOnCamera();
-  }
+        requestAnimationFrame(faceOnCamera);
+      };
+      faceOnCamera();
+    }
+  });
 
   renderer.setAnimationLoop(function() {
-    controls.update();
+    controls.update(clock.getDelta());
     renderer.render(scene, camera);
     let { x, y, z } = camera.position;
     pointLight.position.set(x, y, z);
@@ -100,9 +152,19 @@ function initScene() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    let article_style = document.querySelector("#article").style;
-    article_style.width = `${window.innerWidth / 2}px`;
-    article_style.height = `${window.innerHeight}px`;
+    //let article_style = document.querySelector("#article").style;
+    //article_style.width = `${window.innerWidth / 2}px`;
+    //article_style.height = `${window.innerHeight}px`;
+  });
+
+  //Update camera location from geolocation
+  navigator.geolocation.watchPosition(function(p) {
+    let { longitude, latitude, altitude } = p.coords;
+    let { x, z } = fromLongLatToXZ(longitude, latitude);
+    let y = altitude == null ? 0 : altitude;
+    camera.position.set(x, y, z);
+    console.log("camera:", x, y, z);
+    console.log(p.coords);
   });
 }
 
@@ -134,7 +196,7 @@ function judgeHover() {
       INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
       // set a new color for closest object
       INTERSECTED.material.color.setHex(0xff0000);
-      document.querySelector("#tooltip").innerHTML = INTERSECTED.id;
+      document.querySelector("#tooltip").innerHTML = INTERSECTED.title;
       document.querySelector("#tooltip").style.opacity = "1";
     }
   } // there are no intersections

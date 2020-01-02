@@ -42,17 +42,24 @@ router.get("/:board_id", function(req, res, next) {
   var rtVal = [
     {
       article_id: 0,
-      longitude: 0,
-      latitude: 0,
-      altitude: 0,
+      latitude: 22.7311233, //In radian
+      longitude: 120.2774246, //In radian
+      altitude: 0, //In meters
       title: `article1 in ${req.params.board_id}`
     },
     {
       article_id: 1,
-      longitude: 0,
-      latitude: 0,
+      latitude: 22.7311333,
+      longitude: 120.2774256,
       altitude: 0,
       title: `article2 in ${req.params.board_id}`
+    },
+    {
+      article_id: 2,
+      latitude: 0.001 / 3600,
+      longitude: 0.001 / 3600,
+      altitude: 0,
+      title: `article3 in ${req.params.board_id}`
     }
   ];
 
