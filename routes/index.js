@@ -97,6 +97,7 @@ router.get("/edit_board", function(req, res, next) {
   console.log(req.query.board_name);
   db.find_board(req.query.board_name)
     .then(data => {
+      data = data[0];
       res.render("Edit_board", {
         create: false,
         board_id: data.board_id,

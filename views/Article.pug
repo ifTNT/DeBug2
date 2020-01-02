@@ -58,10 +58,10 @@ section(style='width:60%;margin:80px 20% 0 20%')
         //-   .who_response_content user_id : #{content}
         //-   .who_response_button
         //-     a.badge.badge-primary.mr-2( style='color: white;') update
-      .create_response.mt-4(style='margin-bottom: 3em;')
+      form.create_response.mt-4(style='margin-bottom: 3em;')
         //-     a.badge.badge-danger( style='color: white;') delete
         input#response_content.form-control(type='text' placeholder='請輸入回覆…' name='response_content' style='display:inline;width: 80%;margin-right: 10px;')
-        button.btn.btn-dark.post_response.mb-2.btn-sm(type='button') 送出
+        button.btn.btn-dark.post_response.mb-2.btn-sm(type='submit') 送出
 #longitude(style='display:none;') #{data.longitude}
 #latitude(style='display:none;') #{data.latitude}
 #altitude(style='display:none;') #{data.altitude}

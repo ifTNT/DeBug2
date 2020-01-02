@@ -1,3 +1,20 @@
+function responseTemplate(d) {
+  console.log(d);
+  let control =
+    d.permission === false
+      ? ""
+      : //        <a class='badge badge-primary mr-2' style='color: white;' data-id="${d["response_id"]}" onclick="update_res(this)">edit</a>
+        `<a class='badge badge-danger' style='color: white;' data-id="${d["response_id"]}" onclick="delete_res(this)">delete</a>
+                `;
+  let template = `<div class='someone_res d-flex justify-content-between align-items-center' style='padding-bottom: 0.5em;'>
+              <div><span style='font-weight: 600;'>${d["user_id"]} :</span> ${d["content"]}</div>
+              <div>
+                ${control}
+              </div>
+          </div>`;
+  return template;
+}
+
 function init() {
   $(".markdown").html(marked($(".markdown").text()));
   let latitude = parseFloat($("#latitude").text());
@@ -21,20 +38,9 @@ function init() {
     if (data["ok"] !== false) {
       console.log(data);
       data.forEach(d => {
-        let control =
-          d.permission === false
-            ? ""
-            : `
-                <a class='badge badge-primary mr-2' style='color: white;'>update</a>
-                <a class='badge badge-danger' style='color: white;'>delete</a>
-                `;
-        let template = `<div class='someone_res d-flex justify-content-between align-items-center' style='padding-bottom: 0.5em;'>
-              <div><span style='font-weight: 600;'>${d["user_id"]} :</span> ${d["content"]}</div>
-              <div>
-                ${control}
-              </div>
-          </div>`;
-        document.querySelector(".articleResponse").innerHTML += template;
+        document.querySelector(
+          ".articleResponse"
+        ).innerHTML += responseTemplate(d);
       });
     } else {
       $(".articleResponse").html("回應載入失敗");
@@ -88,6 +94,7 @@ function delete_article() {
   let board_id = $("#board_id").text(); // 回傳 board_id
   let article_id = $("#article_id").text(); //回傳 article_id
   console.log(board_id+" "+article_id)
+
   console.log("delete_article");
   $.ajax({
     type: "DELETE",
@@ -103,56 +110,61 @@ function delete_article() {
   });
 }
 
-function post_response() {
+function post_response(e) {
+  e.preventDefault();
   console.log("post_response");
-  var response_content = $("#response_content").val();
-  console.log(response_content);
-  // #{article_id}_block.d-flex.justify-content-between.align-items-center
-  //       div user_id : #{content}
-  //       div
-  //         a.badge.badge-primary.mr-2( style='color: white;') update
-  //         a.badge.badge-danger( style='color: white;') delete
-  var getUrlString = location.href;
-  var url = new URL(getUrlString);
-  var article_id = url.searchParams.get("article_id"); // 回傳 article_id
-  var user_id = document.querySelector(".user_id").innerHTML;
-  /*---------建立區塊-----------*/
-  var a =
-    "<div class='d-flex justify-content-between align-items-center' id='" +
-    article_id +
-    "_block'>";
-  var b = "<div >" + user_id + " : " + response_content + "</div>";
-  var c = "<div >";
-  var d =
-    "<a class='badge badge-primary mr-2 update' id='" +
-    user_id +
-    "' style='color: white;' onclick='update_res(" +
-    user_id +
-    ")'>update</a>";
-  var e =
-    "<a class='badge badge-danger delete id='" +
-    user_id +
-    "' style='color: white;' onclick='delete_res(" +
-    user_id +
-    ")'>delete</a>";
-  var f = "</div>";
-
-  var new_res_block = document.createElement("div");
-  new_res_block.id = article_id + "_block";
-  new_res_block.classList.add("d-flex");
-  new_res_block.classList.add("justify-content-between");
-  new_res_block.classList.add("align-items-center");
-  new_res_block.innerHTML = a + b + f + c + d + e + f + f;
-  document.querySelector(".articleResponse").appendChild(new_res_block);
-  $("#response_content").val("");
-  /*---------------------------*/
+  var content = $("#response_content").val();
+  let board_id = $("#board_id").text();
+  let article_id = parseInt($("#article_id").text());
+  let user_id = $(".user_id").text();
+  let d = {
+    content,
+    board_id,
+    article_id,
+    user_id
+  };
+  $.ajax({
+    type: "POST",
+    url: `/api/v1/response/${board_id}/${article_id}/`,
+    data: d,
+    dataType: "json"
+  }).done(data => {
+    console.log(data);
+    if (data.ok === true) {
+      d["response_id"] = data.response_id;
+      d["permission"] = true;
+      document.querySelector(".articleResponse").innerHTML =
+        responseTemplate(d) +
+        document.querySelector(".articleResponse").innerHTML;
+      $("#response_content").val("");
+    } else {
+      alert(data.err);
+    }
+  });
 }
 function update_res(e) {
-  console.log(e.id);
+  console.log(e.dataset.id);
 }
 
 function delete_res(e) {
-  console.log(e.id);
+  console.log(e.dataset.id);
+  let board_id = $("#board_id").text();
+  let article_id = parseInt($("#article_id").text());
+  let response_id = e.dataset.id;
+  $.ajax({
+    type: "DELETE",
+    url: `/api/v1/response/${board_id}/${article_id}/${response_id}`,
+    dataType: "json"
+  }).done(function(data) {
+    console.log(data);
+    if (data.ok === true) {
+      document
+        .querySelector(".articleResponse")
+        .removeChild(e.parentNode.parentNode);
+    } else {
+      alert("A error occured when deleting response");
+    }
+  });
 }
 
 document
@@ -162,7 +174,7 @@ document
   .querySelector(".delete_article")
   .addEventListener("click", delete_article);
 document
-  .querySelector(".post_response")
-  .addEventListener("click", post_response);
+  .querySelector(".create_response")
+  .addEventListener("submit", post_response);
 
 //是否顯示留言更新刪除  前端去找userid 右上角那個innerHTML抓 後端不做
