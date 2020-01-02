@@ -6,48 +6,77 @@ var router = express.Router();
 router.post("/:board_id", function(req, res, next) {
   /* [TODO] QQ */
   var rtVal = {};
-  switch(req.body.type){
+  let timeToArtId = +Date.now()*100+Math.floor(100*Math.random());
+  switch(parseInt(req.body.type)){
     case 0:
-      
+      db.create_picture_article(
+        req.params.board_id,
+        timeToArtId,
+        req.session.user_id,
+        req.body.longitude,
+        req.body.latitude,
+        req.body.altitude,
+        req.body.title,
+        req.body.pic_url,
+        req.body.alt_text
+      ).then(() => {
+        rtVal = {ok: true, msg:"upload succeed"};
+      })
+      .catch(err => {
+        rtVal = {
+          ok: false,
+          msg: err
+        };
+      }).finally(()=>{
+        res.send(JSON.stringify(rtVal));
+      });
     break;
     case 1:
-
+      db.create_plaintext_article(
+        req.params.board_id,
+        timeToArtId,
+        req.session.user_id,
+        req.body.longitude,
+        req.body.latitude,
+        req.body.altitude,
+        req.body.title,
+        req.body.markdown
+      ).then(() => {
+        rtVal = {ok: true, msg:"upload succeed"};
+      })
+      .catch(err => {
+        rtVal = {
+          ok: false,
+          msg: err
+        };
+      }).finally(()=>{
+        res.send(JSON.stringify(rtVal));
+      });
     break;
     case 2:
-
+      db.create_3D_article(
+        req.params.board_id,
+        timeToArtId,
+        req.session.user_id,
+        req.body.longitude,
+        req.body.latitude,
+        req.body.altitude,
+        req.body.title,
+        req.body.model_url,
+        req.body.alt_text
+      ).then(() => {
+        rtVal = {ok: true, msg:"upload succeed"};
+      })
+      .catch(err => {
+        rtVal = {
+          ok: false,
+          msg: err
+        };
+      }).finally(()=>{
+        res.send(JSON.stringify(rtVal));
+      });
     break;
-
   }
-  /*var rtVal = {};
-  db.create_general_board(
-    req.body.board_id,
-    req.body.board_name,
-    req.body.read_only,
-    req.body.hashtag
-  )
-    .then(()=>{
-      return db.manage(req.session.user_id, req.body.board_id)
-    })
-    .then(() => {
-      rtVal = {
-        ok: true,
-        msg: `Create board successfully board_id=${req.body.board_id}`
-      };
-    })
-    .catch(err => {
-      rtVal = {
-        ok: false,
-        msg: err
-      };
-    })
-    .finally(() => {
-      res.send(JSON.stringify(rtVal));
-    });*/
-  var rtVal = {
-    ok: true,
-    msg: "Develop only"
-  };
-  res.send(JSON.stringify(rtVal));
 });
 
 /* Get list of all article */

@@ -62,6 +62,24 @@ router.get("/:name", function(req, res, next) {
     });
 });
 
+router.get("/:name/board", function(req, res, next) {
+  var rtVal = {};
+  db.get_board(req.params.name)
+    .then((data)=>{
+      rtVal = data;
+      rtVal["ok"] = true;
+    })
+    .catch(err => {
+      rtVal = {
+        ok: false,
+        msg: err
+      };
+    })
+    .finally(() => {
+      res.send(JSON.stringify(rtVal));
+    });
+});
+
 /* Update board info */
 router.post("/:id", function(req, res, next) {
   var rtVal = {};
