@@ -65,8 +65,8 @@ router.get("/:name", function(req, res, next) {
 router.get("/:name/board", function(req, res, next) {
   var rtVal = {};
   db.get_board(req.params.name)
-    .then((data)=>{
-      rtVal = data;
+    .then(function(data){
+      rtVal = data.visiable ? data : {};
       rtVal["ok"] = true;
     })
     .catch(err => {
