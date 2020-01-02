@@ -216,8 +216,8 @@ module.exports = class {
 
   find_board(board_name) {
     return new Promise((resolve, reject) => {
-      var sql_getBoard = `SELECT board_id, board_name, read_only FROM GENERALBOARD WHERE board_name='${board_name}'`;
-      this.db.get(sql_getBoard, (err, data) => {
+      var sql_getBoard = `SELECT board_id, board_name, read_only FROM GENERALBOARD WHERE board_name like'%${board_name}%'`;
+      this.db.all(sql_getBoard, (err, data) => {
         if (err) reject(err);
         else if (data === undefined) {
           reject("No data found.");

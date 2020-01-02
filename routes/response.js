@@ -4,10 +4,13 @@ var router = express.Router();
 
 /* Create a new response */
 router.post("/:board_id/:article_id/", function(req, res, next) {
-  var rtVal = {
+  var rtVal = {}
+  var content = req.body.content;
+  var user_id = req.session.user_id;
+  /*db.
     ok: true,
     msg: `Develop only. New response under ${req.params.board_id}/${req.params.article_id}`
-  };
+  };*/
   res.send(JSON.stringify(rtVal));
 });
 
