@@ -1,4 +1,4 @@
-//TODO
+
 function search_article()
 {
   //抓board_id
@@ -28,7 +28,7 @@ function search_article()
           //創建原本的樣式到指定位置
           //<button style="border:none;text-align: left;" type="button" class="btn btn-outline-dark btn-lg btn-block">text</button> 
           const newButton=document.createElement('button');
-          newButton.textContent=boardname;
+          newButton.textContent=title;
           newButton.style.border="none";
           newButton.style.textAlign="left";
           newButton.type="Button";
@@ -43,16 +43,18 @@ function search_article()
 
           document.querySelector('.articles').appendChild(newButton).addEventListener('click', Go_article);
      }
-        //console.log(Boards);
     }).fail(function(err){console.log(err)})
 }
 function Go_article()
-{
+{ 
+  console.log("Go_article");
   var getUrlString = location.href;
   var url = new URL(getUrlString);
   var board_id=url.searchParams.get('board_id'); // 回傳 board_id  
-  console.log("Go_article");
+  var article_id=this.id;
+  // window.location.assign("/Article?board_id="+board_id+"&article_id="+article_id);
 }
+
 /*edit and create */
 function new_article(){
     console.log("new_article");

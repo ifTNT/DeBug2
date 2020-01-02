@@ -45,19 +45,19 @@ section(style='width:60%;margin:80px 20% 0 20%')
         h4.mr-2 Response
         // <a href="/" class="badge badge-primary">new response</a>
       .articleResponse.d-flex.flex-column
-        #someone_res.d-flex.justify-content-between.align-items-center
-          div user_id : #{content}
-          div
-            a.badge.badge-primary.mr-2(href='/' style='') update
-            a.badge.badge-danger(href='/' style='') delete
-        #someone_res.d-flex.justify-content-between.align-items-center
-          div user_id : #{content}
-          div
-            a.badge.badge-primary.mr-2(href='/' style='') update
-            a.badge.badge-danger(href='/' style='') delete
+        //- #someone_res.d-flex.justify-content-between.align-items-center
+        //-   div user_id : #{content}
+        //-   div
+        //-     a.badge.badge-primary.mr-2( style='color: white;') update
+        //-     a.badge.badge-danger( style='color: white;') delete
+        //- #someone_res.d-flex.justify-content-between.align-items-center
+        //-   .who_response_content user_id : #{content}
+        //-   .who_response_button
+        //-     a.badge.badge-primary.mr-2( style='color: white;') update
+        //-     a.badge.badge-danger( style='color: white;') delete
       .create_response.mt-4
         input#response_content.form-control(type='text' placeholder='response…' name='response_content' style='display:inline;width: 80%;margin-right: 10px;')
-        button.btn.btn-dark.search_board.mb-2.btn-sm(type='button') response 
+        button.btn.btn-dark.post_response.mb-2.btn-sm(type='button') response 
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
 script(src='/JS/Article.js')

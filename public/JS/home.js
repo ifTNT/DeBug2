@@ -43,7 +43,7 @@ function search_board()
         newButton.classList.add("btn-block");
         newButton.classList.add("mt-3");
         //再加上自己的名字為ID
-        newButton.id=boardname;
+        newButton.id=data.board_id;
 
         document.querySelector('.boards').appendChild(newButton).addEventListener('click', Go_article_board);
     
