@@ -1,9 +1,9 @@
-var express = require('express');
-var util = require('../common.js');
+var express = require("express");
+var util = require("../common.js");
 var router = express.Router();
 
 /* Create a new article */
-router.post('/:board_id', function(req, res, next) {
+router.post("/:board_id", function(req, res, next) {
   /* [TODO] QQ */
   /*var rtVal = {};
   db.create_general_board(
@@ -33,26 +33,67 @@ router.post('/:board_id', function(req, res, next) {
   var rtVal = {
     ok: true,
     msg: "Develop only"
-  }
+  };
   res.send(JSON.stringify(rtVal));
 });
 
 /* Get list of all article */
-router.get('/:board_id', function(req, res, next) {
-  var rtVal = [
+router.get("/:board_id", function(req, res, next) {
+  /*
+  var rtVal = [];
+  db.get_all_article(req.params.board_id)
+    .then(data => {
+      rtVal = data;
+    })
+    .catch(err => {
+      rtVal = {
+        ok: false,
+        msg: err
+      };
+    })
+    .finally(() => {
+      res.send(JSON.stringify(rtVal));
+    });
+  */
+  let rtVal = [
     {
-        article_id: 0,
-        longitude: 0,
-        latitude: 0,
-        altitude: 0,
-        title: `article1 in ${req.params.board_id}`
+      article_id: 1,
+      latitude: 22.7311333,
+      longitude: 120.2774256,
+      altitude: 0,
+      title: `article2 in ${req.params.board_id}`
     },
     {
-        article_id: 1,
-        longitude: 0,
-        latitude: 0,
-        altitude: 0,
-        title: `article2 in ${req.params.board_id}`
+      article_id: 2,
+      latitude: 0.001 / 3600,
+      longitude: 0.001 / 3600,
+      altitude: 0,
+      title: `article3 in ${req.params.board_id}`
+    },
+    {
+      article_id: 3,
+      latitude: 22.7311633,
+      longitude: 120.2775256,
+      altitude: 1,
+      title: `只是隻鴨子`,
+      model_url:
+        "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf"
+    },
+    {
+      article_id: 4,
+      latitude: 22.7311333,
+      longitude: 120.2774256,
+      altitude: 5,
+      title: `芭樂`,
+      model_url: "/glTF_models/Avocado/Avocado.gltf"
+    },
+    {
+      article_id: 4,
+      latitude: 22.7311333,
+      longitude: 120.2774256,
+      altitude: 10,
+      title: `芭樂`,
+      model_url: "/glTF_models/"
     }
   ];
 
@@ -60,7 +101,7 @@ router.get('/:board_id', function(req, res, next) {
 });
 
 /* Get content of article */
-router.get('/:board_id/:article_id', function(req, res, next) {
+router.get("/:board_id/:article_id", function(req, res, next) {
   var rtVal = {
     type: 0,
     longitude: 0,
@@ -71,24 +112,24 @@ router.get('/:board_id/:article_id', function(req, res, next) {
     alt_text: "test",
     markdown: "###test",
     model_url: "heep://3d_test"
-  }
+  };
   res.send(JSON.stringify(rtVal));
 });
 
 /* Update article */
-router.post('/:board_id/:article_id', function(req, res, next){
+router.post("/:board_id/:article_id", function(req, res, next) {
   var rtVal = {
     ok: true,
-    msg:　`Develop only id=${req.params.board_id}/${req.params.article_id}`
-  }
+    msg: `Develop only id=${req.params.board_id}/${req.params.article_id}`
+  };
 });
 
 /* Delete an article */
-router.delete('/:board_id/:article_id', function(req, res, next){
+router.delete("/:board_id/:article_id", function(req, res, next) {
   var rtVal = {
     ok: true,
-    msg:　`Develop only id=${req.params.board_id}/${req.params.article_id}`
-  }
+    msg: `Develop only id=${req.params.board_id}/${req.params.article_id}`
+  };
 });
 
 module.exports = router;

@@ -36,13 +36,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/v1/user', usersRouter);
 
+//[TODO] uncomment when develop
 /* Middleware to check user login*/
-app.use(function(req,res,next){
-  if(req.session.authenticated === true){
-    return next()
-  }
-  return next(createError(403));
-});
+// app.use(function(req,res,next){
+//   if(req.session.authenticated === true){
+//     return next()
+//   }
+//   return next(createError(403));
+// });
 
 app.use('/api/v1/board', boardRouter);
 app.use('/api/v1/article', articleRouter);

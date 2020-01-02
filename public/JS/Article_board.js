@@ -45,7 +45,6 @@ function search_article()
      }
         //console.log(Boards);
     }).fail(function(err){console.log(err)})
-    
 }
 function Go_article()
 {
@@ -107,8 +106,6 @@ function list_article_in_board()
     }
        //console.log(Boards);
    }).fail(function(err){console.log(err)})
-   
-    
 }
 function subscribe()
 {
@@ -131,7 +128,7 @@ function subscribe()
     });
 
 }
-list_article_in_board();
+//list_article_in_board();
 document.querySelector('.new_article').addEventListener('click', new_article);
 document.querySelector('.search_article_button').addEventListener('click',search_article);
 document.querySelector('.subscribe').addEventListener('click',subscribe);

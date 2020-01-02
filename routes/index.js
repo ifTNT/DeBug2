@@ -111,14 +111,21 @@ router.get("/edit_board", function(req, res, next) {
 
 /*GET Article in a board page*/
 router.get("/Article_board", function(req, res, next) {
-  if (req.session.authenticated === true) {
-    console.log(req.query.board_name);
-    console.log(req.session.user_id);
-    res.render("Article_board", { user_id: req.session.user_id,board_id:req.query.board_id});
+  //[TODO] uncomment when develop
+  //if (req.session.authenticated === true) {
+  console.log(req.query.board_name);
+  console.log(req.session.user_id);
+  db.get_board(req.query.board_id).then(data => {
+    res.render("Article_board", {
+      user_id: req.session.user_id,
+      board_id: req.query.board_id,
+      board_name: data.board_name
+    });
+  });
 
-  } else {
-    res.redirect("/");
-  }
+  //  } else {
+  //    res.redirect("/");
+  //  }
 });
 /*GET create Article page*/
 router.get("/Create_article", function(req, res, next) {
@@ -127,8 +134,7 @@ router.get("/Create_article", function(req, res, next) {
 
 router.get("/Article", function(req, res, next) {
   if (req.session.authenticated === true) {
-    res.render("Article", { user_id: req.session.user_id});
-
+    res.render("Article", { user_id: req.session.user_id });
   } else {
     res.redirect("/");
   }
