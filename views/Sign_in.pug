@@ -18,19 +18,19 @@ section.pt-5(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;t
   p.p-1(style='font-size:30px;') DeBug2
   form.pt-3(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%;' id="LoginForm")
     .UserID
-      label(for='exampleInputEmail1') UserID
-      input#userid.form-control(type='userid' aria-describedby='useridHelp' placeholder='Enter UserID')
+      //label(for='exampleInputEmail1') 使用者 ID
+      input#userid.form-control(type='userid' aria-describedby='useridHelp' placeholder='使用者 ID')
       // <small id="useridHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     .Password
-      label(for='exampleInputPassword1') Password
-      input#password.form-control(type='password' placeholder='Password')
+      //label(for='exampleInputPassword1') 密碼
+      input#password.form-control(style="margin: 0.5em 0;" type='password' placeholder='密碼')
     //
       <div class="form-group form-check">
       <input type="checkbox" class="form-check-input" id="exampleCheck1">
       <label class="form-check-label" for="exampleCheck1">Check me out</label>
       </div>
-    p#alert(style='display:none;color:red') UserID or Password is error.
-    button#login.btn.btn-primary.login.mt-2(type='submit') LOGIN
+    p#alert(style='display:none;color:red') 使用者ID或密碼錯誤.
+    button#login.btn.btn-primary.login.mt-2(type='submit') 登入
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
 script(src='/JS/signin.js' defer='')

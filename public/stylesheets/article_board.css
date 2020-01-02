@@ -36,11 +36,12 @@ section.navigator {
 }
 section.navigator .wrap {
   display: flex;
-  padding: 5px;
+  padding: 0.5em;
   box-sizing: border-box;
   background: rgba(255,255,255,0.9);
   align-items: center;
   justify-content: center;
+  border-radius: 0.5em;
 }
 section.navigator .wrap .buttonsWrap>button {
   margin: 0 0.5rem 0 0;

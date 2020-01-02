@@ -8,7 +8,7 @@ head
   link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
   link(rel='stylesheet' href='/stylesheets/article.css')
   script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtSDjMSesCZFoJNZ06PknkmdHtvV4YrS4&callback=initMap")
-  title Article
+  title #{data.title}
 header.fixed-top.bg-dark(style='display:block;')
   nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
     // pt-3 pl-5 pr-5 mb-2
@@ -17,14 +17,15 @@ header.fixed-top.bg-dark(style='display:block;')
       button.btn.btn-danger.dropdown-toggle.user_id(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
         | #{user_id}
       .dropdown-menu
-        a.dropdown-item.person_info(href='user_info') Personal information
+        a.dropdown-item.person_info(href='/user_info') 個人資料
         .dropdown-divider
-        a.dropdown-item.sign_out(href='sign_out') Sign out
+        a.dropdown-item.sign_out(href='/sign_out') 登出
 section(style='width:60%;margin:80px 20% 0 20%')
   .articleWrap
-    .action(style='text-align: right;')
-      button.btn.btn-outline-primary.update_article.mb-2.mr-2(type='button')  Update
-      button.btn.btn-outline-dark.delete_article.mb-2(type='button')  delete
+    if(data.user_id === user_id)
+      .action(style='text-align: right;')
+        button.btn.btn-outline-primary.update_article.mb-2.mr-2(type='button') 編輯
+        button.btn.btn-outline-dark.delete_article.mb-2(type='button') 刪除
     .articleHeader.d-flex.align-items-start.flex-column.mb-3
       .articleTitle.p-2
         h3 #{data.title}
@@ -39,7 +40,7 @@ section(style='width:60%;margin:80px 20% 0 20%')
         
       #map(style="height:200px;width:100%;margin-bottom:15px;")
       .artitleMid.p-2.d-flex.align-items-center
-        h4.mr-2 Response
+        h4.mr-2 回覆
         // <a href="/" class="badge badge-primary">new response</a>
       .articleResponse.d-flex.flex-column
         //- #someone_res.d-flex.justify-content-between.align-items-center
@@ -51,10 +52,10 @@ section(style='width:60%;margin:80px 20% 0 20%')
         //-   .who_response_content user_id : #{content}
         //-   .who_response_button
         //-     a.badge.badge-primary.mr-2( style='color: white;') update
+      .create_response.mt-4(style='margin-bottom: 3em;')
         //-     a.badge.badge-danger( style='color: white;') delete
-      .create_response.mt-4
-        input#response_content.form-control(type='text' placeholder='response…' name='response_content' style='display:inline;width: 80%;margin-right: 10px;')
-        button.btn.btn-dark.post_response.mb-2.btn-sm(type='button') response 
+        input#response_content.form-control(type='text' placeholder='請輸入回覆…' name='response_content' style='display:inline;width: 80%;margin-right: 10px;')
+        button.btn.btn-dark.post_response.mb-2.btn-sm(type='button') 送出
 #longitude(style='display:none;') #{data.longitude}
 #latitude(style='display:none;') #{data.latitude}
 #altitude(style='display:none;') #{data.altitude}

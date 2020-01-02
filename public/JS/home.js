@@ -107,7 +107,7 @@ function Go_article_board()
 function search_choose_public()
 {
     console.log("search_choose_public" );
-    document.querySelector('.search_choose').innerHTML="Public board";
+    document.querySelector('.search_choose').innerHTML="公版";
     document.querySelector('.boards').innerHTML='';
     list_board();
 
@@ -115,7 +115,7 @@ function search_choose_public()
 function search_choose_personal()
 {
     console.log("search_choose_personal" );
-    document.querySelector('.search_choose').innerHTML="Someone's board";
+    document.querySelector('.search_choose').innerHTML="個版";
 
 }
 

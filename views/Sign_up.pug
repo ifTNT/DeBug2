@@ -13,22 +13,22 @@ header(style='height: 100px;width:60%;;margin-left: 20%;margin-right: 20%;')
       // pt-3 pl-5 pr-5 mb-2
       h1(onclick="javascript:location.href='/'") DeBug2
 section.pt-5(style='height: 100%;width:60%;;margin-left: 20%;margin-right: 20%;text-align: center; ')
-  p(style='color: gray;font-size:13px;')  Please input some information to register 
+  p(style='color: gray;font-size:13px;') 想使用DeBug2嗎，填完下面的資料並註冊就可以囉 
   form.pt-3(style='height: 100%;width:40%;;margin-left: 30%;margin-right: 30%;', id='signupForm')
     .form-group
-      label(for='exampleInputEmail1') UserID
-      input#userid.form-control(type='userid' aria-describedby='useridHelp' placeholder='Enter UserID')
+      //label(for='exampleInputEmail1') 使用者ID
+      input#userid.form-control(style='margin: 0.5em 0;' type='userid' aria-describedby='useridHelp' placeholder='使用者ID')
     .form-group
-      label(for='exampleInputPassword1') Password
-      input#Password1.form-control(type='password' placeholder='Password')
+      //label(for='exampleInputPassword1') 密碼
+      input#Password1.form-control(style='margin: 0.5em 0;' type='password' placeholder='密碼')
     .form-group
-      label(for='exampleInputPassword2') Check Password
-      input#Password2.form-control(type='password' placeholder='PasswordCheck')
+      //label(for='exampleInputPassword2') 確認密碼
+      input#Password2.form-control(style='margin: 0.5em 0;' type='password' placeholder='確認密碼')
     .form-group
-      label(for='exampleNickName1') Nickname
-      input#NickName.form-control(type='nickname' placeholder='Nickname')
-    p#alert(style='display:none;color:red') This UserID has been used.
-    button.btn.btn-primary.submit(type='submit') Submit
+      //label(for='exampleNickName1') 暱稱
+      input#NickName.form-control(style='margin: 0.5em 0;' type='nickname' placeholder='暱稱')
+    p#alert(style='display:none;color:red') 這個使用者ID已經被使用了
+    button.btn.btn-primary.submit(type='submit') 註冊
 // Optional JavaScript
 // jQuery first, then Popper.js, then Bootstrap JS
 script(src='/JS/signup.js' defer='')

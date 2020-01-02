@@ -116,7 +116,7 @@ function initScene() {
           i.model_url,
           function(gltf) {
             gltf.scene.position.set(x, y, z);
-            console.log(gltf.scene);
+            console.log(gltf.scene.position);
             scene.add(gltf.scene);
           },
           undefined,
@@ -136,9 +136,15 @@ function initScene() {
         );
       } else {
         const geometry = new THREE.BoxGeometry(0.1, 2, 2); // Article cube
-        const material = new THREE.MeshPhongMaterial({
-          color: getRandom(0, 0xfaffff)
-        });
+        if (i.pic_url !== null) {
+          console.log(i.pic_url);
+          var texture = new THREE.TextureLoader().load(i.pic_url);
+          var material = new THREE.MeshBasicMaterial({ map: texture });
+        } else {
+          var material = new THREE.MeshPhongMaterial({
+            color: getRandom(0, 0xfaffff)
+          });
+        }
         let cube = new THREE.Mesh(geometry, material);
 
         cube.position.set(x, y, z);
@@ -178,6 +184,11 @@ function initScene() {
   renderer.domElement.addEventListener("mouseup", onSceneMouseClick);
   renderer.domElement.addEventListener("mouseout", onSceneMouseOut);
   renderer.domElement.addEventListener("mouseenter", onSceneMouseEnter);
+  document
+    .querySelector(".navigator .wrap")
+    .addEventListener("mouseenter", () => {
+      controls.activeLook = false;
+    });
 
   //RWD
   window.addEventListener("resize", function() {
@@ -273,11 +284,12 @@ function onSceneMouseOut(e) {
 
 function onSceneMouseEnter(e) {
   document.querySelector("#tooltip").style.display = "block";
+  controls.activeLook = true;
 }
 
 initScene();
 
-function openArticle(article_id){
+function openArticle(article_id) {
   let board_id = document.querySelector("#board_id").innerHTML;
   window.location.href = `/article/${board_id}/${article_id}`;
   //alert("還沒做啦幹", article_id);

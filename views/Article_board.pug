@@ -7,7 +7,7 @@ head
   // Bootstrap CSS
   link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
   link(rel='stylesheet' href='stylesheets/article_board.css')
-  title Article_board
+  title 公版 - #{board_name}
 header.fixed-top.bg-dark(style='display:block;')
   nav.d-flex.justify-content-between.text-white(style='width:60%;height:100%;margin-left: 20%;margin-right: 20%;')
     // pt-3 pl-5 pr-5 mb-2
@@ -16,19 +16,18 @@ header.fixed-top.bg-dark(style='display:block;')
       button.btn.btn-danger.dropdown-toggle.user_id(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
         | #{user_id}
       .dropdown-menu
-        a.dropdown-item(href='user_info') Personal information
+        a.dropdown-item(href='/user_info') 個人資料
         .dropdown-divider
-        a.dropdown-item(href='sign_out') Sign out
+        a.dropdown-item(href='/sign_out') 登出
 section.navigator
   .wrap
     h2.boardname(style='font-family:Microsoft JhengHei;') #{board_name}
     .buttonsWrap
-      button.btn.btn-outline-primary.new_article(type='button')  New Article
-      button.btn.btn-outline-primary.subscribe(type='button')  Subscribe
+      button.btn.btn-outline-primary.new_article(type='button') 新建文章
+      button.btn.btn-outline-primary.subscribe(type='button') 訂閱
     .search_article
-      | Please input the article name : 
-      input#articlename(type='text' name='article_name' style='width: 200px;margin-right: 10px;')
-      button.btn.btn-outline-dark.search_article_button(type='button')  search 
+      input#articlename(type='text' name='article_name' style='width: 200px;margin-right: 10px;' placeholder='輸入欲搜尋文章標題')
+      button.btn.btn-outline-dark.search_article_button(type='button')  搜尋 
 //      button.btn.btn-outline-primary.new_article.mb-2.mr-2(type='button')  New Article
 //      button.btn.btn-outline-primary.subscribe.mb-2.mr-2(type='button')  Subscribe
 //  .search_article.mt-2
