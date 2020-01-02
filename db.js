@@ -584,7 +584,7 @@ module.exports = class {
 
   get_responses(board_id, article_id) {
     return new Promise((resolve, reject) => {
-      var sql_getRes = `SELECT user_id,content FROM RESPONSE WHERE board_id='${board_id}' AND article_id=${article_id} order by time desc`;
+      var sql_getRes = `SELECT user_id,content,response_id FROM RESPONSE WHERE board_id='${board_id}' AND article_id=${article_id} order by time desc`;
       this.db.all(sql_getRes, (err, data) => {
         if (err) return reject(err);
         else resolve(data);
@@ -597,6 +597,16 @@ module.exports = class {
     return new Promise((resolve, reject) => {
       var sql_updateRes = `update ARTICLE set content='${content}' WHERE board_id='${board_id}' AND article_id =${article_id} AND response_id = '${response_id}'`;
       this.db.run(sql_updateRes, function(err) {
+        if (err) return reject(err);
+        else resolve();
+      });
+    });
+  }
+  
+  delete_response(board_id, article_id, response_id) {
+    return new Promise((resolve, reject) => {
+      var sql_delA = `DELETE FROM RESPONSE WHERE board_id='${board_id}' AND article_id = ${article_id} AND response_id = ${response_id}`;
+      this.db.run(sql_delA, function(err) {
         if (err) return reject(err);
         else resolve();
       });
