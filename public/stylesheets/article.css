@@ -1,0 +1,5 @@
+p.markdown p img {
+  display: block;
+  margin: 0.5em auto;
+  max-width: 80%;
+}

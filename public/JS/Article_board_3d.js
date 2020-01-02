@@ -278,6 +278,7 @@ function onSceneMouseEnter(e) {
 initScene();
 
 function openArticle(article_id){
-  let board_id = document.querySelector("#board_id");
-  alert("還沒做啦幹", article_id);
+  let board_id = document.querySelector("#board_id").innerHTML;
+  window.location.href = `/article/${board_id}/${article_id}`;
+  //alert("還沒做啦幹", article_id);
 }
