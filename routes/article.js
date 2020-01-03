@@ -4,7 +4,6 @@ var router = express.Router();
 
 /* Create a new article */
 router.post("/:board_id", function (req, res, next) {
-  /* [TODO] QQ */
   var rtVal = {};
   let timeToArtId = +Date.now() * 100 + Math.floor(100 * Math.random());
   switch (parseInt(req.body.type)) {

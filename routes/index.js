@@ -112,24 +112,23 @@ router.get("/edit_board", function(req, res, next) {
 
 /*GET Article in a board page*/
 router.get("/Article_board", function(req, res, next) {
-  //[TODO] uncomment when develop
-  //if (req.session.authenticated === true) {
-  console.log(req.query.board_name);
-  console.log(req.session.user_id);
-  db.get_board(req.query.board_id).then(data => {
-    res.render("Article_board", {
-      user_id: req.session.user_id,
-      board_id: req.query.board_id,
-      board_name: data.board_name
-    })
-    .catch(err=>{
-      next(createError(500,err.stack));
+  if (req.session.authenticated === true) {
+    console.log(req.query.board_name);
+    console.log(req.session.user_id);
+    db.get_board(req.query.board_id).then(data => {
+      res
+        .render("Article_board", {
+          user_id: req.session.user_id,
+          board_id: req.query.board_id,
+          board_name: data.board_name
+        })
+        .catch(err => {
+          next(createError(500, err.stack));
+        });
     });
-  });
-
-  //  } else {
-  //    res.redirect("/");
-  //  }
+  } else {
+    res.redirect("/");
+  }
 });
 /*GET create Article page*/
 router.get("/Create_article", function(req, res, next) {
@@ -137,18 +136,21 @@ router.get("/Create_article", function(req, res, next) {
 });
 
 router.get("/article/:board_id/:article_id", function(req, res, next) {
-  //[TODO] Uncomment when developed
-  //if (req.session.authenticated === true) {
+  if (req.session.authenticated === true) {
     db.get_article(req.params.board_id, req.params.article_id)
-    .then(data=>{
-      res.render("Article", { user_id: req.session.user_id ,board_id: req.params.board_id, data });
-    })
-    .catch(err=>{
-      next(createError(500,err.stack));
-    });
-    //} else {
-  //  res.redirect("/");
-  //}
+      .then(data => {
+        res.render("Article", {
+          user_id: req.session.user_id,
+          board_id: req.params.board_id,
+          data
+        });
+      })
+      .catch(err => {
+        next(createError(500, err.stack));
+      });
+  } else {
+    res.redirect("/");
+  }
 });
 
 router.get("/Edit_person_board", function(req, res, next) {
