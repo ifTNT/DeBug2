@@ -151,20 +151,23 @@ router.get("/:board_id", function (req, res, next) {
   */
 });
 
-/* Get content of article */
-router.get("/:board_id/:article_id", function (req, res, next) {
-  var rtVal = {
-    type: 0,
-    longitude: 0,
-    latitude: 0,
-    altitude: 0,
-    title: "Article 1",
-    pic_url: "http://test",
-    alt_text: "test",
-    markdown: "###test",
-    model_url: "heep://3d_test"
-  };
-  res.send(JSON.stringify(rtVal));
+/* Search article */
+router.get("/:board_id/search", function (req, res, next) {
+  var rtVal = {}
+  db.find_article_title(null, req.query.query, null, req.params.board_id, 1)
+  .then(d =>{
+    rtVal = {
+      ok: true,
+      result_cnt: d.length,
+      result: d
+    }
+  })
+  .catch(err=>{
+    rtVal = {ok: false, msg: err.stack};
+  })
+  .finally(()=>{
+    res.send(JSON.stringify(rtVal));
+  })
 });
 
 /* Update article */

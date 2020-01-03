@@ -46,6 +46,8 @@ function initScene() {
   window.renderer;
   window.camera;
   window.controls;
+  window.clock;
+  window.pointLight;
 
   scene = new THREE.Scene();
 
@@ -95,7 +97,7 @@ function initScene() {
   camera.position.set(10, 10, 10);
 
   //Clock for update control
-  var clock = new THREE.Clock();
+  clock = new THREE.Clock();
   //Control
   if (!mobilecheck()) {
     controls = new THREE.FirstPersonControls(camera, renderer.domElement);
@@ -110,7 +112,7 @@ function initScene() {
   //controls.update();
 
   //Point light that stick to camera
-  var pointLight = new THREE.PointLight(0xffffff, 1, 50);
+  pointLight = new THREE.PointLight(0xffffff, 1, 50);
   scene.add(pointLight);
   //Ambient light
   var light = new THREE.AmbientLight(0xaaaaaa);
@@ -190,13 +192,7 @@ function initScene() {
     }
   });
 
-  renderer.setAnimationLoop(function() {
-    controls.update(clock.getDelta());
-    renderer.render(scene, camera);
-    let { x, y, z } = camera.position;
-    pointLight.position.set(x, y, z);
-    judgeHover();
-  });
+  renderer.setAnimationLoop(animate);
 
   renderer.domElement.addEventListener("mousemove", onSceneMouseMove, false);
   //document.querySelector("#article").style.width = `${window.innerWidth / 2}px`;
@@ -231,6 +227,13 @@ function initScene() {
     console.log("camera:", x, y, z);
     console.log(p.coords);
   });
+}
+function animate() {
+  controls.update(clock.getDelta());
+  renderer.render(scene, camera);
+  let { x, y, z } = camera.position;
+  pointLight.position.set(x, y, z);
+  judgeHover();
 }
 
 function onSceneMouseMove(event) {

@@ -419,32 +419,33 @@ module.exports = class {
     });
   }
 
-  find_article_title(user_id, title, type, board_name, pageShow) {
+  find_article_title(user_id, title, type, board_id, pageShow) {
     const rowPerPage = 200;
     return new Promise((resolve, reject) => {
       var condition = [];
       if (user_id != null) condition.push(`user_id = '${user_id}'`);
-      if (title != null) condition.push(`title = '${title}'`);
+      if (title != null) condition.push(`title like '%${title}%'`);
       if (type != null) condition.push(`type = ${type}`);
-      this.db
-        .getAsync(
-          `SELECT board_id FROM BOARD WHERE board_name = '${board_name}'`
-        )
-        .then(data => {
-          condition.push(`board_id = '${data.board_id}'`);
-        })
-        .catch(() => {})
-        .finally(() => {
-          searchQuery =
-            condition.length == 0 ? "" : " WHERE " + condition.join(" AND ");
-          var aql_searchArticle =
-            `SELECT article_id,title,user_id,board_id FROM ARTICLE ${searchQuery} order by article_id desc` +
-            `LIMIT ${(pageShow - 1) * rowPerPage},${rowPerPage}`;
-          this.db.all(aql_searchArticle, (err, data) => {
-            if (err) return reject(err);
-            else resolve(data);
-          });
-        });
+      //this.db;
+      //.getAsync(
+      //  `SELECT board_id FROM BOARD WHERE board_name = '${board_name}'`
+      //)
+      //.then(data => {
+      //  condition.push(`board_id = '${data.board_id}'`);
+      //})
+      //.catch(() => {})
+      //.finally(() => {
+      condition.push(`board_id = '${board_id}'`);
+      let searchQuery =
+        condition.length == 0 ? "" : " WHERE " + condition.join(" AND ");
+      var aql_searchArticle =
+        `SELECT * FROM ARTICLE ${searchQuery} order by article_id desc ` +
+        `LIMIT ${(pageShow - 1) * rowPerPage},${rowPerPage}`;
+      this.db.all(aql_searchArticle, (err, data) => {
+        if (err) return reject(err);
+        else resolve(data);
+        //});
+      });
     });
   }
   // find_article_title(null, null, null, "高雄大學", 1).then((data)=>{
@@ -598,7 +599,7 @@ module.exports = class {
       });
     });
   }
-  
+
   delete_response(board_id, article_id, response_id) {
     return new Promise((resolve, reject) => {
       var sql_delA = `DELETE FROM RESPONSE WHERE board_id='${board_id}' AND article_id = ${article_id} AND response_id = ${response_id}`;
