@@ -40,7 +40,7 @@ function create_article(e) {
     .done(function(data) {
       console.log(data);
       if(data.ok===true){
-        window.history.back();
+        window.location.href = document.referrer;
       }else{
         alert(data.msg);
       }

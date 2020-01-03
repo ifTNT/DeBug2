@@ -102,7 +102,7 @@ function delete_article() {
     dataType: "json"
   }).done(data => {
     if(data.ok==true){
-      window.history.back();
+      window.location.href = document.referrer;
     }else{
       console.log(data.msg)
     }
